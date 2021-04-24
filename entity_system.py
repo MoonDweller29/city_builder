@@ -23,6 +23,38 @@ class Entity:
         pass
 
 class EntitySystem:
+############################################################################
+#                       Public interface
+############################################################################
+
+    def AddEntity(self, entity):
+        id = self.__GetUnusedId()
+
+        self.entities[id] = entity
+
+        return id
+
+    def GetEntity(self, id):
+        # @TODO check for KeyError
+        return self.entities[id]
+
+    def DestroyEntity(self, id):
+        self.entities_to_delete.append(id)
+
+    def Update(self):
+        self.__DeleteMarked()
+
+        for entity in self.entities.values():
+            entity.Update()
+
+    def Draw(self):
+        for entity in sorted(self.entities.values(), key=lambda e: e.drawOrder, reverse=True):
+            entity.Draw()
+
+############################################################################
+#                       Private interface
+############################################################################
+
     __instance = None
 
     def __new__(cls):
@@ -33,28 +65,14 @@ class EntitySystem:
 
     def __init__singleton(self):
         self.entities = {}
-        
+        self.entities_to_delete = []
         self.last_free_id = -1
-
-    def AddEntity(self, entity):
-        id = self.__GetUnusedId()
-
-        self.entities[id] = entity
-
-        return id
-
-    def GetEntity(self, id):
-        return self.entities[id]
 
     def __GetUnusedId(self):
         self.last_free_id += 1
-
         return self.last_free_id
 
-    def Update(self):
-        for entity in self.entities.values():
-            entity.Update()
-
-    def Draw(self):
-        for entity in sorted(self.entities.values(), key=lambda e: e.drawOrder, reverse=True):
-            entity.Draw()
+    def __DeleteMarked(self):
+        for id in self.entities_to_delete:
+            del self.entities[id]
+        self.entities_to_delete.clear()

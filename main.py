@@ -31,11 +31,6 @@ fontArial = pygame.font.SysFont('Arial', 20)
 myimage = pygame.image.load("Resources/Buildings/Mines/CrystalMine/CrystalMine.png")
 
 EntitySystem().AddEntity(Terrain(screen, myimage, (10,10)))
-id = EntitySystem().AddEntity(Terrain(screen, myimage, (10,10)))
-id = EntitySystem().AddEntity(Terrain(screen, myimage, (10,10)))
-id = EntitySystem().AddEntity(Terrain(screen, myimage, (10,10)))
-
-EntitySystem().GetEntity(id).drawOrder = -100
 
 # Run until the user asks to quit
 running = True
