@@ -15,10 +15,9 @@ GraphicsEngine().init_window([1280, 720], 'City Builder')
 
 drawPosition = (0, 0)
 
-
-fontArial = ResourceManager().create_font("Arial_20", "Arial", 20)
-# fontArial = ResourceManager().createFont("CustomFont_20", "/home/lev/city_builder/Resources/Font/20636.ttf", 20)
-testImage = ResourceManager().create_img("CrystalMine", "Resources/Buildings/Mines/CrystalMine/CrystalMine.png")
+fontArial = ResourceManager().get_font("Arial_20")
+testImage = ResourceManager().get_image("CrystalMine")
+# testImage = ResourceManager().get_sprite_sheet("SP-Land", 2, 3)
 
 EntitySystem().add_entity(ETerrain(testImage, (10,10)))
 
