@@ -1,4 +1,5 @@
 import pygame
+from GraphicsEngine import GraphicsEngine
 
 from utils import *
 
@@ -7,14 +8,10 @@ from terrain import Terrain
 
 from debug import Debug
 from resourceManager import *
+graphics_engine = GraphicsEngine()
+graphics_engine.init_window([1280, 720], 'City Builder')
 
-pygame.init()
-
-pygame.display.set_caption('City Builder')
-
-# @TODO Вот это дело надо собрать в общий скорее всего синглтон, чтобы не передавать в DrawText и DrawImage
-
-screen = pygame.display.set_mode([1280, 720])
+screen = graphics_engine.get_screen()
 
 draw_position = (0, 0)
 
