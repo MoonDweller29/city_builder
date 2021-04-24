@@ -5,6 +5,8 @@ from utils import *
 from entity import Entity
 from terrain import Terrain
 
+from debug import Debug
+
 pygame.init()
 
 pygame.display.set_caption('City Builder')
@@ -35,23 +37,15 @@ entities.append(Terrain(screen, myimage, (10,10)))
 # Run until the user asks to quit
 running = True
 
-last_frame = pygame.time.get_ticks()
+last_frame_time = pygame.time.get_ticks()
 left_sim_time = 0
 lag = 0.0
 
 # @TODO Это желательно вынести в отдельный класс/файл
 # Так чтобы из main только дергались функции FPS каунтера
 # FPS counting stuff
-TARGET_FPS = 60.0
-TICK_MS = 1000.0 / TARGET_FPS
 
-update_fps = 0
-fps = 0
-last_fps_count_time = pygame.time.get_ticks()
-FPS_COUNT_CD = 300
-update_frames = 0
-frames = 0
-
+debugPanel = Debug(screen, fontArial)
 
 while running:
     # Input
@@ -62,18 +56,20 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN:
             draw_position = pygame.mouse.get_pos()
 
-    left_sim_time += pygame.time.get_ticks() - last_frame
-    last_frame = pygame.time.get_ticks()
+    delta_time = pygame.time.get_ticks() - last_frame_time
+    left_sim_time += delta_time
 
-    while left_sim_time > 0:
+    last_frame_time = pygame.time.get_ticks()
+
+    while left_sim_time > debugPanel.TICK_MS:
         # Update
 
         for e in entities:
             e.Update()
 
-        update_frames += 1
+        debugPanel.Update()
 
-        left_sim_time -= TICK_MS
+        left_sim_time -= debugPanel.TICK_MS
 
     #Render
 
@@ -83,25 +79,10 @@ while running:
     for e in entities:
         e.Draw()
 
+    debugPanel.Draw()
+
     # Draw a solid blue circle in the center
     pygame.draw.circle(screen, (0, 0, 255), draw_position, 5)
-    
-    DrawImage(screen, myimage, (10, 10), (64, 64))
-
-    frames += 1
-
-    if pygame.time.get_ticks() - last_fps_count_time > FPS_COUNT_CD:
-        delta_time = pygame.time.get_ticks() - last_fps_count_time
-
-        fps = frames / delta_time * 1000.0
-        update_fps = update_frames / delta_time * 1000.0
-
-        last_fps_count_time = pygame.time.get_ticks()
-        frames = 0
-        update_frames = 0
-
-    DrawText(screen, (1100, 10), fontArial, (0, 255, 0), "FPS:  " + str(int(fps)))
-    DrawText(screen, (1100, 30), fontArial, (0, 255, 0), "UFPS: " + str(int(update_fps)))
 
     # Flip the display
     pygame.display.flip()
