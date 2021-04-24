@@ -5,6 +5,8 @@ from utils import *
 from entity_system import EntitySystem, Entity
 from terrain import Terrain
 
+from grid import Grid
+
 from debug import Debug
 
 pygame.init()
