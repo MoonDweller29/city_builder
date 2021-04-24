@@ -1,33 +1,32 @@
 import pygame
 from GraphicsEngine import GraphicsEngine
 
-from utils import *
+from Utils import *
 
-from entity_system import EntitySystem, Entity
-from terrain import Terrain
+from EntitySystem import EntitySystem, Entity
+from ETerrain import ETerrain
 
-from grid import Grid
+from EGrid import EGrid
 
-from debug import Debug
-from resourceManager import *
+from Debug import Debug
+from ResourceManager import *
+
 GraphicsEngine().init_window([1280, 720], 'City Builder')
 
-
-draw_position = (0, 0)
+drawPosition = (0, 0)
 
 
 fontArial = ResourceManager().create_font("Arial_20", "Arial", 20)
 # fontArial = ResourceManager().createFont("CustomFont_20", "/home/lev/city_builder/Resources/Font/20636.ttf", 20)
-myimage = ResourceManager().create_img("CrystalMine", "Resources/Buildings/Mines/CrystalMine/CrystalMine.png")
+testImage = ResourceManager().create_img("CrystalMine", "Resources/Buildings/Mines/CrystalMine/CrystalMine.png")
 
-EntitySystem().AddEntity(Terrain(myimage, (10,10)))
+EntitySystem().add_entity(ETerrain(testImage, (10,10)))
 
 # Run until the user asks to quit
 running = True
 
-last_frame_time = pygame.time.get_ticks()
-left_sim_time = 0
-lag = 0.0
+lastFrameStartTime = pygame.time.get_ticks()
+leftSimTime = 0
 
 # @TODO Это желательно вынести в отдельный класс/файл
 # Так чтобы из main только дергались функции FPS каунтера
@@ -41,32 +40,32 @@ while running:
         if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
-            draw_position = pygame.mouse.get_pos()
+            drawPosition = pygame.mouse.get_pos()
 
-    delta_time = pygame.time.get_ticks() - last_frame_time
-    left_sim_time += delta_time
+    deltaTime = pygame.time.get_ticks() - lastFrameStartTime
+    leftSimTime += deltaTime
 
-    last_frame_time = pygame.time.get_ticks()
+    lastFrameStartTime = pygame.time.get_ticks()
 
-    while left_sim_time > debugPanel.TICK_MS:
+    while leftSimTime > debugPanel.TICK_MS:
         # Update
 
-        EntitySystem().Update()
+        EntitySystem().update()
 
-        debugPanel.Update()
+        debugPanel.update()
 
-        left_sim_time -= debugPanel.TICK_MS
+        leftSimTime -= debugPanel.TICK_MS
 
     #Render
 
     GraphicsEngine().clear_screen((0, 64, 0))
 
-    EntitySystem().Draw()
+    EntitySystem().draw()
 
-    debugPanel.Draw()
+    debugPanel.draw()
 
     # Draw a solid blue circle
-    GraphicsEngine().draw_circle((0, 0, 255), draw_position, 5)
+    GraphicsEngine().draw_circle((0, 0, 255), drawPosition, 5)
 
     # Flip the display
     GraphicsEngine().display_flip()
