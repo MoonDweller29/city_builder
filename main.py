@@ -8,10 +8,8 @@ from terrain import Terrain
 
 from debug import Debug
 from resourceManager import *
-graphics_engine = GraphicsEngine()
-graphics_engine.init_window([1280, 720], 'City Builder')
+GraphicsEngine().init_window([1280, 720], 'City Builder')
 
-screen = graphics_engine.get_screen()
 
 draw_position = (0, 0)
 
@@ -20,7 +18,7 @@ fontArial = ResourceManager().create_font("Arial_20", "Arial", 20)
 # fontArial = ResourceManager().createFont("CustomFont_20", "/home/lev/city_builder/Resources/Font/20636.ttf", 20)
 myimage = ResourceManager().create_img("CrystalMine", "Resources/Buildings/Mines/CrystalMine/CrystalMine.png")
 
-EntitySystem().AddEntity(Terrain(screen, myimage, (10,10)))
+EntitySystem().AddEntity(Terrain(myimage, (10,10)))
 
 # Run until the user asks to quit
 running = True
@@ -33,7 +31,7 @@ lag = 0.0
 # Так чтобы из main только дергались функции FPS каунтера
 # FPS counting stuff
 
-debugPanel = Debug(screen, fontArial)
+debugPanel = Debug(fontArial)
 
 while running:
     # Input
@@ -59,18 +57,17 @@ while running:
 
     #Render
 
-    # Fill the background with white
-    screen.fill((0, 64, 0))
+    GraphicsEngine().clear_screen((0, 64, 0))
 
     EntitySystem().Draw()
 
     debugPanel.Draw()
 
-    # Draw a solid blue circle in the center
-    pygame.draw.circle(screen, (0, 0, 255), draw_position, 5)
+    # Draw a solid blue circle
+    GraphicsEngine().draw_circle((0, 0, 255), draw_position, 5)
 
     # Flip the display
-    pygame.display.flip()
+    GraphicsEngine().display_flip()
 
 # Done! Time to quit.
 pygame.quit()
