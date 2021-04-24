@@ -1,4 +1,5 @@
 import pygame
+from GraphicsEngine import GraphicsEngine
 
 from utils import *
 
@@ -8,31 +9,18 @@ from terrain import Terrain
 from grid import Grid
 
 from debug import Debug
+from resourceManager import *
+GraphicsEngine().init_window([1280, 720], 'City Builder')
 
-pygame.init()
-
-pygame.display.set_caption('City Builder')
-
-# @TODO Вот это дело надо собрать в общий скорее всего синглтон, чтобы не передавать в DrawText и DrawImage
-
-screen = pygame.display.set_mode([1280, 720])
 
 draw_position = (0, 0)
 
-pygame.font.init() # you have to call this at the start, 
-                   # if you want to use this module.
 
-# @TODO нужно будет сделать систему подгрузки ресурсов
-# 1) Шрифты, картинки, может звуки (потом)
-# 2) Доступно из разных модулей программы (Давайте синглтон)
-# 3) Понять че за дичь с pygame, там ресурсы создают сразу с локальными свойствами (Например, в грифт зашит размер)
-# 4) Подумать о том, что потенциально мы можем грузить данные из zip потом. Просто код под эту замену подготовить.
+fontArial = ResourceManager().create_font("Arial_20", "Arial", 20)
+# fontArial = ResourceManager().createFont("CustomFont_20", "/home/lev/city_builder/Resources/Font/20636.ttf", 20)
+myimage = ResourceManager().create_img("CrystalMine", "Resources/Buildings/Mines/CrystalMine/CrystalMine.png")
 
-fontArial = pygame.font.SysFont('Arial', 20)
-
-myimage = pygame.image.load("Resources/Buildings/Mines/CrystalMine/CrystalMine.png")
-
-EntitySystem().AddEntity(Terrain(screen, myimage, (10,10)))
+EntitySystem().AddEntity(Terrain(myimage, (10,10)))
 
 # Run until the user asks to quit
 running = True
@@ -45,7 +33,7 @@ lag = 0.0
 # Так чтобы из main только дергались функции FPS каунтера
 # FPS counting stuff
 
-debugPanel = Debug(screen, fontArial)
+debugPanel = Debug(fontArial)
 
 while running:
     # Input
@@ -71,18 +59,17 @@ while running:
 
     #Render
 
-    # Fill the background with white
-    screen.fill((0, 64, 0))
+    GraphicsEngine().clear_screen((0, 64, 0))
 
     EntitySystem().Draw()
 
     debugPanel.Draw()
 
-    # Draw a solid blue circle in the center
-    pygame.draw.circle(screen, (0, 0, 255), draw_position, 5)
+    # Draw a solid blue circle
+    GraphicsEngine().draw_circle((0, 0, 255), draw_position, 5)
 
     # Flip the display
-    pygame.display.flip()
+    GraphicsEngine().display_flip()
 
 # Done! Time to quit.
 pygame.quit()

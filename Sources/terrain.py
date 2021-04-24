@@ -1,13 +1,13 @@
 from entity_system import Entity
 from utils import *
+from GraphicsEngine import GraphicsEngine
 
 class Terrain(Entity):
-    def __init__(self, screen, image, size):
+    def __init__(self, image, size):
         super().__init__()
 
         self.size = size
         self.image = image
-        self.screen = screen
 
     def Update(self):
         super().Update()
@@ -17,6 +17,7 @@ class Terrain(Entity):
     def Draw(self):
         super().Draw()
 
+        renderer = GraphicsEngine()
         for x in range(self.size[0]):
             for y in range(self.size[1]):
-                DrawImage(self.screen, self.image, add((100, 100), (64 * x, 64 * y)), (64, 64))
+                renderer.draw_image(self.image, add((100, 100), (64 * x, 64 * y)), (64, 64))
