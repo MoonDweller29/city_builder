@@ -6,6 +6,7 @@ from entity_system import EntitySystem, Entity
 from terrain import Terrain
 
 from debug import Debug
+from resourceManager import *
 
 pygame.init()
 
@@ -17,18 +18,10 @@ screen = pygame.display.set_mode([1280, 720])
 
 draw_position = (0, 0)
 
-pygame.font.init() # you have to call this at the start, 
-                   # if you want to use this module.
 
-# @TODO нужно будет сделать систему подгрузки ресурсов
-# 1) Шрифты, картинки, может звуки (потом)
-# 2) Доступно из разных модулей программы (Давайте синглтон)
-# 3) Понять че за дичь с pygame, там ресурсы создают сразу с локальными свойствами (Например, в грифт зашит размер)
-# 4) Подумать о том, что потенциально мы можем грузить данные из zip потом. Просто код под эту замену подготовить.
-
-fontArial = pygame.font.SysFont('Arial', 20)
-
-myimage = pygame.image.load("Resources/Buildings/Mines/CrystalMine/CrystalMine.png")
+fontArial = ResourceManager().create_font("Arial_20", "Arial", 20)
+# fontArial = ResourceManager().createFont("CustomFont_20", "/home/lev/city_builder/Resources/Font/20636.ttf", 20)
+myimage = ResourceManager().create_img("CrystalMine", "Resources/Buildings/Mines/CrystalMine/CrystalMine.png")
 
 EntitySystem().AddEntity(Terrain(screen, myimage, (10,10)))
 
