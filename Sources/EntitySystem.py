@@ -5,21 +5,21 @@
 # def __init__(self):
 #     super().__init__()
 
-# def Update(self):
-#     super().Update()
+# def update(self):
+#     super().update()
 
-# def Draw(self):
-#     super().Draw()
+# def draw(self):
+#     super().draw()
 
 
 class Entity:
     def __init__(self):
         self.drawOrder = 0
 
-    def Draw(self):
+    def draw(self):
         pass
 
-    def Update(self):
+    def update(self):
         pass
 
 class EntitySystem:
@@ -27,29 +27,29 @@ class EntitySystem:
 #                       Public interface
 ############################################################################
 
-    def AddEntity(self, entity):
-        id = self.__GetUnusedId()
+    def add_entity(self, entity):
+        id = self.__get_unused_id()
 
         self.entities[id] = entity
 
         return id
 
-    def GetEntity(self, id):
+    def get_entity(self, id):
         # @TODO check for KeyError
         return self.entities[id]
 
-    def DestroyEntity(self, id):
-        self.entities_to_delete.append(id)
+    def destroy_entity(self, id):
+        self.entitiesToDelete.append(id)
 
-    def Update(self):
-        self.__DeleteMarked()
+    def update(self):
+        self.__delete_marked()
 
         for entity in self.entities.values():
-            entity.Update()
+            entity.update()
 
-    def Draw(self):
+    def draw(self):
         for entity in sorted(self.entities.values(), key=lambda e: e.drawOrder, reverse=True):
-            entity.Draw()
+            entity.draw()
 
 ############################################################################
 #                       Private interface
@@ -65,14 +65,14 @@ class EntitySystem:
 
     def __init__singleton(self):
         self.entities = {}
-        self.entities_to_delete = []
-        self.last_free_id = -1
+        self.entitiesToDelete = []
+        self.lastFreeId = -1
 
-    def __GetUnusedId(self):
-        self.last_free_id += 1
-        return self.last_free_id
+    def __get_unused_id(self):
+        self.lastFreeId += 1
+        return self.lastFreeId
 
-    def __DeleteMarked(self):
-        for id in self.entities_to_delete:
+    def __delete_marked(self):
+        for id in self.entitiesToDelete:
             del self.entities[id]
-        self.entities_to_delete.clear()
+        self.entitiesToDelete.clear()

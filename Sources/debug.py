@@ -8,31 +8,31 @@ class Debug:
         self.TARGET_FPS = 60.0
         self.TICK_MS = 1000.0 / self.TARGET_FPS
 
-        self.update_fps = 0
+        self.updateFps = 0
         self.fps = 0
-        self.last_fps_count_time = pygame.time.get_ticks()
+        self.lastFpsCountTime = pygame.time.get_ticks()
         self.FPS_COUNT_CD = 300
-        self.update_frames = 0
+        self.updateFrames = 0
         self.frames = 0
 
         self.font = font
 
-    def Update(self):
-        self.update_frames += 1 
+    def update(self):
+        self.updateFrames += 1 
 
-        if pygame.time.get_ticks() - self.last_fps_count_time > self.FPS_COUNT_CD:
-            delta_time = pygame.time.get_ticks() - self.last_fps_count_time
+        if pygame.time.get_ticks() - self.lastFpsCountTime > self.FPS_COUNT_CD:
+            deltaTime = pygame.time.get_ticks() - self.lastFpsCountTime
 
-            self.fps = self.frames / delta_time * 1000.0
-            self.update_fps = self.update_frames / delta_time * 1000.0
+            self.fps = self.frames / deltaTime * 1000.0
+            self.updateFps = self.updateFrames / deltaTime * 1000.0
 
-            self.last_fps_count_time = pygame.time.get_ticks()
+            self.lastFpsCountTime = pygame.time.get_ticks()
             self.frames = 0
-            self.update_frames = 0
+            self.updateFrames = 0
 
-    def Draw(self):
+    def draw(self):
         self.frames += 1
 
         renderer = GraphicsEngine()
         renderer.draw_text((1100, 10), self.font, (0, 255, 0), "FPS:  " + str(int(self.fps)))
-        renderer.draw_text((1100, 30), self.font, (0, 255, 0), "UFPS: " + str(int(self.update_fps)))
+        renderer.draw_text((1100, 30), self.font, (0, 255, 0), "UFPS: " + str(int(self.updateFps)))

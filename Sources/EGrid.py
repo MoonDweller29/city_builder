@@ -1,6 +1,6 @@
-from entity_system import Entity
+from EntitySystem import Entity
 
-class Grid(Entity):
+class EGrid(Entity):
     def __init__(self, origin, size, cellSize):
         super().__init__()
 
@@ -17,8 +17,8 @@ class Grid(Entity):
     def world_to_cell(self, worldCoord):
         return (worldCoord - self.origin) / (self.cellSize, self.cellSize)
 
-    def Update(self):
-        super().Update()
+    def update(self):
+        super().update()
 
-    def Draw(self):
-        super().Draw()
+    def draw(self):
+        super().draw()

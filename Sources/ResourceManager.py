@@ -9,16 +9,16 @@ import pygame
 # 4) Подумать о том, что потенциально мы можем грузить данные из zip потом. Просто код под эту замену подготовить.
 
 class ResourceManager:
-    _instance = None
-    _imageDict = {}
-    _fontDict = {}
+    __instance = None
+    __imageDict = {}
+    __fontDict = {}
 
     def __new__(cls):
-        if not ResourceManager._instance:
+        if not ResourceManager.__instance:
             if not pygame.get_init():
                 pygame.init()
-            ResourceManager._instance = super(ResourceManager, cls).__new__(cls)
-        return ResourceManager._instance
+            ResourceManager.__instance = super(ResourceManager, cls).__new__(cls)
+        return ResourceManager.__instance
 
     def __init__(self):
         pass
@@ -30,30 +30,30 @@ class ResourceManager:
         return pygame.font.Font(path, size)
 
     def create_img(self, name, path):
-        if name in self._imageDict:
+        if name in self.__imageDict:
             raise ValueError(f"Resource img {name} exist!")
-        self._imageDict[name] = self.__load_img(path)
-        return self._imageDict[name]
+        self.__imageDict[name] = self.__load_img(path)
+        return self.__imageDict[name]
 
     def create_font(self, name, path, size):
-        if name in self._fontDict:
+        if name in self.__fontDict:
             raise ValueError(f"Resource font {name} exist!")
         
         # Проверка на системный шрифт
         if pygame.font.match_font(path):
             path = pygame.font.match_font(path)
 
-        self._fontDict[name] = self.__load_font(path, size)
-        return self._fontDict[name]
+        self.__fontDict[name] = self.__load_font(path, size)
+        return self.__fontDict[name]
 
     def get_image(self, name):
-        if name in self._imageDict:
-            return self._imageDict[name]
+        if name in self.__imageDict:
+            return self.__imageDict[name]
         else:
             raise ValueError(f"Image resource {name} not exist!")
 
     def get_font(self, name):
-        if name in self._fontDict:
-            return self._fontDict[name]
+        if name in self.__fontDict:
+            return self.__fontDict[name]
         else:
             raise ValueError(f"Font resource {name} not exist!")

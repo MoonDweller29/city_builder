@@ -15,7 +15,6 @@ class GraphicsEngine:
     def display_flip(self):
         pygame.display.flip()
 
-
     # draw methods
 
     def draw_image(self, image, position, size):
