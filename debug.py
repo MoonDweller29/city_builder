@@ -1,10 +1,10 @@
 import pygame
 
-from utils import *
+from GraphicsEngine import GraphicsEngine
 
 # @TODO вынести нахер шрифт и скрин отсюда в централизованную точку
 class Debug:
-    def __init__(self, screen, font):
+    def __init__(self, font):
         self.TARGET_FPS = 60.0
         self.TICK_MS = 1000.0 / self.TARGET_FPS
 
@@ -15,7 +15,6 @@ class Debug:
         self.update_frames = 0
         self.frames = 0
 
-        self.screen = screen
         self.font = font
 
     def Update(self):
@@ -34,5 +33,6 @@ class Debug:
     def Draw(self):
         self.frames += 1
 
-        DrawText(self.screen, (1100, 10), self.font, (0, 255, 0), "FPS:  " + str(int(self.fps)))
-        DrawText(self.screen, (1100, 30), self.font, (0, 255, 0), "UFPS: " + str(int(self.update_fps)))
+        renderer = GraphicsEngine()
+        renderer.draw_text((1100, 10), self.font, (0, 255, 0), "FPS:  " + str(int(self.fps)))
+        renderer.draw_text((1100, 30), self.font, (0, 255, 0), "UFPS: " + str(int(self.update_fps)))
