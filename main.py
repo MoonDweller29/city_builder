@@ -2,7 +2,7 @@ import pygame
 
 from utils import *
 
-from entity import Entity
+from entity_system import EntitySystem, Entity
 from terrain import Terrain
 
 from debug import Debug
@@ -30,9 +30,12 @@ fontArial = pygame.font.SysFont('Arial', 20)
 
 myimage = pygame.image.load("Resources/Buildings/Mines/CrystalMine/CrystalMine.png")
 
-entities = []
+EntitySystem().AddEntity(Terrain(screen, myimage, (10,10)))
+id = EntitySystem().AddEntity(Terrain(screen, myimage, (10,10)))
+id = EntitySystem().AddEntity(Terrain(screen, myimage, (10,10)))
+id = EntitySystem().AddEntity(Terrain(screen, myimage, (10,10)))
 
-entities.append(Terrain(screen, myimage, (10,10)))
+EntitySystem().GetEntity(id).drawOrder = -100
 
 # Run until the user asks to quit
 running = True
@@ -49,9 +52,8 @@ debugPanel = Debug(screen, fontArial)
 
 while running:
     # Input
-    
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+        if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             draw_position = pygame.mouse.get_pos()
@@ -64,8 +66,7 @@ while running:
     while left_sim_time > debugPanel.TICK_MS:
         # Update
 
-        for e in entities:
-            e.Update()
+        EntitySystem().Update()
 
         debugPanel.Update()
 
@@ -76,8 +77,7 @@ while running:
     # Fill the background with white
     screen.fill((0, 64, 0))
 
-    for e in entities:
-        e.Draw()
+    EntitySystem().Draw()
 
     debugPanel.Draw()
 
