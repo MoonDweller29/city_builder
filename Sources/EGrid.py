@@ -11,11 +11,16 @@ class EGrid(Entity):
         self.contents = []
 
         for x in range(size[0]):
+            self.contents.append([])
+
             for y in range(size[1]):
-                self.contents[x][y] = []
+                self.contents[x].append([])
 
     def world_to_cell(self, worldCoord):
-        return (worldCoord - self.origin) / (self.cellSize, self.cellSize)
+        return div(sub(worldCoord, self.origin), (self.cellSize, self.cellSize))
+
+    def cell_to_world(self, worldCoord):
+        return int(add(mul(worldCoord, (self.cellSize, self.cellSize)), self.origin))
 
     def update(self):
         super().update()

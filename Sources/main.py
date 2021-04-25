@@ -21,6 +21,9 @@ testImage = ResourceManager().get_image("CrystalMine")
 testImage = ResourceManager().get_sprite_sheet("SP-Land", 2, 3)
 
 EntitySystem().add_entity(ETerrain("CrystalMine", (10,10)))
+gridId = EntitySystem().add_entity(EGrid((10, 10), (10,10), 64))
+
+print(EntitySystem().get_entity(gridId).world_to_cell((10, 10)))
 
 # Run until the user asks to quit
 running = True

@@ -11,6 +11,11 @@ def sub(a, b):
 def mul(a, b):
     return tuple(map(operator.mul, a, b))
 
-def truediv(a, b):
+def div(a, b):
     return tuple(map(operator.truediv, a, b))
 
+def floor(a, b):
+    return tuple(map(floor, a, b))
+
+def int(a, b):
+    return tuple(map(int, a, b))
