@@ -19,9 +19,9 @@ class ETerrain(Entity):
     __tileTypeToCode = { key : i for i, key in enumerate(__tileColorHash) }
     __tileCodeToType = { i : key for i, key in enumerate(__tileColorHash) }
     __spriteTypes = {
-        "WATER"  : np.array([6, 1]), # x, y
-        "GROUND" : np.array([0, 1]),
-        "TREE"   : np.array([1, 10])
+        "WATER"  : (6, 1), # x, y
+        "GROUND" : (0, 1),
+        "TREE"   : (1, 10)
     }
 
 
@@ -46,11 +46,13 @@ class ETerrain(Entity):
         print(self.__tileColorHash)
         print(self.__tileTypeToCode)
         print(self.__tileCodeToType)
-        self.__spriteIds = np.zeros((self.__logicMap.shape[0], self.__logicMap.shape[1], 2)).astype(np.uint8)
+        self.__spriteIds = []
         for y in range(self.__logicMap.shape[0]):
+            self.__spriteIds.append([])
+
             for x in range(self.__logicMap.shape[1]):
                 tileType = self.__tileCodeToType[self.__logicMap[y,x]]
-                self.__spriteIds[y,x,:] = self.__spriteTypes[tileType]
+                self.__spriteIds[y].append(self.__spriteTypes[tileType])
 
     def update(self):
         super().update()
@@ -64,16 +66,16 @@ class ETerrain(Entity):
 
         for y in range(self.__logicMap.shape[0]):
             for x in range(self.__logicMap.shape[1]):
-                tileType = self.__tileCodeToType[self.__logicMap[y,x]]
-                spriteInfo = self.__spriteTypes[tileType]
-                renderer.draw_sprite(self.__spriteSheetName,
-                                     spriteInfo,
-                                    add((64, 64), (self.__tileSize[0] * x, self.__tileSize[1] * y)),
-                                    self.__tileSize)
+                # tileType = self.__tileCodeToType[self.__logicMap[y,x]]
+                # spriteInfo = self.__spriteTypes[tileType]
                 # renderer.draw_sprite(self.__spriteSheetName,
-                #                      self.__spriteIds[y,x],
-                #                      add((64, 64), (self.__tileSize[0] * x, self.__tileSize[1] * y)),
-                #                      self.__tileSize)
+                #                      spriteInfo,
+                #                     add((64, 64), (self.__tileSize[0] * x, self.__tileSize[1] * y)),
+                #                     self.__tileSize)
+                renderer.draw_sprite(self.__spriteSheetName,
+                                     self.__spriteIds[y][x],
+                                     add((64, 64), (self.__tileSize[0] * x, self.__tileSize[1] * y)),
+                                     self.__tileSize)
                 # renderer.draw_image(self.__name,
                 #                      add((64, 64), (self.__tileSize[0] * x, self.__tileSize[1] * y)),
                 #                      self.__tileSize)
