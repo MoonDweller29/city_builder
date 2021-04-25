@@ -3,7 +3,7 @@
         "CrystalMine": "Resources/Buildings/Mines/CrystalMine/CrystalMine.png"
     },
     "SpriteSheet": {
-        "SP-Land": ["Resources/Environment/SP-Land.png", 16, 16]
+        "SP-Overworld": ["Resources/Environment/SP-Overworld.png", 16, 16]
     },
     "Fonts": {
         "Arial_20": ["Arial", 20],

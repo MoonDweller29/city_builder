@@ -17,9 +17,10 @@ drawPosition = (0, 0)
 
 fontArial = ResourceManager().get_font("Arial_20")
 testImage = ResourceManager().get_image("CrystalMine")
-testImage = ResourceManager().get_sprite_sheet("SP-Land", 2, 3)
+testImage = ResourceManager().get_sprite_sheet("SP-Overworld", 2, 3)
 
-EntitySystem().add_entity(ETerrain("CrystalMine", (10,10)))
+terrain = ETerrain("Resources/Maps/test_map.png", (32,32))
+EntitySystem().add_entity(terrain)
 
 # Run until the user asks to quit
 running = True
@@ -57,8 +58,8 @@ while running:
 
     #Render
 
-    GraphicsEngine().clear_screen((0, 64, 0))
-
+    GraphicsEngine().clear_screen((0, 30, 0))
+    GraphicsEngine().clearStats()
     EntitySystem().draw()
 
     debugPanel.draw()
@@ -68,6 +69,7 @@ while running:
 
     # Flip the display
     GraphicsEngine().display_flip()
+    # print(f"{GraphicsEngine().culledSprites} / {GraphicsEngine().spriteDrawCallsCount}")
 
 # Done! Time to quit.
 pygame.quit()
