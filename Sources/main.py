@@ -40,7 +40,7 @@ while running:
     if UserInput().is_exit():
         running = False
 
-    if UserInput().get_type(pygame.MOUSEBUTTONDOWN):
+    if UserInput().is_mouse_down():
         drawPosition = UserInput().get_mouse_position()
 
     deltaTime = pygame.time.get_ticks() - lastFrameStartTime

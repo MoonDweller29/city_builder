@@ -3,7 +3,7 @@ import pygame
 class UserInput:
     __instance = None
     __initialized = None
-    __pushKey = set()
+    __keyDown = set()
     __eventType = set()
 
     def __new__(cls):
@@ -18,20 +18,23 @@ class UserInput:
             self.__initialized = True
 
     def update(self):
-        self.__pushKey.clear()
+        self.__keyDown.clear()
         self.__eventType.clear()
         for event in pygame.event.get():
             self.__eventType.add(event.type)
             if event.type == pygame.KEYDOWN:
-                self.__pushKey.add(event.key)
+                self.__keyDown.add(event.key)
 
     def is_exit(self):
-        return (pygame.QUIT in self.__eventType) or (pygame.K_ESCAPE in self.__pushKey)
+        return (pygame.QUIT in self.__eventType) or self.is_key_down(pygame.K_ESCAPE)
 
-    def get(self, key):
-        return event in self.__pushKey
+    def is_key_down(self, key):
+        return key in self.__keyDown
+    
+    def is_mouse_down(self):
+        return self.check_event(pygame.MOUSEBUTTONDOWN)
 
-    def get_type(self, eventType):
+    def check_event(self, eventType):
         return eventType in self.__eventType
 
     def get_mouse_position(self):
