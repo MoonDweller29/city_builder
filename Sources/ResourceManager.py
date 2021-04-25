@@ -9,6 +9,28 @@ import json
 # 3) Понять че за дичь с pygame, там ресурсы создают сразу с локальными свойствами (Например, в грифт зашит размер)
 # 4) Подумать о том, что потенциально мы можем грузить данные из zip потом. Просто код под эту замену подготовить.
 
+class SpriteSheet:
+    def __init__(self, image, tile_width, tile_height):
+        self.__image = image
+        self.__tile_width = tile_width
+        self.__tile_height = tile_height
+        self.__tile_count_width = image.get_width() // tile_width
+        self.__tile_count_height = image.get_height() // tile_height
+        self.__spriteArr = []
+        for y in range(self.__tile_count_height):
+            for x in range(self.__tile_count_width):
+                self.__spriteArr.append(
+                    image.subsurface(
+                        x * tile_width, y * tile_height, 
+                        tile_width, tile_height
+                    )
+                )
+    
+    def get_sprite(self, x, y):
+        if x >= self.__tile_width or y >= self.__tile_height:
+            raise ValueError("Index out of range")
+        return self.__spriteArr[x + y * self.__tile_count_width]
+
 class ResourceManager:
     __instance = None
     __initialized = None
@@ -52,17 +74,7 @@ class ResourceManager:
             raise ValueError(f"SpriteSheet resource {name} exist!")
 
         image = self.__load_img(path)
-        imgArray = []
-        for y in range(image.get_height() // height):
-            for x in range(image.get_width() // width):
-                print (x, y, x * width, y * height)
-                imgArray.append(image.subsurface(x * width, y * height, width, height))
-        self.__spriteSheetDict[name] = {
-            "OrigImage": imgArray,
-            "SpriteX": image.get_width() // width,
-            "SpriteY": image.get_height() // height,
-            "SpriteArr": imgArray
-        }
+        self.__spriteSheetDict[name] = SpriteSheet(image, width, height)
         return self.__spriteSheetDict[name]
 
     def create_font(self, name, path, size):
@@ -84,12 +96,7 @@ class ResourceManager:
     
     def get_sprite_sheet(self, name, x, y):
         if name in self.__spriteSheetDict:
-            sprite = self.__spriteSheetDict[name]
-            sizeX = sprite["SpriteX"]
-            sizeY = sprite["SpriteY"]
-            if x >= sizeX or y >= sizeY:
-                raise ValueError("Index out of range")
-            return sprite["SpriteArr"][x + y * sizeX]
+            return self.__spriteSheetDict[name].get_sprite(x, y)
         else:
             raise ValueError(f"SpriteSheet resource {name} not exist!")
 

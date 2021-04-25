@@ -1,4 +1,5 @@
 import pygame
+from ResourceManager import ResourceManager
 
 class GraphicsEngine:
     ##############################################################################
@@ -17,8 +18,8 @@ class GraphicsEngine:
 
     # draw methods
 
-    def draw_image(self, image, position, size):
-        tmp = pygame.transform.scale(image, size)
+    def draw_image(self, name, position, size):
+        tmp = pygame.transform.scale(ResourceManager().get_image(name), size)
 
         rect = tmp.get_rect()
         rect = rect.move(position)

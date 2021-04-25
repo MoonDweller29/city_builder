@@ -3,11 +3,11 @@ from Utils import *
 from GraphicsEngine import GraphicsEngine
 
 class ETerrain(Entity):
-    def __init__(self, image, size):
+    def __init__(self, name, size):
         super().__init__()
 
         self.size = size
-        self.image = image
+        self.__name = name
 
     def update(self):
         super().update()
@@ -21,4 +21,4 @@ class ETerrain(Entity):
         
         for x in range(self.size[0]):
             for y in range(self.size[1]):
-                renderer.draw_image(self.image, add((100, 100), (64 * x, 64 * y)), (64, 64))
+                renderer.draw_image(self.__name, add((100, 100), (64 * x, 64 * y)), (64, 64))
