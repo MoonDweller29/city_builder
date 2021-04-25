@@ -14,8 +14,6 @@ from UserInput import UserInput
 
 GraphicsEngine().init_window([1280, 720], 'City Builder')
 
-drawPosition = (0, 0)
-
 fontArial = ResourceManager().get_font("Arial_20")
 testImage = ResourceManager().get_image("CrystalMine")
 testImage = ResourceManager().get_sprite_sheet("SP-Land", 2, 3)
@@ -23,7 +21,9 @@ testImage = ResourceManager().get_sprite_sheet("SP-Land", 2, 3)
 EntitySystem().add_entity(ETerrain("CrystalMine", (10,10)))
 gridId = EntitySystem().add_entity(EGrid((10, 10), (10,10), 64))
 
-print(EntitySystem().get_entity(gridId).world_to_cell((10, 10)))
+grid = EntitySystem().get_entity(gridId)
+
+print(grid.world_to_cell(grid.cell_to_world((3, 3))))
 
 # Run until the user asks to quit
 running = True
@@ -38,21 +38,18 @@ leftSimTime = 0
 debugPanel = Debug("Arial_20")
 
 while running:
-    # Input
-    UserInput().update()
-    if UserInput().is_exit():
-        running = False
-
-    if UserInput().is_mouse_down():
-        drawPosition = UserInput().get_mouse_position()
-
     deltaTime = pygame.time.get_ticks() - lastFrameStartTime
     leftSimTime += deltaTime
 
     lastFrameStartTime = pygame.time.get_ticks()
 
-    while leftSimTime > debugPanel.TICK_MS:
+    while leftSimTime > 0:
         # Update
+    # Input
+        UserInput().update()
+
+        if UserInput().is_exit():
+            running = False
 
         EntitySystem().update()
 
@@ -67,9 +64,6 @@ while running:
     EntitySystem().draw()
 
     debugPanel.draw()
-
-    # Draw a solid blue circle
-    GraphicsEngine().draw_circle((0, 0, 255), drawPosition, 5)
 
     # Flip the display
     GraphicsEngine().display_flip()

@@ -20,6 +20,7 @@ class UserInput:
     def update(self):
         self.__keyDown.clear()
         self.__eventType.clear()
+        
         for event in pygame.event.get():
             self.__eventType.add(event.type)
             if event.type == pygame.KEYDOWN:

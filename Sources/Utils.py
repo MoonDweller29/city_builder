@@ -17,5 +17,5 @@ def div(a, b):
 def floor(a, b):
     return tuple(map(floor, a, b))
 
-def int(a, b):
-    return tuple(map(int, a, b))
+def toInt(a):
+    return (int(a[0]), int(a[1]))
