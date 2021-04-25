@@ -27,8 +27,8 @@ class GraphicsEngine:
         self.screen.blit(tmp, rect)
 
     # @TODO проверить memory leak texture surface возвращаемого из метода ренедер
-    def draw_text(self, position, font, color, text):
-        self.screen.blit(font.render(text, False, color), position)
+    def draw_text(self, position, fontName, color, text):
+        self.screen.blit(ResourceManager().get_font(fontName).render(text, False, color), position)
 
     def draw_circle(self, color, pos, radius):
         pygame.draw.circle(self.screen, color, pos, radius)

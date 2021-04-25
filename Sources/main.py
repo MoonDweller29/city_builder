@@ -31,7 +31,7 @@ leftSimTime = 0
 # Так чтобы из main только дергались функции FPS каунтера
 # FPS counting stuff
 
-debugPanel = Debug(fontArial)
+debugPanel = Debug("Arial_20")
 
 while running:
     # Input
