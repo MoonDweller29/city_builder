@@ -1,0 +1,12 @@
+{
+    "Images": {
+        "CrystalMine": "Resources/Buildings/Mines/CrystalMine/CrystalMine.png"
+    },
+    "SpriteSheet": {
+        "SP-Land": ["Resources/Environment/SP-Land.png", 16, 16]
+    },
+    "Fonts": {
+        "Arial_20": ["Arial", 20],
+        "CustomFont_20": ["Resources/Font/20636.ttf", 20]
+    }
+}

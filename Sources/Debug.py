@@ -4,7 +4,7 @@ from GraphicsEngine import GraphicsEngine
 
 # @TODO вынести нахер шрифт и скрин отсюда в централизованную точку
 class Debug:
-    def __init__(self, font):
+    def __init__(self, fontName):
         self.TARGET_FPS = 60.0
         self.TICK_MS = 1000.0 / self.TARGET_FPS
 
@@ -15,7 +15,7 @@ class Debug:
         self.updateFrames = 0
         self.frames = 0
 
-        self.font = font
+        self.fontName = fontName
 
     def update(self):
         self.updateFrames += 1 
@@ -34,5 +34,5 @@ class Debug:
         self.frames += 1
 
         renderer = GraphicsEngine()
-        renderer.draw_text((1100, 10), self.font, (0, 255, 0), "FPS:  " + str(int(self.fps)))
-        renderer.draw_text((1100, 30), self.font, (0, 255, 0), "UFPS: " + str(int(self.updateFps)))
+        renderer.draw_text((1100, 10), self.fontName, (0, 255, 0), "FPS:  " + str(int(self.fps)))
+        renderer.draw_text((1100, 30), self.fontName, (0, 255, 0), "UFPS: " + str(int(self.updateFps)))

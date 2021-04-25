@@ -1,4 +1,5 @@
 import pygame
+from ResourceManager import ResourceManager
 
 class GraphicsEngine:
     ##############################################################################
@@ -17,8 +18,8 @@ class GraphicsEngine:
 
     # draw methods
 
-    def draw_image(self, image, position, size):
-        tmp = pygame.transform.scale(image, size)
+    def draw_image(self, name, position, size):
+        tmp = pygame.transform.scale(ResourceManager().get_image(name), size)
 
         rect = tmp.get_rect()
         rect = rect.move(position)
@@ -26,8 +27,8 @@ class GraphicsEngine:
         self.screen.blit(tmp, rect)
 
     # @TODO проверить memory leak texture surface возвращаемого из метода ренедер
-    def draw_text(self, position, font, color, text):
-        self.screen.blit(font.render(text, False, color), position)
+    def draw_text(self, position, fontName, color, text):
+        self.screen.blit(ResourceManager().get_font(fontName).render(text, False, color), position)
 
     def draw_circle(self, color, pos, radius):
         pygame.draw.circle(self.screen, color, pos, radius)
