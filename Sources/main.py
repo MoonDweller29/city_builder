@@ -10,6 +10,7 @@ from EGrid import EGrid
 
 from Debug import Debug
 from ResourceManager import ResourceManager
+from UserInput import UserInput
 
 GraphicsEngine().init_window([1280, 720], 'City Builder')
 
@@ -35,11 +36,12 @@ debugPanel = Debug("Arial_20")
 
 while running:
     # Input
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            running = False
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            drawPosition = pygame.mouse.get_pos()
+    UserInput().update()
+    if UserInput().is_exit():
+        running = False
+
+    if UserInput().get_type(pygame.MOUSEBUTTONDOWN):
+        drawPosition = UserInput().get_mouse_position()
 
     deltaTime = pygame.time.get_ticks() - lastFrameStartTime
     leftSimTime += deltaTime
