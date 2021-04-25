@@ -11,6 +11,7 @@ from EGrid import EGrid
 from Debug import Debug
 from ResourceManager import ResourceManager
 from UserInput import UserInput
+from EButton import EButton
 
 GraphicsEngine().init_window([1280, 720], 'City Builder')
 
@@ -21,6 +22,7 @@ testImage = ResourceManager().get_image("CrystalMine")
 testImage = ResourceManager().get_sprite_sheet("SP-Land", 2, 3)
 
 EntitySystem().add_entity(ETerrain("CrystalMine", (10,10)))
+EntitySystem().add_entity(EButton("Wood", (0, 0), (100, 100)))
 
 # Run until the user asks to quit
 running = True
@@ -35,20 +37,20 @@ leftSimTime = 0
 debugPanel = Debug("Arial_20")
 
 while running:
-    # Input
-    UserInput().update()
-    if UserInput().is_exit():
-        running = False
-
-    if UserInput().is_mouse_down():
-        drawPosition = UserInput().get_mouse_position()
-
     deltaTime = pygame.time.get_ticks() - lastFrameStartTime
     leftSimTime += deltaTime
 
     lastFrameStartTime = pygame.time.get_ticks()
 
     while leftSimTime > debugPanel.TICK_MS:
+        # Input
+        UserInput().update()
+        if UserInput().is_exit():
+            running = False
+
+        if UserInput().is_mouse_down():
+            drawPosition = UserInput().get_mouse_position()
+        
         # Update
 
         EntitySystem().update()

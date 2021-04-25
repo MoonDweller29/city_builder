@@ -1,6 +1,7 @@
 {
     "Images": {
-        "CrystalMine": "Resources/Buildings/Mines/CrystalMine/CrystalMine.png"
+        "CrystalMine": "Resources/Buildings/Mines/CrystalMine/CrystalMine.png",
+        "Wood": "Resources/Buildings/Resources/Wood.png"
     },
     "SpriteSheet": {
         "SP-Land": ["Resources/Environment/SP-Land.png", 16, 16]
