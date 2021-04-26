@@ -24,9 +24,11 @@ testImage = ResourceManager().get_image("CrystalMine")
 testImage = ResourceManager().get_sprite_sheet("SP-Land", 2, 3)
 
 EntitySystem().add_entity(ETerrain("CrystalMine", (10,10)))
+
 EntitySystem().gridId = EntitySystem().add_entity(EGrid((10, 10), (10,10), 64))
 
 grid = EntitySystem().get_entity(EntitySystem().gridId)
+terrain.fill_grid(grid)
 
 EntitySystem().add_entity(EShop())
 EntitySystem().add_entity(EBuilder())
@@ -68,8 +70,7 @@ while running:
 
     #Render
 
-    GraphicsEngine().clear_screen((0, 64, 0))
-
+    GraphicsEngine().clear_screen((0, 30, 0))
     EntitySystem().draw()
 
     debugPanel.draw()

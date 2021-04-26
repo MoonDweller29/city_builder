@@ -48,9 +48,12 @@ class EGrid(Entity):
 
     def on_add_to_cell(self, id):
         self.contents[EntitySystem().get_entity(id).get_pos()[0]][EntitySystem().get_entity(id).get_pos()[1]].add(id)
-
+    
     def is_cell_free(self, coord):
         return len(self.contents[coord[0]][coord[1]]) <= 0
+    
+    def on_add_to_cell_xy(self, id, x, y):
+        self.contents[x][y].add(id)
 
     def update(self):
         super().update()
