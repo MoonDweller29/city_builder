@@ -12,12 +12,25 @@ class EOnGrid(EActor):
         self.__cell_x = x
         self.__cell_y = y
 
-    # @TODO ГОВНО ГОВНА
+    def set_solid(self, v):
+        if v != self.is_solid:
+            self.is_solid = v
+            if v:
+                EntitySystem().get_grid().on_add_to_cell(self.id)
+            else:
+                EntitySystem().get_grid().on_remove_from_cell(self.id)
+
+
+    # @TODO Рефакторить!
     def on_start(self):
+        self.is_solid = True
+
         self.set_pos((self.__cell_x, self.__cell_y))
 
+
     def set_pos(self, coord):
-        EntitySystem().get_grid().on_remove_from_cell(self.id)
+        if (self.is_solid):
+            EntitySystem().get_grid().on_remove_from_cell(self.id)
 
         self.__cell_x = coord[0]
         self.__cell_y = coord[1]
@@ -28,7 +41,8 @@ class EOnGrid(EActor):
         self.x = self.__cell_x * cellSize + origin[0]
         self.y = self.__cell_y * cellSize + origin[1]
 
-        EntitySystem().get_grid().on_add_to_cell(self.id)
+        if (self.is_solid):
+            EntitySystem().get_grid().on_add_to_cell(self.id)
 
     def get_pos(self):
         return (self.__cell_x, self.__cell_y)

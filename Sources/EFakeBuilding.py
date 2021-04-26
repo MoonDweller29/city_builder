@@ -8,6 +8,10 @@ class EFakeBuilding(EOnGrid):
 
         self.drawOrder = 800
 
+    def on_start(self):
+        super().on_start()
+        self.set_solid(False)
+
     def update(self):
         super().update()
 
