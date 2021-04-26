@@ -74,8 +74,14 @@ class EntitySystem:
         for id, entity in self.entities.items(): 
             if entity.name == name:
                 return id
-        
         return -1
+
+    def find_all_children(self, cls):
+        result = []
+        for id, entity in self.entities.items(): 
+            if isinstance(entity, cls):
+                result.append(id)
+        return result
 
     def get_entity(self, id):
         # @TODO check for KeyError

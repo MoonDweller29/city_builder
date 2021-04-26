@@ -5,13 +5,14 @@ from EBuilder import EBuilder
 
 from BuildingDatabase import BuildingDatabase
 
-from EntitySystem import Entity, EntitySystem
+from EntitySystem import EntitySystem
+from EUIElement import EUIElement
 
 from Utils import *
 
-class EShop(Entity):
+class EShop(EUIElement):
     def __init__(self):
-        super().__init__()
+        super().__init__((900, 10), (360, 700))
 
     def on_start(self):
         self.builder = EntitySystem().add_entity(EBuilder())
@@ -44,5 +45,5 @@ class EShop(Entity):
     def draw(self):
         super().draw()
 
-        GraphicsEngine().draw_rectangle((100, 100, 0), (900, 10), (360, 700))
+        GraphicsEngine().draw_rectangle((100, 100, 0), self._position, self._size)
         GraphicsEngine().draw_text((1060, 20), "Arial_20", (255, 255, 255), "Shop")

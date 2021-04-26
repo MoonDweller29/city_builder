@@ -7,11 +7,8 @@ from Utils import *
 
 class EButton(EUIElement):
     def __init__(self, name, position, size):
-        super().__init__()
+        super().__init__(position, size)
         self.__textureName = name
-        # @TODO: replace position and size by pygame.Rect
-        self.__position = position
-        self.__size = size
         self.__selected = False
         self.__greyed = False
         # @TODO: change drawOrder
@@ -34,8 +31,8 @@ class EButton(EUIElement):
         self.pressed_frames -= 1
 
         # @TODO: check collision by pygame rectangle
-        if 0 < mousePosition[0] - self.__position[0] + self.__size[0] / 2.0 < self.__size[0] and \
-            0 < mousePosition[1] - self.__position[1] + self.__size[1] / 2.0 < self.__size[1]:
+        if 0 < mousePosition[0] - self._position[0] + self._size[0] / 2.0 < self._size[0] and \
+            0 < mousePosition[1] - self._position[1] + self._size[1] / 2.0 < self._size[1]:
             if (not self.__selected):
                 self.__selected = True
                 self.on_selected()
@@ -44,14 +41,14 @@ class EButton(EUIElement):
                 self.__selected = False
                 self.on_deselected()
 
-        if input.is_mouse_down() and self.__selected:
+        if input.is_ui_mouse_down() and self.__selected:
             self.on_pressed()
 
     def on_selected(self):
-        self.__size = toInt(mul(self.__size, (1.2, 1.2)))
+        self._size = toInt(mul(self._size, (1.2, 1.2)))
 
     def on_deselected(self):
-        self.__size = toInt(mul(self.__size, (1/1.2, 1/1.2)))
+        self._size = toInt(mul(self._size, (1/1.2, 1/1.2)))
 
     def on_pressed(self):
         self.pressed_frames = 5
@@ -63,8 +60,8 @@ class EButton(EUIElement):
         # @TODO map tint colors and stuff?
         if self.pressed_frames < 0:
             if self.__selected:
-                render.draw_image_centered(self.__textureName, self.__position, self.__size, tint_color=(40, 40, 40), tint_flag=pygame.BLEND_RGB_ADD)
+                render.draw_image_centered(self.__textureName, self._position, self._size, tint_color=(40, 40, 40), tint_flag=pygame.BLEND_RGB_ADD)
             else:
-                render.draw_image_centered(self.__textureName, self.__position, self.__size)
+                render.draw_image_centered(self.__textureName, self._position, self._size)
         else:
-            render.draw_image_centered(self.__textureName, self.__position, self.__size, tint_color=(220, 220, 220))
+            render.draw_image_centered(self.__textureName, self._position, self._size, tint_color=(220, 220, 220))
