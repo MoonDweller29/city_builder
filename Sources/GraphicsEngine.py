@@ -47,8 +47,9 @@ class GraphicsEngine:
             tint_image = pygame.Surface(size)
             tint_image.fill(tint_color)
             tmp.blit(tint_image, (0, 0), special_flags=tint_flag)
-
-        tmp.set_alpha(128)
+        
+        # @TODO alpha не работает у AlexHonor провить эту дичь
+        #tmp.set_alpha(128)
 
         self.screen.blit(tmp, rect)
 
