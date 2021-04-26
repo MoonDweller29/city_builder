@@ -5,10 +5,16 @@ from UserInput import UserInput
 
 from BuildingFactory import GetBuilding
 
+from EFakeBuilding import EFakeBuilding
+
 class EBuilder(Entity):
     def __init__(self):
         super().__init__()
         
+    def on_start(self):
+        super().on_start()
+        
+        self.fakeBuilding = EntitySystem().add_entity(EFakeBuilding(0, 0, "CrystalMine")) 
 
     def update(self):
         super().update()

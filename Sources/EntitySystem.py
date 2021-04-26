@@ -16,6 +16,23 @@ class Entity:
     def __init__(self):
         self.drawOrder = 0
         self.id = 0
+        self.enabled = False
+
+    def enable(self):
+        if (not self.enabled):
+            self.enabled = True
+            self.on_enable()
+
+    def disable(self):
+        if (self.enabled):
+            self.enabled = False
+            self.on_enable()
+
+    def on_enable(self):
+        pass
+
+    def on_disable(self):
+        pass
 
     def on_start(self):
         pass
@@ -45,6 +62,8 @@ class EntitySystem:
         self.entities[id] = entity
         self.entities[id].id = id
 
+        self.entities[id].enable()
+
         self.entities[id].on_start()
 
         return id
@@ -56,6 +75,8 @@ class EntitySystem:
     def destroy_entity(self, id):
         self.entitiesToDelete.append(id)
 
+        self.get_entity(id).disable()
+
         self.get_entity(id).on_destroy()
 
     def update(self):
@@ -63,11 +84,13 @@ class EntitySystem:
 
         # @TODO Check copy of dictionary - seems to be shady
         for entity in self.entities.copy().values():
-            entity.update()
+            if (entity.enabled):
+                entity.update()
 
     def draw(self):
         for entity in sorted(self.entities.values(), key=lambda e: e.drawOrder):
-            entity.draw()
+            if (entity.enabled):
+                entity.draw()
 
 ############################################################################
 #                       Private interface
