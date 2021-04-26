@@ -11,6 +11,7 @@ class EActor(Entity):
         self.size = size
 
         self.sprite = sprite
+        self.tint_color = None
 
     def update(self):
         super().update()
@@ -18,4 +19,4 @@ class EActor(Entity):
     def draw(self):
         super().draw()
 
-        GraphicsEngine().draw_image(self.sprite, (self.x, self.y), self.size)
+        GraphicsEngine().draw_image(self.sprite, (self.x, self.y), self.size, tint_color= self.tint_color)

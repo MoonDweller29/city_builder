@@ -10,6 +10,7 @@ from EGrid import EGrid
 from EActor import EActor
 from EOnGrid import EOnGrid
 from EBuilder import EBuilder
+from EShop import EShop
 
 from Debug import Debug
 from ResourceManager import ResourceManager
@@ -23,11 +24,11 @@ testImage = ResourceManager().get_image("CrystalMine")
 testImage = ResourceManager().get_sprite_sheet("SP-Land", 2, 3)
 
 EntitySystem().add_entity(ETerrain("CrystalMine", (10,10)))
-EntitySystem().add_entity(EButton("Wood", (0, 0), (100, 100)))
 EntitySystem().gridId = EntitySystem().add_entity(EGrid((10, 10), (10,10), 64))
 
 grid = EntitySystem().get_entity(EntitySystem().gridId)
 
+EntitySystem().add_entity(EShop())
 EntitySystem().add_entity(EBuilder())
 EntitySystem().add_entity(EOnGrid(2, 4, "CrystalMine"))
 
