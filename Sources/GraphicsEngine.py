@@ -53,18 +53,25 @@ class GraphicsEngine:
 
         self.screen.blit(tmp, rect)
 
-    def draw_sprite(self, name, tileCoord, position, size):
-        self.spriteDrawCallsCount += 1
+    def draw_sprite(self, name, tileCoord, position, size, alpha=255, tint_color=None, tint_flag=pygame.BLEND_RGBA_MULT):
 
         rect = pygame.Rect(position[0], position[1], size[0], size[1])
         if (rect.colliderect(self.__screenRect)):
             tmp = pygame.transform.scale(
                 ResourceManager().get_sprite_sheet(name, tileCoord[0], tileCoord[1]), size
             )
+            if (alpha == 255):
+                tmp.set_alpha(alpha)
+            else:
+                tmp.set_alpha(None)
+
+            if (not tint_color is None):
+                tint_image = pygame.Surface(size)
+                tint_image.fill(tint_color)
+                tmp.blit(tint_image, (0, 0), special_flags=tint_flag)
+
             self.screen.blit(tmp, rect)
-        else:
-            self.culledSprites += 1
-        # rect = rect.move(position)
+
 
 
     # @TODO проверить memory leak texture surface возвращаемого из метода ренедер
@@ -97,8 +104,6 @@ class GraphicsEngine:
         if GraphicsEngine.__inited:
             return
         GraphicsEngine.__inited = True
-        self.spriteDrawCallsCount = 0
-        self.culledSprites = 0
 
         self.drawCalls = 0
         self.culledDrawCalls = 0
