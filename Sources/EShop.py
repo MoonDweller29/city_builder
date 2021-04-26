@@ -1,5 +1,9 @@
-from EButton import EButton
+from EShopButton import EShopButton
 from GraphicsEngine import GraphicsEngine
+
+from EBuilder import EBuilder
+
+from BuildingDatabase import BuildingDatabase
 
 from EntitySystem import Entity, EntitySystem
 
@@ -10,9 +14,29 @@ class EShop(Entity):
         super().__init__()
 
     def on_start(self):
-        for x in range(3):
-            for y in range(5): 
-                EntitySystem().add_entity(EButton("CrystalMine", add((960, 180), (110 * x, 110 * y)), (100, 100)))
+        self.builder = EntitySystem().add_entity(EBuilder())
+
+        names = BuildingDatabase().GetAllBuildingNames()
+        self.resourcePanel = EntitySystem().find_entity("ResourcePanel")
+
+        id = 0
+
+        for y in range(5):
+            if id >= len(names):
+                break
+
+            for x in range(3): 
+                if id >= len(names):
+                    break
+                EntitySystem().add_entity(EShopButton(names[id], add((960, 180), (110 * x, 110 * y)), (100, 100), names[id], self.id))
+                id += 1
+
+    def try_buying(self, buildingName):
+        costs = BuildingDatabase().GetBuildingCosts(buildingName)
+
+        if (EntitySystem().get_entity(self.resourcePanel).can_buy(costs)):
+            EntitySystem().get_entity(self.resourcePanel).spend(costs)
+            EntitySystem().get_entity(self.builder).start_building(buildingName)
 
     def update(self):
         super().update()
