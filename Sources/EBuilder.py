@@ -24,7 +24,7 @@ class EBuilder(Entity):
         if UserInput().is_mouse_down():
             coord = grid.world_to_cell(UserInput().get_mouse_position())
             
-            if (grid.is_inside(coord) and len(grid.contents[coord[0]][coord[1]]) <= 0):
+            if (grid.is_inside(coord) and grid.is_cell_free(coord)):
                 buildingId = EntitySystem().add_entity(GetBuilding("CrystalMine"))
                 EntitySystem().get_entity(buildingId).set_pos(coord)
 

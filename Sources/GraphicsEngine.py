@@ -1,6 +1,8 @@
 import pygame
 from ResourceManager import ResourceManager
 
+from Utils import *
+
 class GraphicsEngine:
     ##############################################################################
     # public interface
@@ -22,13 +24,31 @@ class GraphicsEngine:
 
     # draw methods
 
-    def draw_image(self, name, position, size):
+
+    def draw_image_centered(self, name, position, size, tint_color=None, tint_flag=pygame.BLEND_RGBA_MULT):
+        self.draw_image(name, sub(position, div(size, (2, 2))), size, tint_color=tint_color, tint_flag= tint_flag)
+
+    def draw_image(self, name, position, size, alpha=255, tint_color=None, tint_flag=pygame.BLEND_RGBA_MULT):
         self.drawCalls += 1
 
         tmp = pygame.transform.scale(ResourceManager().get_image(name), size)
 
         rect = tmp.get_rect()
         rect = rect.move(position)
+
+        # , special_flags=pygame.BLEND_RGBA_ADD
+        #
+        if (alpha == 255):
+            tmp.set_alpha(alpha)
+        else: 
+            tmp.set_alpha(None)
+
+        if (not tint_color is None):
+            tint_image = pygame.Surface(size)
+            tint_image.fill(tint_color)
+            tmp.blit(tint_image, (0, 0), special_flags=tint_flag)
+
+        tmp.set_alpha(128)
 
         self.screen.blit(tmp, rect)
 
