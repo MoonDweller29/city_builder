@@ -38,6 +38,8 @@ class EBuilder(Entity):
                 buildingId = EntitySystem().add_entity(BuildingDatabase().GetBuilding(self.buildingName))
                 EntitySystem().get_entity(buildingId).set_pos(coord)
 
+                self.buildingName = ""
+
                 EntitySystem().get_entity(self.fakeBuilding).disable()
 
     def draw(self):
