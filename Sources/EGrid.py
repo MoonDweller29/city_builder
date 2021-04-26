@@ -52,8 +52,21 @@ class EGrid(Entity):
     def is_cell_free(self, coord):
         return len(self.contents[coord[0]][coord[1]]) <= 0
     
+    def is_colliding(self, coord, mask):
+        for x in range(len(mask)):
+            for y in range(len(mask[0])):
+                if (len(self.contents[coord[0] + x][coord[1] + y]) > 0):
+                    return True
+
+        return False
+    
     def on_add_to_cell_xy(self, id, x, y):
-        self.contents[x][y].add(id)
+        if (self.is_inside((x, y))):
+            self.contents[x][y].add(id)
+
+    def on_remove_from_cell_xy(self, id, x, y):
+        if (self.is_inside((x, y)) ):
+            self.contents[x][y].discard(id)
 
     def update(self):
         super().update()

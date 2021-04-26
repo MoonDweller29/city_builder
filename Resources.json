@@ -3,6 +3,7 @@
         "CrystalMine": "Resources/Buildings/Mines/CrystalMine/CrystalMine.png",
         "Sawmill": "Resources/Buildings/Mines/Sawmill/Sawmill.png",
         "WindMill": "Resources/Buildings/Mines/WindMill/WindMill.png",
+        "BlackMarket": "Resources/Buildings/Miscellaneous/BlackMarket.png",
         "Wood": "Resources/Buildings/Resources/Wood.png"
     },
     "SpriteSheet": {
