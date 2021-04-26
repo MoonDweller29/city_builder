@@ -90,7 +90,12 @@ def getGroundTilesDict():
         Dirs(right_up=1, right=1, right_down=1, down=1).toInt() : [(2, 3)],
         Dirs(right=1, right_down=1, down=1, left_down=1).toInt(): [(2, 3)],
         Dirs(right_down=1, down=1, left_down=1, left=1).toInt(): [(1, 3)],
-        Dirs(down=1, left_down=1, left=1, left_up=1).toInt()   : [(1, 3)]
+        Dirs(down=1, left_down=1, left=1, left_up=1).toInt()   : [(1, 3)],
+        # the same for 5 water tiles
+        Dirs(left_down=1, left=1, left_up=1, up=1, right_up=1).toInt(): [(1, 2)],
+        Dirs(left_up=1, up=1, right_up=1, right=1, right_down=1).toInt(): [(2, 2)],
+        Dirs(right_up=1, right=1, right_down=1, down=1, left_down=1).toInt(): [(2, 3)],
+        Dirs(right_down=1, down=1, left_down=1, left=1, left_up=1).toInt(): [(1, 3)],
     }
 
     return groundTiles
