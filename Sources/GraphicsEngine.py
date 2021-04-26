@@ -48,7 +48,7 @@ class GraphicsEngine:
             tint_image.fill(tint_color)
             tmp.blit(tint_image, (0, 0), special_flags=tint_flag)
 
-        tmp.set_alpha(128)
+        # tmp.set_alpha(128) @TODO: this doesn't work on some machines
 
         self.screen.blit(tmp, rect)
 
