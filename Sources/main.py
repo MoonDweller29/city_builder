@@ -4,9 +4,12 @@ from GraphicsEngine import GraphicsEngine
 from Utils import *
 
 from EntitySystem import EntitySystem, Entity
-from ETerrain import ETerrain
 
+from ETerrain import ETerrain
 from EGrid import EGrid
+from EActor import EActor
+from EOnGrid import EOnGrid
+from EBuilder import EBuilder
 
 from Debug import Debug
 from ResourceManager import ResourceManager
@@ -19,9 +22,12 @@ testImage = ResourceManager().get_image("CrystalMine")
 testImage = ResourceManager().get_sprite_sheet("SP-Land", 2, 3)
 
 EntitySystem().add_entity(ETerrain("CrystalMine", (10,10)))
-gridId = EntitySystem().add_entity(EGrid((10, 10), (10,10), 64))
+EntitySystem().gridId = EntitySystem().add_entity(EGrid((10, 10), (10,10), 64))
 
-grid = EntitySystem().get_entity(gridId)
+grid = EntitySystem().get_entity(EntitySystem().gridId)
+
+EntitySystem().add_entity(EBuilder())
+EntitySystem().add_entity(EOnGrid(2, 4, "CrystalMine"))
 
 print(grid.world_to_cell(grid.cell_to_world((3, 3))))
 

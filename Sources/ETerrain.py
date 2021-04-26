@@ -19,6 +19,6 @@ class ETerrain(Entity):
 
         renderer = GraphicsEngine()
         
-        for x in range(self.size[0]):
-            for y in range(self.size[1]):
-                renderer.draw_image(self.__name, add((100, 100), (64 * x, 64 * y)), (64, 64))
+        #for x in range(self.size[0]):
+        #    for y in range(self.size[1]):
+        #        renderer.draw_image(self.__name, add((100, 100), (64 * x, 64 * y)), (64, 64))

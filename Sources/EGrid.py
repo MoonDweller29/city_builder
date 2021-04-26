@@ -1,16 +1,18 @@
 from Utils import *
 
-from EntitySystem import Entity
+from EntitySystem import Entity, EntitySystem
 from GraphicsEngine import GraphicsEngine
 from UserInput import UserInput
 
 class EGrid(Entity):
     def __init__(self, origin, size, cellSize):
         super().__init__()
-
+ 
         self.origin = origin
         self.size = size
         self.cellSize = cellSize
+
+        self.drawOrder = 1000
 
         self.contents = []
 
@@ -18,7 +20,7 @@ class EGrid(Entity):
             self.contents.append([])
 
             for y in range(size[1]):
-                self.contents[x].append(0)
+                self.contents[x].append(set())
 
     def is_inside(self, coord):
         return coord[0] >= 0 and coord[1] >= 0 and coord[0] < self.size[0] and coord[1] < self.size[1]
@@ -41,19 +43,18 @@ class EGrid(Entity):
         else:
             return self.contents[coord[0]][coord[1]]
 
+    def on_remove_from_cell(self, id):
+        self.contents[EntitySystem().get_entity(id).get_pos()[0]][EntitySystem().get_entity(id).get_pos()[1]].discard(id)
+
+    def on_add_to_cell(self, id):
+        self.contents[EntitySystem().get_entity(id).get_pos()[0]][EntitySystem().get_entity(id).get_pos()[1]].add(id)
 
     def update(self):
         super().update()
 
-        if UserInput().is_mouse_down():
-            coord = self.world_to_cell(UserInput().get_mouse_position())
-            
-            if (self.is_inside(coord)):
-                self.contents[coord[0]][coord[1]] = 255
-
     def draw(self):
         super().draw()
 
-        for x in range(self.size[0]):
-            for y in range(self.size[1]):
-                GraphicsEngine().draw_circle((0, self.get_cell((x, y)), 0), toInt(self.cell_to_world_center((x, y))), (self.cellSize >> 1) - 10)
+        #for x in range(self.size[0]):
+        #    for y in range(self.size[1]):
+        #        GraphicsEngine().draw_circle((0, self.get_cell((x, y)), 0), toInt(self.cell_to_world_center((x, y))), (self.cellSize >> 1) - 20)
