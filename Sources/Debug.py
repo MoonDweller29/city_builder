@@ -51,5 +51,6 @@ class Debug:
         renderer.draw_text((1100, 10), self.fontName, (0, 255, 0), "FPS:  " + str(int(self.fps)))
         renderer.draw_text((1100, 30), self.fontName, (0, 255, 0), "UFPS: " + str(int(self.updateFps)))
         renderer.draw_text((1100, 50), self.fontName, (0, 255, 0), "Entities: " + str(int(len(EntitySystem().entities))))
-        renderer.draw_text((1100, 70), self.fontName, (0, 255, 0), "DrawCalls: " + str(GraphicsEngine().drawCalls) + "/" + str(GraphicsEngine().culledDrawCalls))
+        renderer.draw_text((1100, 70), self.fontName, (0, 255, 0),
+                           f"DrawCalls: {GraphicsEngine().drawCalls - GraphicsEngine().culledDrawCalls}/{GraphicsEngine().drawCalls}")
 
