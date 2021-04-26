@@ -75,9 +75,6 @@ class GraphicsEngine:
         else:
             self.culledDrawCalls += 1
 
-
-
-
     # @TODO проверить memory leak texture surface возвращаемого из метода ренедер
     def draw_text(self, position, fontName, color, text):
         self.drawCalls += 1
