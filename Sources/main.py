@@ -46,22 +46,14 @@ leftSimTime = 0
 debugPanel = Debug("Arial_20")
 
 while running:
-    # Input
-    UserInput().update()
-    if UserInput().is_exit():
-        running = False
-
-    if UserInput().is_mouse_down():
-        drawPosition = UserInput().get_mouse_position()
-
     deltaTime = pygame.time.get_ticks() - lastFrameStartTime
     leftSimTime += deltaTime
 
     lastFrameStartTime = pygame.time.get_ticks()
 
+    # Update
     while leftSimTime > 0:
-        # Update
-    # Input
+        # Input
         UserInput().update()
 
         if UserInput().is_exit():
