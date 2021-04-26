@@ -18,6 +18,6 @@ class SpriteSheet:
                 )
     
     def get_sprite(self, x, y):
-        if x >= self.__tile_width or y >= self.__tile_height:
+        if x >= self.__tile_count_width or y >= self.__tile_count_height:
             raise ValueError("Index out of range")
         return self.__spriteArr[x + y * self.__tile_count_width]
