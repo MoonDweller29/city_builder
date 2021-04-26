@@ -11,6 +11,7 @@ from EActor import EActor
 from EOnGrid import EOnGrid
 from EBuilder import EBuilder
 from EShop import EShop
+from EResourcePanel import EResourcePanel
 
 from Debug import Debug
 from ResourceManager import ResourceManager
@@ -20,19 +21,21 @@ from EButton import EButton
 GraphicsEngine().init_window([1280, 720], 'City Builder')
 
 fontArial = ResourceManager().get_font("Arial_20")
-testImage = ResourceManager().get_image("CrystalMine")
-testImage = ResourceManager().get_sprite_sheet("SP-Land", 2, 3)
 
-EntitySystem().add_entity(ETerrain("CrystalMine", (10,10)))
+terrainOrigin = (64, 64)
+terrainTileSize = 40
+terrain = ETerrain("Resources/Maps/test_map.png", origin=terrainOrigin, tileSize=terrainTileSize)
 
-EntitySystem().gridId = EntitySystem().add_entity(EGrid((10, 10), (10,10), 64))
+EntitySystem().add_entity(terrain)
+EntitySystem().gridId = EntitySystem().add_entity(EGrid(terrainOrigin, terrain.get_size(), terrainTileSize))
 
 grid = EntitySystem().get_entity(EntitySystem().gridId)
+
 terrain.fill_grid(grid)
 
+EntitySystem().add_entity(EResourcePanel())
 EntitySystem().add_entity(EShop())
 EntitySystem().add_entity(EBuilder())
-EntitySystem().add_entity(EOnGrid(2, 4, "CrystalMine"))
 
 print(grid.world_to_cell(grid.cell_to_world((3, 3))))
 
@@ -69,7 +72,6 @@ while running:
         leftSimTime -= debugPanel.TICK_MS
 
     #Render
-
     GraphicsEngine().clear_screen((0, 30, 0))
     EntitySystem().draw()
 
