@@ -54,6 +54,7 @@ class GraphicsEngine:
         self.screen.blit(tmp, rect)
 
     def draw_sprite(self, name, tileCoord, position, size, alpha=255, tint_color=None, tint_flag=pygame.BLEND_RGBA_MULT):
+        self.drawCalls += 1
 
         rect = pygame.Rect(position[0], position[1], size[0], size[1])
         if (rect.colliderect(self.__screenRect)):
@@ -71,6 +72,9 @@ class GraphicsEngine:
                 tmp.blit(tint_image, (0, 0), special_flags=tint_flag)
 
             self.screen.blit(tmp, rect)
+        else:
+            self.culledDrawCalls += 1
+
 
 
 
