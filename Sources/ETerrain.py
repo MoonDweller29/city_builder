@@ -1,6 +1,7 @@
 from EntitySystem import Entity
 from Utils import *
 from GraphicsEngine import GraphicsEngine
+from EGrid import EGrid
 from skimage.io import imread
 import numpy as np
 from skimage import img_as_ubyte
@@ -130,7 +131,7 @@ class ETerrain(Entity):
         super().__init__()
 
         self.__origin = origin
-        self.__tileSize = tileSize
+        self.__tileSize = (tileSize, tileSize)
         self.__spriteSheetName = "SP-Overworld"
         self.__load_map(mapPath)
 
@@ -210,6 +211,15 @@ class ETerrain(Entity):
 
     def get_size(self):
         return self.__logicMap.shape
+
+    def fill_grid(self, grid):
+        print("FILL GRID", self.id)
+        shape = self.__logicMap.shape
+        for y in range(shape[0]):
+            for x in range(shape[1]):
+                tileName = self.__tileCodeToName[self.__logicMap[y, x]]
+                if tileName == "COAST" or tileName == "WATER":
+                    grid.on_add_to_cell_xy(self.id, x, y)
 
     def update(self):
         super().update()

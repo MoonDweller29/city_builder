@@ -22,12 +22,15 @@ fontArial = ResourceManager().get_font("Arial_20")
 testImage = ResourceManager().get_image("CrystalMine")
 testImage = ResourceManager().get_sprite_sheet("SP-Overworld", 2, 3)
 
-terrain = ETerrain("Resources/Maps/test_map.png", origin=(64,64), tileSize=(40,40))
+terrainOrigin = (64, 64)
+terrainTileSize = 40
+terrain = ETerrain("Resources/Maps/test_map.png", origin=terrainOrigin, tileSize=terrainTileSize)
 EntitySystem().add_entity(terrain)
 EntitySystem().add_entity(EButton("Wood", (0, 0), (100, 100)))
-EntitySystem().gridId = EntitySystem().add_entity(EGrid((64, 64), terrain.get_size(), 40))
+EntitySystem().gridId = EntitySystem().add_entity(EGrid(terrainOrigin, terrain.get_size(), terrainTileSize))
 
 grid = EntitySystem().get_entity(EntitySystem().gridId)
+terrain.fill_grid(grid)
 
 EntitySystem().add_entity(EBuilder())
 EntitySystem().add_entity(EOnGrid(2, 4, "CrystalMine"))
