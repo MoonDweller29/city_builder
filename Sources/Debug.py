@@ -1,6 +1,9 @@
 import pygame
 
 from GraphicsEngine import GraphicsEngine
+from EntitySystem import EntitySystem
+
+from UserInput import UserInput
 
 # @TODO вынести нахер шрифт и скрин отсюда в централизованную точку
 class Debug:
@@ -17,8 +20,13 @@ class Debug:
 
         self.fontName = fontName
 
+        self.active = True
+
     def update(self):
         self.updateFrames += 1 
+
+        if UserInput().is_key_down(pygame.K_F1):
+            self.active = not self.active
 
         if pygame.time.get_ticks() - self.lastFpsCountTime > self.FPS_COUNT_CD:
             deltaTime = pygame.time.get_ticks() - self.lastFpsCountTime
@@ -33,6 +41,15 @@ class Debug:
     def draw(self):
         self.frames += 1
 
+        if (not self.active):
+            return
+
         renderer = GraphicsEngine()
+
+        GraphicsEngine().draw_rectangle((0, 0, 0), (1090, 5), (1260, 100))
+
         renderer.draw_text((1100, 10), self.fontName, (0, 255, 0), "FPS:  " + str(int(self.fps)))
         renderer.draw_text((1100, 30), self.fontName, (0, 255, 0), "UFPS: " + str(int(self.updateFps)))
+        renderer.draw_text((1100, 50), self.fontName, (0, 255, 0), "Entities: " + str(int(len(EntitySystem().entities))))
+        renderer.draw_text((1100, 70), self.fontName, (0, 255, 0), "DrawCalls: " + str(GraphicsEngine().drawCalls) + "/" + str(GraphicsEngine().culledDrawCalls))
+
