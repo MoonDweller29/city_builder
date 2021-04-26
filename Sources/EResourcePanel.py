@@ -17,24 +17,27 @@ class EResourcePanel(Entity):
 
 
     def __init_resources(self):
-        self.resources = {}
-        self.resourcesInfo = {}
+        self.__resources = {}
+        self.__resourcesInfo = {}
 
-        self.resources["Wood"] = 100
-        self.resourcesInfo["Wood"] = ("Wood", 0)
+        self.__resources["Wood"] = 100
+        self.__resourcesInfo["Wood"] = ("Wood", 0)
 
-        self.resources["CrystalMine"] = 2
-        self.resourcesInfo["CrystalMine"] = ("CrystalMine", 0)
+        self.__resources["CrystalMine"] = 2
+        self.__resourcesInfo["CrystalMine"] = ("CrystalMine", 0)
 
     def can_buy(self, requiredResources):
         for name, amount in requiredResources:
-            if self.resources[name] < amount:
+            if self.__resources[name] < amount:
                 return False
         return True
 
     def spend(self, requiredResources):
         for name, amount in requiredResources:
-            self.resources[name] -= amount
+            self.__resources[name] -= amount
+
+    def add_resource(self, resourceName, count):
+        self.__resources[resourceName] += count
 
     def update(self):
         super().update()
@@ -51,7 +54,7 @@ class EResourcePanel(Entity):
         GraphicsEngine().draw_rectangle((0, 0, 0), (0, 0), (1280, 40))
 
         id = 0
-        for k, v in self.resourcesInfo.items():
-            self.draw_resource(id, v[0], str(self.resources[k]))
+        for k, v in self.__resourcesInfo.items():
+            self.draw_resource(id, v[0], str(self.__resources[k]))
             
             id += 1

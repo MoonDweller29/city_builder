@@ -1,4 +1,5 @@
 from EBuilding import EBuilding
+from ESource import ESource, ESourceType
 
 class BuildingDatabase:
     def GetAllBuildingNames(self):
@@ -8,7 +9,7 @@ class BuildingDatabase:
         return self.buildings[name][2]
 
     def GetBuilding(self, name):
-        return self.buildings[name][0](0, 0, self.buildings[name][1])
+        return self.buildings[name][0](0, 0, *(self.buildings[name][1]))
 
     __instance = None
 
@@ -20,7 +21,7 @@ class BuildingDatabase:
 
     def __init__singleton(self):
         self.buildings = {
-            "CrystalMine": (EBuilding, "CrystalMine", [("Wood", 10)]),
-            "Sawmill": (EBuilding, "Sawmill", [("Wood", 10), ("CrystalMine", 2)]),
-            "WindMill": (EBuilding, "WindMill", [("CrystalMine", 1)])
+            "Sawmill": (ESource, [ESourceType.SAW_MILL], [("Wood", 1)]),
+            "CrystalMine": (EBuilding, ["CrystalMine"], [("Wood", 10), ("CrystalMine", 2)]),
+            "WindMill": (EBuilding, ["WindMill"], [("CrystalMine", 1)])
         }
