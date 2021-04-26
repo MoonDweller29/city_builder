@@ -14,6 +14,7 @@ from EBuilder import EBuilder
 from Debug import Debug
 from ResourceManager import ResourceManager
 from UserInput import UserInput
+from EButton import EButton
 
 GraphicsEngine().init_window([1280, 720], 'City Builder')
 
@@ -22,6 +23,7 @@ testImage = ResourceManager().get_image("CrystalMine")
 testImage = ResourceManager().get_sprite_sheet("SP-Land", 2, 3)
 
 EntitySystem().add_entity(ETerrain("CrystalMine", (10,10)))
+EntitySystem().add_entity(EButton("Wood", (0, 0), (100, 100)))
 EntitySystem().gridId = EntitySystem().add_entity(EGrid((10, 10), (10,10), 64))
 
 grid = EntitySystem().get_entity(EntitySystem().gridId)
@@ -44,6 +46,14 @@ leftSimTime = 0
 debugPanel = Debug("Arial_20")
 
 while running:
+    # Input
+    UserInput().update()
+    if UserInput().is_exit():
+        running = False
+
+    if UserInput().is_mouse_down():
+        drawPosition = UserInput().get_mouse_position()
+
     deltaTime = pygame.time.get_ticks() - lastFrameStartTime
     leftSimTime += deltaTime
 
