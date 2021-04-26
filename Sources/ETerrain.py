@@ -1,6 +1,8 @@
 from EntitySystem import Entity
 from Utils import *
 from GraphicsEngine import GraphicsEngine
+from EntitySystem import EntitySystem
+from TreeFactory import TreeFactory
 from EGrid import EGrid
 from skimage.io import imread
 import numpy as np
@@ -112,14 +114,13 @@ class ETerrain(Entity):
         "GROUND" : [
             (1,0),(2,0), #flowers
             (3,0),(4,0), #grass
-            (0,1),       #empty
+            (0,1),       #empty ground
             (1,1),(2,1), #wood
             (3,1),(4,1)  #stones
         ],
         "TREE"   : [
-            (1, 10), #regular tree
-            (1, 13), #birch tree
-            (1, 16)  #pine
+            (3,0),(4,0), # grass
+            (0,1),       # empty ground
         ],
         "COAST" : get_coast_tiles_dict()
     }
@@ -213,13 +214,16 @@ class ETerrain(Entity):
         return self.__logicMap.shape
 
     def fill_grid(self, grid):
-        print("FILL GRID", self.id)
         shape = self.__logicMap.shape
         for y in range(shape[0]):
             for x in range(shape[1]):
                 tileName = self.__tileCodeToName[self.__logicMap[y, x]]
                 if tileName == "COAST" or tileName == "WATER":
                     grid.on_add_to_cell_xy(self.id, x, y)
+                elif tileName == "TREE":
+                    tree = TreeFactory.create_random_tree()
+                    EntitySystem().add_entity(tree)
+                    tree.set_pos((x, y))
 
     def update(self):
         super().update()
