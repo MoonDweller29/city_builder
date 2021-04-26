@@ -41,27 +41,19 @@ class Dirs:
 
         return res
 
-def get_full_ground_sprite_weights():
-    return [0.9, 0.8, 2, 2, 10, 0.4, 0.4, 0.4, 0.4]
 
-def get_ground_tiles_dict():
-    groundTiles = {
-        Dirs().to_int() : [
-            (1,0),(2,0), #flowers
-            (3,0),(4,0), #grass
-            (0,1),       #empty
-            (1,1),(2,1), #wood
-            (3,1),(4,1)  #stones
-        ],
+def get_coast_tiles_dict():
+    coastSprites = {
 
-        Dirs(left_up=1).to_int()   : [(7,2)],
-        Dirs(up=1).to_int()        : [(6,2)],
-        Dirs(right_up=1).to_int()  : [(5,2)],
-        Dirs(left=1).to_int()      : [(7,1)],
-        Dirs(right=1).to_int()     : [(5,1)],
-        Dirs(left_down=1).to_int() : [(7,0)],
-        Dirs(down=1).to_int()      : [(6,0)],
-        Dirs(right_down=1).to_int(): [(5,0)],
+        Dirs(left_up=1).to_int()    : [(7, 2)],
+        Dirs(right_up=1).to_int()   : [(5, 2)],
+        Dirs(left_down=1).to_int()  : [(7, 0)],
+        Dirs(right_down=1).to_int() : [(5, 0)],
+
+        Dirs(up=1).to_int()    : [(6,2)],
+        Dirs(left=1).to_int()  : [(7,1)],
+        Dirs(right=1).to_int() : [(5,1)],
+        Dirs(down=1).to_int()  : [(6,0)],
         # the left/right/up/down in case of 3 water tiles
         Dirs(left_up=1, up=1, right_up=1).to_int(): [(6, 2)],
         Dirs(left_down=1, left=1, left_up=1).to_int(): [(7, 1)],
@@ -97,7 +89,7 @@ def get_ground_tiles_dict():
         Dirs(right_down=1, down=1, left_down=1, left=1, left_up=1).to_int(): [(1, 3)],
     }
 
-    return groundTiles
+    return coastSprites
 
 
 
@@ -108,28 +100,36 @@ class ETerrain(Entity):
         "GROUND" : to_color_hash(89,  193, 53 ),
         "TREE"   : to_color_hash(113, 65,  59 )
     }
-    __tileNameToCode = { key : i for i, key in enumerate(__tileColorHash) }
-    __tileCodeToName = { i : key for i, key in enumerate(__tileColorHash) }
+    __tileCodeToName = [ "WATER", "GROUND", "TREE", "COAST" ]
+    __tileNameToCode = { key : i for i, key in enumerate(__tileCodeToName) }
     # coords: x, y
     __spriteTypes = {
         "WATER"  : [
             (6, 1), # empty
             (7, 3)  # waves
         ],
-        "GROUND" : get_ground_tiles_dict(),
+        "GROUND" : [
+            (1,0),(2,0), #flowers
+            (3,0),(4,0), #grass
+            (0,1),       #empty
+            (1,1),(2,1), #wood
+            (3,1),(4,1)  #stones
+        ],
         "TREE"   : [
             (1, 10), #regular tree
             (1, 13), #birch tree
             (1, 16)  #pine
-        ]
+        ],
+        "COAST" : get_coast_tiles_dict()
     }
     __waterSpriteWeights = [4, 1]
-    __groundSpriteWeights = get_full_ground_sprite_weights()
+    __groundSpriteWeights = [0.9, 0.8, 2, 2, 10, 0.4, 0.4, 0.4, 0.4]
 
 
-    def __init__(self, mapPath, tileSize):
+    def __init__(self, mapPath, origin, tileSize):
         super().__init__()
 
+        self.__origin = origin
         self.__tileSize = tileSize
         self.__spriteSheetName = "SP-Overworld"
         self.__load_map(mapPath)
@@ -142,6 +142,8 @@ class ETerrain(Entity):
             imgMap = np.where(imgMap == self.__tileColorHash[key], self.__tileNameToCode[key], imgMap)
 
         self.__logicMap = imgMap.astype(int)
+        self.__finalize_logic_map()
+
         self.__spriteIds = []
         for y in range(self.__logicMap.shape[0]):
             self.__spriteIds.append([])
@@ -149,6 +151,26 @@ class ETerrain(Entity):
                 self.__spriteIds[y].append(self.__get_sprite_coord(x,y))
 
         # @TODO: Tree object generation is supposed to be there
+
+    def __finalize_logic_map(self):
+        shape = self.__logicMap.shape
+        for y in range(shape[0]):
+            for x in range(shape[1]):
+                tileName = self.__tileCodeToName[self.__logicMap[y, x]]
+                if tileName == "GROUND":
+                    self.__check_coast(x, y)
+
+    def __check_coast(self, x, y):
+        for i in range(-1, 2):
+            for j in range(-1, 2):
+                if i == 0 == j:
+                    continue
+                iInd = np.clip(i + y, 0, self.__logicMap.shape[0] - 1)
+                jInd = np.clip(j + x, 0, self.__logicMap.shape[1] - 1)
+                neighbourName = self.__tileCodeToName[self.__logicMap[iInd, jInd]]
+                if neighbourName == "WATER":
+                    self.__logicMap[y, x] = self.__tileNameToCode["COAST"]
+                    return
 
     def __get_sprite_coord(self, x, y):
         tileName = self.__tileCodeToName[self.__logicMap[y, x]]
@@ -162,6 +184,10 @@ class ETerrain(Entity):
             return spriteCoords[randInd]
 
         elif tileName == "GROUND":
+            spriteCoords = self.__spriteTypes[tileName]
+            return random.choices(spriteCoords, weights=self.__groundSpriteWeights, k=1)[0]
+
+        elif tileName == "COAST":
             spriteTypes = self.__spriteTypes[tileName]
             dirs = Dirs()
             for i in range(-1, 2):
@@ -176,13 +202,14 @@ class ETerrain(Entity):
                         dirs.setON(i,j)
             key = dirs.to_int()
             spriteCoords = spriteTypes[key]
-            if (key == 0):
-                return random.choices(spriteCoords, weights=self.__groundSpriteWeights, k=1)[0]
 
             randInd = random.randint(0, len(spriteCoords) - 1)
             return spriteCoords[randInd]
 
         return (0,0)
+
+    def get_size(self):
+        return self.__logicMap.shape
 
     def update(self):
         super().update()
@@ -198,6 +225,6 @@ class ETerrain(Entity):
             for x in range(self.__logicMap.shape[1]):
                 renderer.draw_sprite(self.__spriteSheetName,
                                      self.__spriteIds[y][x],
-                                     add((64, 64), (self.__tileSize[0] * x, self.__tileSize[1] * y)),
+                                     add(self.__origin, (self.__tileSize[0] * x, self.__tileSize[1] * y)),
                                      self.__tileSize)
 
