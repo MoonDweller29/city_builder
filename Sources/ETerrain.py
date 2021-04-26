@@ -42,9 +42,18 @@ class Dirs:
 
         return res
 
+def getFullGroundSpriteWeights():
+    return [0.9, 0.8, 2, 2, 10, 0.4, 0.4, 0.4, 0.4]
+
 def getGroundTilesDict():
     groundTiles = {
-        Dirs().toInt() : [(1,0),(2,0),(3,0),(4,0), (0,1),(1,1),(2,1),(3,1),(4,1)],
+        Dirs().toInt() : [
+            (1,0),(2,0), #flowers
+            (3,0),(4,0), #grass
+            (0,1),       #empty
+            (1,1),(2,1), #wood
+            (3,1),(4,1)  #stones
+    ],
 
         Dirs(left_up=1).toInt()   : [(7,2)],
         Dirs(up=1).toInt()        : [(6,2)],
@@ -99,7 +108,10 @@ class ETerrain(Entity):
     __tileCodeToName = { i : key for i, key in enumerate(__tileColorHash) }
     # coords: x, y
     __spriteTypes = {
-        "WATER"  : [(6, 1), (7, 3)],
+        "WATER"  : [
+            (6, 1), # empty
+            (7, 3)  # waves
+        ],
         "GROUND" : getGroundTilesDict(),
         "TREE"   : [
             (1, 10), #regular tree
@@ -107,6 +119,8 @@ class ETerrain(Entity):
             (1, 16)  #pine
         ]
     }
+    __waterSpriteWeights = [4, 1]
+    __groundSpriteWeights = getFullGroundSpriteWeights()
 
 
     def __init__(self, mapPath, tileSize):
@@ -140,8 +154,8 @@ class ETerrain(Entity):
         tileName = self.__tileCodeToName[self.__logicMap[y, x]]
         if tileName == "WATER":
             spriteCoords = self.__spriteTypes[tileName]
-            randInd = random.randint(0, len(spriteCoords) - 1)
-            return spriteCoords[randInd]
+            return random.choices(spriteCoords, weights=self.__waterSpriteWeights, k=1)[0]
+
         elif tileName == "TREE":
             spriteCoords = self.__spriteTypes[tileName]
             randInd = random.randint(0, len(spriteCoords) - 1)
@@ -161,6 +175,9 @@ class ETerrain(Entity):
                         dirs.setON(i,j)
             key = dirs.toInt()
             spriteCoords = spriteTypes[key]
+            if (key == 0):
+                return random.choices(spriteCoords, weights=self.__groundSpriteWeights, k=1)[0]
+
             randInd = random.randint(0, len(spriteCoords) - 1)
             return spriteCoords[randInd]
 
@@ -194,10 +211,3 @@ class ETerrain(Entity):
                 #                      add((64, 64), (self.__tileSize[0] * x, self.__tileSize[1] * y)),
                 #                      self.__tileSize)
 
-
-d = Dirs()
-print("d", d.toInt())
-d.setON(-1,-1)
-d.setON(-1, 0)
-d.setON(-1, 1)
-print("d", d.toInt())
