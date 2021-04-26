@@ -15,6 +15,27 @@
 class Entity:
     def __init__(self):
         self.drawOrder = 0
+        self.id = 0
+        self.enabled = False
+
+    def enable(self):
+        if (not self.enabled):
+            self.enabled = True
+            self.on_enable()
+
+    def disable(self):
+        if (self.enabled):
+            self.enabled = False
+            self.on_enable()
+
+    def on_enable(self):
+        pass
+
+    def on_disable(self):
+        pass
+
+    def on_start(self):
+        pass
 
     def draw(self):
         pass
@@ -22,15 +43,28 @@ class Entity:
     def update(self):
         pass
 
+    def on_destroy(self):
+        pass
+
 class EntitySystem:
 ############################################################################
 #                       Public interface
 ############################################################################
 
+    def get_grid(self):
+        return self.get_entity(self.gridId)
+
     def add_entity(self, entity):
         id = self.__get_unused_id()
 
+        #self.entitiesToStart.append(id)
+
         self.entities[id] = entity
+        self.entities[id].id = id
+
+        self.entities[id].enable()
+
+        self.entities[id].on_start()
 
         return id
 
@@ -41,15 +75,22 @@ class EntitySystem:
     def destroy_entity(self, id):
         self.entitiesToDelete.append(id)
 
-    def update(self):
-        self.__delete_marked()
+        self.get_entity(id).disable()
 
-        for entity in self.entities.values():
-            entity.update()
+        self.get_entity(id).on_destroy()
+
+    def update(self):
+        self.__update_preprocess()
+
+        # @TODO Check copy of dictionary - seems to be shady
+        for entity in self.entities.copy().values():
+            if (entity.enabled):
+                entity.update()
 
     def draw(self):
-        for entity in sorted(self.entities.values(), key=lambda e: e.drawOrder, reverse=True):
-            entity.draw()
+        for entity in sorted(self.entities.values(), key=lambda e: e.drawOrder):
+            if (entity.enabled):
+                entity.draw()
 
 ############################################################################
 #                       Private interface
@@ -66,13 +107,20 @@ class EntitySystem:
     def __init__singleton(self):
         self.entities = {}
         self.entitiesToDelete = []
+        self.entitiesToStart = []
         self.lastFreeId = -1
 
     def __get_unused_id(self):
         self.lastFreeId += 1
         return self.lastFreeId
 
-    def __delete_marked(self):
+    def __update_preprocess(self):
         for id in self.entitiesToDelete:
             del self.entities[id]
+
         self.entitiesToDelete.clear()
+
+        #for id in self.entitiesToStart:
+        #    self.get_entity(self.entitiesToStart[id]).on_start()
+
+        #self.entitiesToStart.clear()

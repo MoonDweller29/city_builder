@@ -4,23 +4,34 @@ from GraphicsEngine import GraphicsEngine
 from Utils import *
 
 from EntitySystem import EntitySystem, Entity
-from ETerrain import ETerrain
 
+from ETerrain import ETerrain
 from EGrid import EGrid
+from EActor import EActor
+from EOnGrid import EOnGrid
+from EBuilder import EBuilder
 
 from Debug import Debug
 from ResourceManager import ResourceManager
+from UserInput import UserInput
+from EButton import EButton
 
 GraphicsEngine().init_window([1280, 720], 'City Builder')
-
-drawPosition = (0, 0)
 
 fontArial = ResourceManager().get_font("Arial_20")
 testImage = ResourceManager().get_image("CrystalMine")
 testImage = ResourceManager().get_sprite_sheet("SP-Overworld", 2, 3)
 
-terrain = ETerrain("Resources/Maps/test_map.png", tileSize=(32,32))
-EntitySystem().add_entity(terrain)
+EntitySystem().add_entity(ETerrain("Resources/Maps/test_map.png", tileSize=(32,32)))
+EntitySystem().add_entity(EButton("Wood", (0, 0), (100, 100)))
+EntitySystem().gridId = EntitySystem().add_entity(EGrid((10, 10), (10,10), 64))
+
+grid = EntitySystem().get_entity(EntitySystem().gridId)
+
+EntitySystem().add_entity(EBuilder())
+EntitySystem().add_entity(EOnGrid(2, 4, "CrystalMine"))
+
+print(grid.world_to_cell(grid.cell_to_world((3, 3))))
 
 # Run until the user asks to quit
 running = True
@@ -35,20 +46,18 @@ leftSimTime = 0
 debugPanel = Debug("Arial_20")
 
 while running:
-    # Input
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            running = False
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            drawPosition = pygame.mouse.get_pos()
-
     deltaTime = pygame.time.get_ticks() - lastFrameStartTime
     leftSimTime += deltaTime
 
     lastFrameStartTime = pygame.time.get_ticks()
 
-    while leftSimTime > debugPanel.TICK_MS:
-        # Update
+    # Update
+    while leftSimTime > 0:
+        # Input
+        UserInput().update()
+
+        if UserInput().is_exit():
+            running = False
 
         EntitySystem().update()
 
@@ -59,17 +68,12 @@ while running:
     #Render
 
     GraphicsEngine().clear_screen((0, 30, 0))
-    GraphicsEngine().clearStats()
     EntitySystem().draw()
 
     debugPanel.draw()
 
-    # Draw a solid blue circle
-    GraphicsEngine().draw_circle((0, 0, 255), drawPosition, 5)
-
     # Flip the display
     GraphicsEngine().display_flip()
-    # print(f"{GraphicsEngine().culledSprites} / {GraphicsEngine().spriteDrawCallsCount}")
 
 # Done! Time to quit.
 pygame.quit()

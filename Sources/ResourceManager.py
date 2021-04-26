@@ -29,6 +29,7 @@ class ResourceManager:
         if not self.__initialized:
             with open('Resources.json') as json_file:
                 data = json.load(json_file)
+                self.__imageDict["None"] = pygame.Surface((0, 0))
                 for (name, path) in data["Images"].items():
                     self.create_img(name, path)
                 for (name, sprite_args) in data["SpriteSheet"].items():
