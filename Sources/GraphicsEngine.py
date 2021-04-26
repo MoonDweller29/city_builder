@@ -29,17 +29,12 @@ class GraphicsEngine:
 
     def draw_sprite(self, name, tileCoord, position, size):
         self.spriteDrawCallsCount += 1
-        # if (position[0] > self.__screenRect.width):
-        #     return
-        # if (position[1] > self.__screenRect.height):
-        #     return
 
         rect = pygame.Rect(position[0], position[1], size[0], size[1])
         if (rect.colliderect(self.__screenRect)):
             tmp = pygame.transform.scale(
                 ResourceManager().get_sprite_sheet(name, tileCoord[0], tileCoord[1]), size
             )
-            # tmp = ResourceManager().get_sprite_sheet(name, tileCoord[0], tileCoord[1])
             self.screen.blit(tmp, rect)
         else:
             self.culledSprites += 1
