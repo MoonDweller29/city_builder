@@ -4,10 +4,10 @@ from EActor import EActor
 from GraphicsEngine import GraphicsEngine
 
 class EOnGrid(EActor):
-    def __init__(self, x, y, sprite):
+    def __init__(self, x, y, sprite, spritePos=None):
         cellSize = EntitySystem().get_grid().cellSize
 
-        super().__init__(x * cellSize, y * cellSize, (cellSize, cellSize) , sprite)
+        super().__init__(x * cellSize, y * cellSize, (cellSize, cellSize), sprite, spritePos)
 
         self.__cell_x = x
         self.__cell_y = y
