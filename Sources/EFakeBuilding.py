@@ -19,10 +19,10 @@ class EFakeBuilding(EOnGrid):
         userInput = UserInput()
         coord = grid.world_to_cell(userInput.get_mouse_position())
 
-        if (grid.is_cell_free(self.get_pos())):
-            self.tint_color = (0, 255, 0)
-        elif (userInput.is_ui()):
+        if (userInput.is_ui()):
             self.tint_color = (100, 100, 100)
+        elif (grid.is_cell_free(self.get_pos())):
+            self.tint_color = (0, 255, 0)
         else:
             self.tint_color = (255, 0, 0)
 

@@ -32,10 +32,13 @@ class EShop(EUIElement):
                 EntitySystem().add_entity(EShopButton(names[id], add((960, 180), (110 * x, 110 * y)), (100, 100), names[id], self.id))
                 id += 1
 
+    def can_buy(self, buildingName):
+        costs = BuildingDatabase().GetBuildingCosts(buildingName)
+        return EntitySystem().get_entity(self.resourcePanel).can_buy(costs)
+
     def try_buying(self, buildingName):
         costs = BuildingDatabase().GetBuildingCosts(buildingName)
-
-        if (EntitySystem().get_entity(self.resourcePanel).can_buy(costs)):
+        if self.can_buy(buildingName):
             EntitySystem().get_entity(self.resourcePanel).spend(costs)
             EntitySystem().get_entity(self.builder).start_building(buildingName)
 
