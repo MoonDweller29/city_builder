@@ -1,7 +1,5 @@
 from EBuilding import EBuilding
 
-# @TODO Завернуть это в класс базы "стоительной базы данных"
-
 class BuildingDatabase:
     def GetAllBuildingNames(self):
         return list(self.buildings.keys())
