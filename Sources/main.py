@@ -19,7 +19,7 @@ fontArial = ResourceManager().get_font("Arial_20")
 testImage = ResourceManager().get_image("CrystalMine")
 testImage = ResourceManager().get_sprite_sheet("SP-Overworld", 2, 3)
 
-terrain = ETerrain("Resources/Maps/test_map.png", (32,32))
+terrain = ETerrain("Resources/Maps/test_map.png", tileSize=(32,32))
 EntitySystem().add_entity(terrain)
 
 # Run until the user asks to quit
