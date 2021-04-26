@@ -11,6 +11,8 @@ class EResourcePanel(Entity):
 
         self.__init_resources()
 
+        self.name = "ResourcePanel"
+
         self.drawOrder = 1001
 
 
@@ -23,6 +25,16 @@ class EResourcePanel(Entity):
 
         self.resources["CrystalMine"] = 2
         self.resourcesInfo["CrystalMine"] = ("CrystalMine", 0)
+
+    def can_buy(self, requiredResources):
+        for name, amount in requiredResources:
+            if self.resources[name] < amount:
+                return False
+        return True
+
+    def spend(self, requiredResources):
+        for name, amount in requiredResources:
+            self.resources[name] -= amount
 
     def update(self):
         super().update()

@@ -13,10 +13,17 @@ class EButton(EUIElement):
         self.__position = position
         self.__size = size
         self.__selected = False
+        self.__greyed = False
         # @TODO: change drawOrder
         self.drawOrder = 500
 
         self.pressed_frames = 0
+
+    # def set_greyed(self, v):
+    #     if (self.__greyed != v):
+    #         if (self.__greyed):
+    #             se
+    #         else:
 
     def update(self):
         super().update()

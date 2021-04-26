@@ -35,7 +35,6 @@ terrain.fill_grid(grid)
 
 EntitySystem().add_entity(EResourcePanel())
 EntitySystem().add_entity(EShop())
-EntitySystem().add_entity(EBuilder())
 
 print(grid.world_to_cell(grid.cell_to_world((3, 3))))
 

@@ -16,6 +16,8 @@ class Entity:
     def __init__(self):
         self.drawOrder = 0
         self.id = 0
+        self.name = "Unnamed"
+        self.tag = "Tag"
         self.enabled = False
 
     def enable(self):
@@ -67,6 +69,13 @@ class EntitySystem:
         self.entities[id].on_start()
 
         return id
+
+    def find_entity(self, name):
+        for id, entity in self.entities.items(): 
+            if entity.name == name:
+                return id
+        
+        return -1
 
     def get_entity(self, id):
         # @TODO check for KeyError
