@@ -2,10 +2,10 @@ import copy
 
 import pygame
 
-from EUIElement import EUIElement
-from GraphicsEngine import GraphicsEngine
-from UserInput import UserInput, MouseButton
-from Utils import mul, to_int
+from .EUIElement import EUIElement
+from .GraphicsEngine import GraphicsEngine
+from .UserInput import UserInput, MouseButton
+from .Utils import mul, to_int
 
 
 class EButton(EUIElement):

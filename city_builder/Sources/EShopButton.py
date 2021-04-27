@@ -1,8 +1,8 @@
-from BuildingDatabase import BuildingDatabase
-from EButton import EButton
-from EntitySystem import EntitySystem
-from GraphicsEngine import GraphicsEngine
-from Utils import add
+from .BuildingDatabase import BuildingDatabase
+from .EButton import EButton
+from .EntitySystem import EntitySystem
+from .GraphicsEngine import GraphicsEngine
+from .Utils import add
 
 
 class EShopButton(EButton):

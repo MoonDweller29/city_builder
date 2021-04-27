@@ -1,5 +1,5 @@
-from EntitySystem import Entity, EntitySystem
-from Utils import add, sub, mul, div, to_int
+from .EntitySystem import Entity, EntitySystem
+from .Utils import add, sub, mul, div, to_int
 
 
 class EGrid(Entity):

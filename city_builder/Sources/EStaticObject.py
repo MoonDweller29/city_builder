@@ -1,4 +1,4 @@
-from EOnGrid import EOnGrid
+from .EOnGrid import EOnGrid
 
 
 class EStaticObject(EOnGrid):

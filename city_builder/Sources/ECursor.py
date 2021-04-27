@@ -1,7 +1,8 @@
-from Utils import ease_out_elastic, lerp
-from UserInput import UserInput, MouseButton
-from EActor import EActor
 import pygame
+
+from .Utils import ease_out_elastic, lerp
+from .UserInput import UserInput, MouseButton
+from .EActor import EActor
 
 
 class ECursor(EActor):

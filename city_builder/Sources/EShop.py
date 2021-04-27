@@ -1,10 +1,10 @@
-from BuildingDatabase import BuildingDatabase
-from EBuilder import EBuilder
-from EShopButton import EShopButton
-from EUIElement import EUIElement
-from EntitySystem import EntitySystem
-from GraphicsEngine import GraphicsEngine
-from Utils import add
+from .BuildingDatabase import BuildingDatabase
+from .EBuilder import EBuilder
+from .EShopButton import EShopButton
+from .EUIElement import EUIElement
+from .EntitySystem import EntitySystem
+from .GraphicsEngine import GraphicsEngine
+from .Utils import add
 
 
 class EShop(EUIElement):

@@ -1,7 +1,7 @@
-from EOnGrid import EOnGrid
-from EntitySystem import EntitySystem
-from GraphicsEngine import GraphicsEngine
-from UserInput import UserInput
+from .EOnGrid import EOnGrid
+from .EntitySystem import EntitySystem
+from .GraphicsEngine import GraphicsEngine
+from .UserInput import UserInput
 
 
 class EFakeBuilding(EOnGrid):

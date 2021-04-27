@@ -1,5 +1,5 @@
-from EntitySystem import Entity
-from GraphicsEngine import GraphicsEngine
+from .EntitySystem import Entity
+from .GraphicsEngine import GraphicsEngine
 
 
 class EActor(Entity):

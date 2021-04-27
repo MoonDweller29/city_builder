@@ -1,5 +1,5 @@
-from EActor import EActor
-from EntitySystem import EntitySystem
+from .EActor import EActor
+from .EntitySystem import EntitySystem
 
 
 class EOnGrid(EActor):

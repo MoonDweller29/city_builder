@@ -1,7 +1,7 @@
 import random
 from enum import Enum
 
-from ETree import ETree
+from .ETree import ETree
 
 
 class TreeType(Enum):
