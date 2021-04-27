@@ -35,8 +35,8 @@ class BuildingDatabase:
 
     def __init__singleton(self):
         self.buildings = {
-            "Sawmill": (ESource, [ESourceType.SAW_MILL], [("Wood", 10), ("People", 1)]),
-            "CrystalMine": (EBuilding, ["CrystalMine"], [("Wood", 200), ("People", 2)]),
-            "WindMill": (ESource, [ESourceType.WIND_MILL], [("Wood", 30)]),
-            "House": (EBuilding, ["House"], [("Wood", 50), ("Food", 10)])
+            "Sawmill": (ESource, [ESourceType.SAW_MILL], [("Wood", 40), ("People", 1)]),
+            "CrystalMine": (EBuilding, ["CrystalMine"], [("Wood", 400), ("People", 2)]),
+            "WindMill": (ESource, [ESourceType.WIND_MILL], [("Wood", 60), ("People", 1)]),
+            "House": (EBuilding, ["House"], [("Wood", 80), ("Food", 20)])
         }

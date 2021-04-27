@@ -20,16 +20,16 @@ class EResourcePanel(Entity):
         self.__resources = {}
         self.__resourcesInfo = {}
 
-        self.__resources["People"] = 5
+        self.__resources["People"] = 4
         self.__resourcesInfo["People"] = ("PeopleResource", 0)
 
-        self.__resources["Food"] = 2
+        self.__resources["Food"] = 10
         self.__resourcesInfo["Food"] = ("Food", 0)
 
-        self.__resources["Wood"] = 20
+        self.__resources["Wood"] = 50
         self.__resourcesInfo["Wood"] = ("Wood", 0)
 
-        self.__resources["Gold"] = 2
+        self.__resources["Gold"] = 0
         self.__resourcesInfo["Gold"] = ("Gold", 0)
 
     def check_needed_resources(self, requiredResources):
