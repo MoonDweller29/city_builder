@@ -1,22 +1,14 @@
 import pygame
-from GraphicsEngine import GraphicsEngine
-
-from Utils import *
-
-from EntitySystem import EntitySystem, Entity
-
-from ETerrain import ETerrain
-from EGrid import EGrid
-from EActor import EActor
-from EOnGrid import EOnGrid
-from EBuilder import EBuilder
-from EShop import EShop
-from EResourcePanel import EResourcePanel
 
 from Debug import Debug
+from EGrid import EGrid
+from EResourcePanel import EResourcePanel
+from EShop import EShop
+from ETerrain import ETerrain
+from EntitySystem import EntitySystem
+from GraphicsEngine import GraphicsEngine
 from ResourceManager import ResourceManager
 from UserInput import UserInput
-from EButton import EButton
 
 GraphicsEngine().init_window([1280, 720], 'City Builder')
 
@@ -67,7 +59,7 @@ while running:
 
         leftSimTime -= TICK_MS
 
-    #Render
+    # Render
     GraphicsEngine().clear_screen((36, 159, 222))
 
     EntitySystem().draw()

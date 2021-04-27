@@ -1,8 +1,6 @@
+from EntitySystem import Entity, EntitySystem
 from Utils import *
 
-from EntitySystem import Entity, EntitySystem
-from GraphicsEngine import GraphicsEngine
-from UserInput import UserInput
 
 class EGrid(Entity):
     def __init__(self, origin, size, cellSize):

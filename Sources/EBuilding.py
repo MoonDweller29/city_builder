@@ -1,8 +1,8 @@
-from EOnGrid import EOnGrid
+import pygame
 
+from EOnGrid import EOnGrid
 from Utils import *
 
-import pygame
 
 class EBuilding(EOnGrid):
     def __init__(self, x, y, sprite):
@@ -16,7 +16,9 @@ class EBuilding(EOnGrid):
         super().update()
 
     def draw(self):
-        self.size = (self.size[0], int(Lerp(1 - ease_out_elastic((pygame.time.get_ticks() - self.startTime) / self.animationLength), self.startSize[1], self.startSize[1] + self.animationAmlitude)))
+        self.size = (self.size[0], int(
+            Lerp(1 - ease_out_elastic((pygame.time.get_ticks() - self.startTime) / self.animationLength),
+                 self.startSize[1], self.startSize[1] + self.animationAmlitude)))
 
         super().draw()
 

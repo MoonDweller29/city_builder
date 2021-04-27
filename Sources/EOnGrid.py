@@ -1,7 +1,6 @@
-from EntitySystem import EntitySystem
 from EActor import EActor
+from EntitySystem import EntitySystem
 
-from GraphicsEngine import GraphicsEngine
 
 class EOnGrid(EActor):
     def __init__(self, x, y, sprite, spritePos=None):
@@ -11,7 +10,7 @@ class EOnGrid(EActor):
 
         self.__cell_x = x
         self.__cell_y = y
-        
+
         self.is_solid = True
 
     def set_solid(self, v):
@@ -22,11 +21,9 @@ class EOnGrid(EActor):
             else:
                 EntitySystem().get_grid().on_remove_from_cell(self.id)
 
-
     # @TODO Рефакторить!
     def on_start(self):
         self.set_pos((self.__cell_x, self.__cell_y))
-
 
     def set_pos(self, coord):
         if (self.is_solid):
@@ -36,7 +33,7 @@ class EOnGrid(EActor):
         self.__cell_y = coord[1]
 
         cellSize = EntitySystem().get_grid().cellSize
-        origin   = EntitySystem().get_grid().origin
+        origin = EntitySystem().get_grid().origin
 
         self.x = self.__cell_x * cellSize + origin[0]
         self.y = self.__cell_y * cellSize + origin[1]

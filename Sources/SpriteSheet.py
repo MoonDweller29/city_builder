@@ -1,5 +1,3 @@
-import pygame
-
 class SpriteSheet:
     def __init__(self, image, tile_width, tile_height):
         self.__image = image
@@ -12,11 +10,11 @@ class SpriteSheet:
             for x in range(self.__tile_count_width):
                 self.__spriteArr.append(
                     image.subsurface(
-                        x * tile_width, y * tile_height, 
+                        x * tile_width, y * tile_height,
                         tile_width, tile_height
                     )
                 )
-    
+
     def get_sprite(self, x, y):
         if x >= self.__tile_count_width or y >= self.__tile_count_height:
             raise ValueError("Index out of range")

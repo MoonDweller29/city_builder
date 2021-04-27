@@ -1,7 +1,7 @@
 from EBuilding import EBuilding
+from EResourceProvider import EResourceProvider
 from ESource import ESource, ESourceType
 
-from EResourceProvider import EResourceProvider
 
 class BuildingDatabase:
     def GetAllBuildingNames(self):

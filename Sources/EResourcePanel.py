@@ -1,9 +1,7 @@
-from EButton import EButton
+from EntitySystem import Entity
 from GraphicsEngine import GraphicsEngine
-
-from EntitySystem import Entity, EntitySystem
-
 from Utils import *
+
 
 class EResourcePanel(Entity):
     def __init__(self):
@@ -14,7 +12,6 @@ class EResourcePanel(Entity):
         self.name = "ResourcePanel"
 
         self.drawOrder = 1001
-
 
     def __init_resources(self):
         self.__resources = {}
@@ -59,7 +56,7 @@ class EResourcePanel(Entity):
     def update(self):
         super().update()
 
-        #self.wood += 1
+        # self.wood += 1
 
     def draw_resource(self, id, sprite, text):
         GraphicsEngine().draw_image_centered(sprite, add((20, 20), (id * 100, 0)), (32, 32))
@@ -73,5 +70,5 @@ class EResourcePanel(Entity):
         id = 0
         for k, v in self.__resourcesInfo.items():
             self.draw_resource(id, v[0], str(self.__resources[k]))
-            
+
             id += 1

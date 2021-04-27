@@ -1,10 +1,7 @@
-from GraphicsEngine import GraphicsEngine
-
 from EntitySystem import EntitySystem, Entity
-
-from EResourcePanel import EResourcePanel
-
+from GraphicsEngine import GraphicsEngine
 from Utils import *
+
 
 class EResourceParticle(Entity):
     def __init__(self, x, y, resourceName, value):
@@ -14,7 +11,7 @@ class EResourceParticle(Entity):
         self.y = y
 
         self.resourceName = resourceName
-        
+
         self.lifetime_max = 35
         self.lifetime = self.lifetime_max
         self.alpha = 255
@@ -24,7 +21,6 @@ class EResourceParticle(Entity):
         super().on_start()
 
         self.__resourcePanel = EntitySystem().find_entity("ResourcePanel")
-
 
     def update(self):
         super().update()
@@ -37,13 +33,14 @@ class EResourceParticle(Entity):
         self.y -= 0.5
         self.alpha = Lerp(self.lifetime / self.lifetime_max, 0, 255)
 
-
     def draw(self):
         super().draw()
 
-        #GraphicsEngine().draw_rectangle((100, 100, 100), add(self._position, (-48, 32)), (80,20), alpha=100)
+        # GraphicsEngine().draw_rectangle((100, 100, 100), add(self._position, (-48, 32)), (80,20), alpha=100)
 
-        GraphicsEngine().draw_image(EntitySystem().get_entity(self.__resourcePanel).get_resource_icon(self.resourceName), (self.x, self.y), (24, 24))
+        GraphicsEngine().draw_image(
+            EntitySystem().get_entity(self.__resourcePanel).get_resource_icon(self.resourceName), (self.x, self.y),
+            (24, 24))
 
         textColor = (255, 255, 255)
         text = "+" + str(self.value)
