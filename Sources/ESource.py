@@ -19,18 +19,22 @@ class ESourceInfo:
         self.modifyingResources = modifyingResourses
 
 class ESource(EBuilding):
-    __typeInfoDict = {
+    nameToTypeDict = {
+        "WindMill" : ESourceType.WIND_MILL,
+        "Sawmill"  : ESourceType.SAW_MILL
+    }
+    typeInfoDict = {
         ESourceType.WIND_MILL : ESourceInfo("WindMill", 5, []),
-        ESourceType.SAW_MILL  : ESourceInfo("Sawmill", 3, [
-            ResourceModifyingInfo("Wood", 2, 120)
+        ESourceType.SAW_MILL  : ESourceInfo("Sawmill", 2, [
+            ResourceModifyingInfo("Wood", 1, 120)
         ])
     }
 
     def __init__(self, x, y, sourceType):
-        super().__init__(x, y, self.__typeInfoDict[sourceType].spriteName)
+        super().__init__(x, y, self.typeInfoDict[sourceType].spriteName)
 
         self.__sourceType    = sourceType
-        self.__typeInfo      = self.__typeInfoDict[sourceType]
+        self.__typeInfo      = self.typeInfoDict[sourceType]
         self.__effectRadius  = self.__typeInfo.effectRadius
         self.__modifyingResources = self.__typeInfo.modifyingResources
         self.__tickCounters = [ 0 for _ in self.__modifyingResources ]

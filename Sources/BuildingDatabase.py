@@ -11,6 +11,15 @@ class BuildingDatabase:
     def GetBuilding(self, name):
         return self.buildings[name][0](0, 0, *(self.buildings[name][1]))
 
+    def get_affect_radius(self, name):
+        buildingClass = self.buildings[name][0]
+        if (buildingClass is EBuilding):
+            return 0
+        elif (buildingClass is ESource):
+            buildingType = ESource.nameToTypeDict[name]
+            typeInfo = ESource.typeInfoDict[buildingType]
+            return typeInfo.effectRadius
+
     __instance = None
 
     def __new__(cls):
