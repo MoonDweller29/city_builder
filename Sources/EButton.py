@@ -5,7 +5,7 @@ import pygame
 from EUIElement import EUIElement
 from GraphicsEngine import GraphicsEngine
 from UserInput import UserInput, MouseButton
-from Utils import *
+from Utils import mul, toInt
 
 
 class EButton(EUIElement):

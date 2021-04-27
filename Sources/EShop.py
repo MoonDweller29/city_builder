@@ -4,7 +4,7 @@ from EShopButton import EShopButton
 from EUIElement import EUIElement
 from EntitySystem import EntitySystem
 from GraphicsEngine import GraphicsEngine
-from Utils import *
+from Utils import add
 
 
 class EShop(EUIElement):

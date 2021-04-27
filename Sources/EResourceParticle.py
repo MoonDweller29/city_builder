@@ -1,6 +1,5 @@
 from EntitySystem import EntitySystem, Entity
 from GraphicsEngine import GraphicsEngine
-from Utils import *
 
 
 class EResourceParticle(Entity):

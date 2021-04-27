@@ -1,7 +1,7 @@
 import pygame
 
 from EOnGrid import EOnGrid
-from Utils import *
+from Utils import lerp, ease_out_elastic
 
 
 class EBuilding(EOnGrid):
@@ -17,7 +17,7 @@ class EBuilding(EOnGrid):
 
     def draw(self):
         self.size = (self.size[0], int(
-            Lerp(1 - ease_out_elastic((pygame.time.get_ticks() - self.startTime) / self.animationLength),
+            lerp(1 - ease_out_elastic((pygame.time.get_ticks() - self.startTime) / self.animationLength),
                  self.startSize[1], self.startSize[1] + self.animationAmlitude)))
 
         super().draw()

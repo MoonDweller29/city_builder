@@ -1,6 +1,6 @@
 from EntitySystem import Entity
 from GraphicsEngine import GraphicsEngine
-from Utils import *
+from Utils import add
 
 
 class EResourcePanel(Entity):

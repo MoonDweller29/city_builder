@@ -1,7 +1,7 @@
 import pygame
 
 from ResourceManager import ResourceManager
-from Utils import *
+from Utils import sub, div
 
 
 class GraphicsEngine:
