@@ -1,4 +1,5 @@
 import operator
+import math
 
 # Vector operations on tuples
 
@@ -22,3 +23,14 @@ def toInt(a):
 
 def Lerp(t, a, b):
     return a + (b - a) * t
+
+def ease_out_elastic(x):
+    c4 = (2 * math.pi) / 3
+
+    if x < 0:
+        return 0
+
+    if x > 1:
+        return 1
+
+    return pow(2, -10 * x) * math.sin((x * 10 - 0.75) * c4) + 1

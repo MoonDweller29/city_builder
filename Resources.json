@@ -15,6 +15,6 @@
     "Fonts": {
         "Arial_20": ["Arial", 20],
         "CustomFont_20": ["Resources/Font/20636.ttf", 20],
-        "ShopButtonFont": ["Resources/Font/20636.ttf", 20]
+        "ShopButtonFont": ["TimesNewRoman", 20] 
     }
 }
