@@ -97,4 +97,3 @@ def ease_out_elastic(t: float) -> float:
         return 1
 
     return pow(2, -10 * t) * math.sin((t * 10 - 0.75) * c4) + 1
-
