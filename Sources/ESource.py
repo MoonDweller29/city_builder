@@ -10,6 +10,7 @@ class ESourceType(Enum):
     WIND_MILL = 0
     SAW_MILL = 1
 
+
 class ResourceModifyingInfo:
     def __init__(self, resourceName, perTickAmount, tickPeriod):
         self.resourceName = resourceName
@@ -23,6 +24,7 @@ class ESourceInfo:
         self.effectRadius = effectRadius
         self.modifyingResources = modifyingResourses
         self.neighbourEffects = neighbourEffects
+
 
 class ESource(EBuilding):
     nameToTypeDict = {

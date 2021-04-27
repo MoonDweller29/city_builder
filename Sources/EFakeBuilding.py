@@ -3,6 +3,7 @@ from EntitySystem import EntitySystem
 from GraphicsEngine import GraphicsEngine
 from UserInput import UserInput
 
+
 class EFakeBuilding(EOnGrid):
     def __init__(self, x, y, sprite):
         super().__init__(x, y, sprite)

@@ -1,6 +1,6 @@
 from EntitySystem import EntitySystem, Entity
 from GraphicsEngine import GraphicsEngine
-from Utils import lerp, add
+from Utils import lerp
 
 
 class EResourceParticle(Entity):
