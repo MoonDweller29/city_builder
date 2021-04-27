@@ -4,6 +4,8 @@ from EGrid import EGrid
 from ETree import ETree
 from enum import Enum
 
+from EResourceParticle import EResourceParticle
+
 class ESourceType(Enum):
     WIND_MILL = 0
     SAW_MILL  = 1
@@ -27,9 +29,11 @@ class ESource(EBuilding):
         "Sawmill"  : ESourceType.SAW_MILL
     }
     typeInfoDict = {
-        ESourceType.WIND_MILL : ESourceInfo("WindMill", 5, [], {}),
-        ESourceType.SAW_MILL  : ESourceInfo("Sawmill", 2, [
-            ResourceModifyingInfo("Wood", 1, 120)
+        ESourceType.WIND_MILL : ESourceInfo("WindMill", 0, [
+            ResourceModifyingInfo("Food", 1, 140)
+        ], {}),
+        ESourceType.SAW_MILL  : ESourceInfo("Sawmill", 1, [
+            ResourceModifyingInfo("Wood", 3, 240)
         ],{
             "Tree" : 1 #@TODO: refactor this
         })
@@ -53,6 +57,8 @@ class ESource(EBuilding):
                 self.__resourcePanel.add_resource(modRes.resourceName, onTickCount)
                 self.__tickCounters[i] = 0
 
+                EntitySystem().add_entity(EResourceParticle(self.x, self.y, modRes.resourceName, onTickCount))
+
         self.__tickCounters = [i+1 for i in self.__tickCounters]
 
     def draw(self):
@@ -60,6 +66,8 @@ class ESource(EBuilding):
 
     def on_start(self):
         super().on_start()
+        # @TODO Вот так не надо вообще делать. Понятно, что панель пропасть не должна,
+        # но id по идее существуют чтобы косвенно адресовать
         self.__resourcePanel = EntitySystem().get_entity(EntitySystem().find_entity("ResourcePanel"))
 
 

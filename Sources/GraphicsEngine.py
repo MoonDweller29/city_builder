@@ -32,6 +32,8 @@ class GraphicsEngine:
 
     # draw methods
 
+    def draw_image_bot(self, name, position, size, tint_color=None, tint_flag=pygame.BLEND_RGBA_MULT):
+        self.draw_image(name, sub(position, size), size, tint_color=tint_color, tint_flag= tint_flag)
 
     def draw_image_centered(self, name, position, size, tint_color=None, tint_flag=pygame.BLEND_RGBA_MULT):
         self.draw_image(name, sub(position, div(size, (2, 2))), size, tint_color=tint_color, tint_flag= tint_flag)

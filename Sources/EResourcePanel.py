@@ -20,11 +20,28 @@ class EResourcePanel(Entity):
         self.__resources = {}
         self.__resourcesInfo = {}
 
-        self.__resources["Wood"] = 100
+        self.__resources["People"] = 4
+        self.__resourcesInfo["People"] = ("PeopleResource", 0)
+
+        self.__resources["Food"] = 10
+        self.__resourcesInfo["Food"] = ("Food", 0)
+
+        self.__resources["Wood"] = 50
         self.__resourcesInfo["Wood"] = ("Wood", 0)
 
-        self.__resources["CrystalMine"] = 2
-        self.__resourcesInfo["CrystalMine"] = ("CrystalMine", 0)
+        self.__resources["Gold"] = 0
+        self.__resourcesInfo["Gold"] = ("Gold", 0)
+
+    def check_needed_resources(self, requiredResources):
+        result = []
+
+        for name, amount in requiredResources:
+            result.append(self.__resources[name] >= amount)
+
+        return result
+
+    def get_resource_icon(self, name):
+        return self.__resourcesInfo[name][0]
 
     def can_buy(self, requiredResources):
         for name, amount in requiredResources:
@@ -51,7 +68,7 @@ class EResourcePanel(Entity):
     def draw(self):
         super().draw()
 
-        GraphicsEngine().draw_rectangle((0, 0, 0), (0, 0), (1280, 40))
+        GraphicsEngine().draw_rectangle((0, 0, 0), (0, 0), (1280, 40), alpha=200)
 
         id = 0
         for k, v in self.__resourcesInfo.items():

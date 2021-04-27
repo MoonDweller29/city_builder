@@ -11,6 +11,8 @@ class EOnGrid(EActor):
 
         self.__cell_x = x
         self.__cell_y = y
+        
+        self.is_solid = True
 
     def set_solid(self, v):
         if v != self.is_solid:
@@ -23,8 +25,6 @@ class EOnGrid(EActor):
 
     # @TODO Рефакторить!
     def on_start(self):
-        self.is_solid = True
-
         self.set_pos((self.__cell_x, self.__cell_y))
 
 

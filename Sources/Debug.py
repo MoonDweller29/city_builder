@@ -1,15 +1,15 @@
 import pygame
 
 from GraphicsEngine import GraphicsEngine
-from EntitySystem import EntitySystem
+from EntitySystem import EntitySystem, Entity
 
 from UserInput import UserInput
 
-# @TODO вынести нахер шрифт и скрин отсюда в централизованную точку
-class Debug:
-    def __init__(self, fontName):
-        self.TARGET_FPS = 60.0
-        self.TICK_MS = 1000.0 / self.TARGET_FPS
+class Debug(Entity):
+    def __init__(self, fontName, TICK_MS):
+        super().__init__()
+
+        self.TICK_MS = TICK_MS
 
         self.updateFps = 0
         self.fps = 0
@@ -18,11 +18,15 @@ class Debug:
         self.updateFrames = 0
         self.frames = 0
 
+        self.drawOrder = 10000
+
         self.fontName = fontName
 
-        self.active = True
+        self.active = False
 
     def update(self):
+        super().update()
+
         self.updateFrames += 1 
 
         if UserInput().is_key_down(pygame.K_F1):
@@ -39,6 +43,8 @@ class Debug:
             self.updateFrames = 0
 
     def draw(self):
+        super().draw()
+        
         self.frames += 1
 
         if (not self.active):
@@ -52,5 +58,5 @@ class Debug:
         renderer.draw_text((1100, 30), self.fontName, (0, 255, 0), "UFPS: " + str(int(self.updateFps)))
         renderer.draw_text((1100, 50), self.fontName, (0, 255, 0), "Entities: " + str(int(len(EntitySystem().entities))))
         renderer.draw_text((1100, 70), self.fontName, (0, 255, 0),
-                           f"DrawCalls: {GraphicsEngine().drawCalls - GraphicsEngine().culledDrawCalls}/{GraphicsEngine().drawCalls}")
+                           f"DCalls: {GraphicsEngine().drawCalls - GraphicsEngine().culledDrawCalls}/{GraphicsEngine().drawCalls}")
 
