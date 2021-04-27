@@ -10,17 +10,25 @@ class GraphicsEngine:
 
     def init_window(self, resolution, title):
         pygame.display.set_caption(title)
-        self.screen = pygame.display.set_mode(resolution)
-        self.__screenRect = self.screen.get_rect()
+        self.__screen = pygame.display.set_mode(resolution)
+        self.__renderTarget = self.__screen
+        self.__renderTargetRect = self.__screen.get_rect()
 
     def clear_screen(self, color):
-        self.screen.fill(color)
+        self.__renderTarget.fill(color)
 
     def display_flip(self):
         self.drawCalls = 0
         self.culledDrawCalls = 0
 
         pygame.display.flip()
+
+    def set_render_target(self, surface = None):
+        if surface is None:
+            surface = self.__screen
+
+        self.__renderTarget = surface
+        self.__renderTargetRect = surface.get_rect()
 
     # draw methods
 
@@ -51,13 +59,13 @@ class GraphicsEngine:
         # @TODO alpha не работает у AlexHonor провить эту дичь
         #tmp.set_alpha(128)
 
-        self.screen.blit(tmp, rect)
+        self.__renderTarget.blit(tmp, rect)
 
     def draw_sprite(self, name, tileCoord, position, size, alpha=255, tint_color=None, tint_flag=pygame.BLEND_RGBA_MULT):
         self.drawCalls += 1
 
         rect = pygame.Rect(position[0], position[1], size[0], size[1])
-        if (rect.colliderect(self.__screenRect)):
+        if (rect.colliderect(self.__renderTargetRect)):
             tmp = pygame.transform.scale(
                 ResourceManager().get_sprite_sheet(name, tileCoord[0], tileCoord[1]), size
             )
@@ -71,29 +79,34 @@ class GraphicsEngine:
                 tint_image.fill(tint_color)
                 tmp.blit(tint_image, (0, 0), special_flags=tint_flag)
 
-            self.screen.blit(tmp, rect)
+            self.__renderTarget.blit(tmp, rect)
         else:
             self.culledDrawCalls += 1
 
     # @TODO проверить memory leak texture surface возвращаемого из метода ренедер
     def draw_text(self, position, fontName, color, text):
         self.drawCalls += 1
-        self.screen.blit(ResourceManager().get_font(fontName).render(text, False, color), position)
+        self.__renderTarget.blit(ResourceManager().get_font(fontName).render(text, False, color), position)
 
     def draw_circle(self, color, pos, radius):
         self.drawCalls += 1
-        pygame.draw.circle(self.screen, color, pos, radius)
+        pygame.draw.circle(self.__renderTarget, color, pos, radius)
 
 
     def draw_rectangle(self, color, lt, rectSize, alpha=None):
         self.drawCalls += 1
-        # pygame.draw.rect(self.screen, color, pygame.Rect(lt[0], lt[1], rectSize[0], rectSize[1]))
+        # pygame.draw.rect(self.__renderTarget, color, pygame.Rect(lt[0], lt[1], rectSize[0], rectSize[1]))
 
         s = pygame.Surface(rectSize)
         if not (alpha is None):
             s.set_alpha(alpha)
         s.fill(color)
-        self.screen.blit(s, lt)
+        self.__renderTarget.blit(s, lt)
+
+    def draw_surface(self, surface, lt):
+        self.drawCalls += 1
+        self.__renderTarget.blit(surface, lt)
+
 
     ##############################################################################
     # private interface
