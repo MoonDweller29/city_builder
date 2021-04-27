@@ -1,5 +1,5 @@
 from EntitySystem import Entity, EntitySystem
-from Utils import add, sub, mul, div, toInt
+from Utils import add, sub, mul, div, to_int
 
 
 class EGrid(Entity):
@@ -24,7 +24,7 @@ class EGrid(Entity):
         return coord[0] >= 0 and coord[1] >= 0 and coord[0] < self.size[0] and coord[1] < self.size[1]
 
     def world_to_cell(self, worldCoord):
-        return toInt(div(sub(worldCoord, self.origin), (self.cellSize, self.cellSize)))
+        return to_int(div(sub(worldCoord, self.origin), (self.cellSize, self.cellSize)))
 
     def cell_to_world(self, coord):
         return add(mul(coord, (self.cellSize, self.cellSize)), self.origin)
