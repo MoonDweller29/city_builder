@@ -12,9 +12,9 @@ class ESourceType(Enum):
 
 
 class ResourceModifyingInfo:
-    def __init__(self, resourceName, onTickCount, tickPeriod):
+    def __init__(self, resourceName, perTickAmount, tickPeriod):
         self.resourceName = resourceName
-        self.onTickCount = onTickCount
+        self.perTickAmount = perTickAmount
         self.tickPeriod = tickPeriod  # in update ticks
 
 
@@ -50,17 +50,17 @@ class ESource(EBuilding):
         self.__effectRadius = self.__typeInfo.effectRadius
         self.__modifyingResources = self.__typeInfo.modifyingResources
         self.__tickCounters = [0 for _ in self.__modifyingResources]
-        self.__onTickResourceCounts = [modRes.onTickCount for modRes in self.__modifyingResources]
+        self.__onTickResourceCounts = [modRes.perTickAmount for modRes in self.__modifyingResources]
 
     def update(self):
         super().update()
         for i, modRes in enumerate(self.__modifyingResources):
             if self.__tickCounters[i] >= modRes.tickPeriod:
-                onTickCount = self.__onTickResourceCounts[i]
-                self.__resourcePanel.add_resource(modRes.resourceName, onTickCount)
+                perTickAmount = self.__onTickResourceCounts[i]
+                self.__resourcePanel.add_resource(modRes.resourceName, perTickAmount)
                 self.__tickCounters[i] = 0
 
-                EntitySystem().add_entity(EResourceParticle(self.x, self.y, modRes.resourceName, onTickCount))
+                EntitySystem().add_entity(EResourceParticle(self.x, self.y, modRes.resourceName, perTickAmount))
 
         self.__tickCounters = [i + 1 for i in self.__tickCounters]
 
@@ -76,7 +76,7 @@ class ESource(EBuilding):
     def set_pos(self, coord):
         super().set_pos(coord)
         self.__tickCounters = [i + 1 for i in self.__tickCounters]
-        self.__onTickResourceCounts = [modRes.onTickCount for modRes in self.__modifyingResources]
+        self.__onTickResourceCounts = [modRes.perTickAmount for modRes in self.__modifyingResources]
 
         grid = EntitySystem().get_grid()
         cellPos = grid.world_to_cell((self.x, self.y))  # @TODO: maybe it's ok to use self.__cell_x from EOnGrid

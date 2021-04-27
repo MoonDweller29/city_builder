@@ -59,8 +59,8 @@ class EResourcePanel(Entity):
         # self.wood += 1
 
     def draw_resource(self, id, sprite, text):
-        GraphicsEngine().draw_image_centered(sprite, add((20, 20), (id * 100, 0)), (32, 32))
-        GraphicsEngine().draw_text(add((40, 10), (id * 100, 0)), "Arial_20", (255, 255, 255), text)
+        GraphicsEngine().draw_image_centered(sprite, add((20 + 400, 20), (id * 120, 0)), (32, 32))
+        GraphicsEngine().draw_text(add((40 + 400, 10), (id * 120, 0)), "Arial_20", (255, 255, 255), text)
 
     def draw(self):
         super().draw()

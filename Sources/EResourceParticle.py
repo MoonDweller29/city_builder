@@ -36,7 +36,7 @@ class EResourceParticle(Entity):
     def draw(self):
         super().draw()
 
-        # GraphicsEngine().draw_rectangle((100, 100, 100), add(self._position, (-48, 32)), (80,20), alpha=100)
+        # GraphicsEngine().draw_rectangle((0, 0, 0), add((self.x, self.y), (0, 3)), (50,20), alpha=100)
 
         GraphicsEngine().draw_image(
             EntitySystem().get_entity(self.__resourcePanel).get_resource_icon(self.resourceName), (self.x, self.y),
@@ -49,4 +49,5 @@ class EResourceParticle(Entity):
             textColor = (255, 45, 17)
             text = "+" + str(self.value)
 
+        GraphicsEngine().draw_text((self.x + 23, self.y + 2), "ShopButtonFont", (0, 0, 0), text)
         GraphicsEngine().draw_text((self.x + 25, self.y), "ShopButtonFont", textColor, text)

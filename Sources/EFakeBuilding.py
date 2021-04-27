@@ -34,8 +34,8 @@ class EFakeBuilding(EOnGrid):
         if (grid.is_inside(coord) and not userInput.is_ui()):  # and len(grid.contents[coord[0]][coord[1]]) <= 0):
             self.set_pos(coord)
         else:
-            self.x = userInput.get_mouse_position()[0]
-            self.y = userInput.get_mouse_position()[1]
+            self.x = userInput.get_mouse_position()[0] - 32
+            self.y = userInput.get_mouse_position()[1] - 32
 
     def draw(self):
         grid = EntitySystem().get_grid()

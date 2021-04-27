@@ -7,14 +7,15 @@
         "PeopleResource": "Resources/Buildings/Resources/People.png",
         "Food": "Resources/Buildings/Resources/Food.png",
         "Gold": "Resources/Buildings/Resources/Gold.png",
+        "Cursor": "Resources/Cursor.png",
         "Wood": "Resources/Buildings/Resources/Wood.png"
     },
     "SpriteSheet": {
         "SP-Overworld": ["Resources/Environment/SP-Overworld.png", 16, 16]
     },
     "Fonts": {
-        "Arial_20": ["Arial", 20],
-        "CustomFont_20": ["Resources/Font/20636.ttf", 20],
-        "ShopButtonFont": ["TimesNewRoman", 20] 
+        "Arial_20": ["Resources/Font/vinque rg.ttf", 17],
+        "CustomFont_20": ["Resources/Font/vinque rg.ttf", 20],
+        "ShopButtonFont": ["Resources/Font/vinque rg.ttf", 17] 
     }
 }
