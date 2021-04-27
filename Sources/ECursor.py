@@ -1,5 +1,3 @@
-from EntitySystem import Entity
-from GraphicsEngine import GraphicsEngine
 from Utils import ease_out_elastic, lerp
 from UserInput import UserInput, MouseButton
 from EActor import EActor

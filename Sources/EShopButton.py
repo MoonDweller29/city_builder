@@ -29,8 +29,8 @@ class EShopButton(EButton):
     def draw(self):
         super().draw()
 
-        #GraphicsEngine().draw_rectangle((0, 0, 0), add(self._position, (-48, 32 - 3)), (80, 20), alpha=100)
-        #GraphicsEngine().draw_rectangle((230, 230, 230), add(self._position, (-48, 32)), (80, 20), alpha=200)
+        # GraphicsEngine().draw_rectangle((0, 0, 0), add(self._position, (-48, 32 - 3)), (80, 20), alpha=100)
+        # GraphicsEngine().draw_rectangle((230, 230, 230), add(self._position, (-48, 32)), (80, 20), alpha=200)
 
         resourceStatus = EntitySystem().get_entity(self.__resourcePanel).check_needed_resources(self.costs)
 

@@ -2,7 +2,6 @@ from EOnGrid import EOnGrid
 from EntitySystem import EntitySystem
 from GraphicsEngine import GraphicsEngine
 from UserInput import UserInput
-import pygame
 
 class EFakeBuilding(EOnGrid):
     def __init__(self, x, y, sprite):
