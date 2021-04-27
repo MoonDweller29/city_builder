@@ -30,12 +30,18 @@ class EFakeBuilding(EOnGrid):
         else:
             self.tint_color = (255, 0, 0)
 
-        if (grid.is_inside(coord)):# and len(grid.contents[coord[0]][coord[1]]) <= 0):
+        if (grid.is_inside(coord) and not userInput.is_ui()):# and len(grid.contents[coord[0]][coord[1]]) <= 0):
             self.set_pos(coord)
+        else:
+            self.x = userInput.get_mouse_position()[0]
+            self.y = userInput.get_mouse_position()[1]
 
 
     def draw(self):
-        if self.radius > 0:
+        grid = EntitySystem().get_grid()
+        coord = grid.world_to_cell(UserInput().get_mouse_position())
+
+        if self.radius > 0 and grid.is_inside(coord) and not UserInput().is_ui():
             lt = (self.x - self.cellSize*self.radius, self.y - self.cellSize*self.radius)
             rectSize = (self.cellSize*(2*self.radius + 1), self.cellSize*(2*self.radius + 1))
             GraphicsEngine().draw_rectangle(self.tint_color, lt, rectSize, 100)

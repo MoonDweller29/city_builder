@@ -3,6 +3,10 @@
         "CrystalMine": "Resources/Buildings/Mines/CrystalMine/CrystalMine.png",
         "Sawmill": "Resources/Buildings/Mines/Sawmill/Sawmill.png",
         "WindMill": "Resources/Buildings/Mines/WindMill/WindMill.png",
+        "House": "Resources/Buildings/Miscellaneous/BlackMarket.png",
+        "PeopleResource": "Resources/Buildings/Resources/people.png",
+        "Food": "Resources/Buildings/Resources/Food.png",
+        "Gold": "Resources/Buildings/Resources/Gold.png",
         "Wood": "Resources/Buildings/Resources/Wood.png"
     },
     "SpriteSheet": {
@@ -10,6 +14,7 @@
     },
     "Fonts": {
         "Arial_20": ["Arial", 20],
-        "CustomFont_20": ["Resources/Font/20636.ttf", 20]
+        "CustomFont_20": ["Resources/Font/20636.ttf", 20],
+        "ShopButtonFont": ["Resources/Font/20636.ttf", 20]
     }
 }

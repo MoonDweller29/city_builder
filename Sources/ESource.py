@@ -27,9 +27,11 @@ class ESource(EBuilding):
         "Sawmill"  : ESourceType.SAW_MILL
     }
     typeInfoDict = {
-        ESourceType.WIND_MILL : ESourceInfo("WindMill", 5, [], {}),
+        ESourceType.WIND_MILL : ESourceInfo("WindMill", 5, [
+            ResourceModifyingInfo("Food", 1, 60)
+        ], {}),
         ESourceType.SAW_MILL  : ESourceInfo("Sawmill", 2, [
-            ResourceModifyingInfo("Wood", 1, 120)
+            ResourceModifyingInfo("Wood", 1, 360)
         ],{
             "Tree" : 1 #@TODO: refactor this
         })
@@ -60,6 +62,8 @@ class ESource(EBuilding):
 
     def on_start(self):
         super().on_start()
+        # @TODO Вот так не надо вообще делать. Понятно, что панель пропасть не должна,
+        # но id по идее существуют чтобы косвенно адресовать
         self.__resourcePanel = EntitySystem().get_entity(EntitySystem().find_entity("ResourcePanel"))
 
 

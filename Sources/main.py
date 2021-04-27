@@ -36,6 +36,11 @@ terrain.fill_grid(grid)
 EntitySystem().add_entity(EResourcePanel())
 EntitySystem().add_entity(EShop())
 
+TARGET_FPS = 60.0
+TICK_MS = 1000.0 / TARGET_FPS
+
+EntitySystem().add_entity(Debug("Arial_20", TICK_MS))
+
 print(grid.world_to_cell(grid.cell_to_world((3, 3))))
 
 # Run until the user asks to quit
@@ -43,12 +48,6 @@ running = True
 
 lastFrameStartTime = pygame.time.get_ticks()
 leftSimTime = 0
-
-# @TODO Это желательно вынести в отдельный класс/файл
-# Так чтобы из main только дергались функции FPS каунтера
-# FPS counting stuff
-
-debugPanel = Debug("Arial_20")
 
 while running:
     deltaTime = pygame.time.get_ticks() - lastFrameStartTime
@@ -66,15 +65,12 @@ while running:
 
         EntitySystem().update()
 
-        debugPanel.update()
-
-        leftSimTime -= debugPanel.TICK_MS
+        leftSimTime -= TICK_MS
 
     #Render
     GraphicsEngine().clear_screen((0, 30, 0))
-    EntitySystem().draw()
 
-    debugPanel.draw()
+    EntitySystem().draw()
 
     # Flip the display
     GraphicsEngine().display_flip()

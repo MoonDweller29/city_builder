@@ -12,7 +12,7 @@ from Utils import *
 
 class EShop(EUIElement):
     def __init__(self):
-        super().__init__((900, 10), (360, 700))
+        super().__init__((900, 100), (360, 280))
 
     def on_start(self):
         self.builder = EntitySystem().add_entity(EBuilder())
@@ -29,7 +29,7 @@ class EShop(EUIElement):
             for x in range(3): 
                 if id >= len(names):
                     break
-                EntitySystem().add_entity(EShopButton(names[id], add((960, 180), (110 * x, 110 * y)), (100, 100), names[id], self.id))
+                EntitySystem().add_entity(EShopButton(names[id], add((965, 180), (110 * x, 110 * y)), (100, 100), names[id], self.id))
                 id += 1
 
     def can_buy(self, buildingName):
@@ -48,5 +48,5 @@ class EShop(EUIElement):
     def draw(self):
         super().draw()
 
-        GraphicsEngine().draw_rectangle((100, 100, 0), self._position, self._size)
+        GraphicsEngine().draw_rectangle((99, 68, 57), self._position, self._size, alpha=245)
         GraphicsEngine().draw_text((1060, 20), "Arial_20", (255, 255, 255), "Shop")
