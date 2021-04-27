@@ -9,12 +9,13 @@ from EntitySystem import EntitySystem
 from GraphicsEngine import GraphicsEngine
 from ResourceManager import ResourceManager
 from UserInput import UserInput
+from ECursor import ECursor
 
 GraphicsEngine().init_window([1280, 720], 'City Builder')
 
 fontArial = ResourceManager().get_font("Arial_20")
 
-terrainOrigin = (64, 64)
+terrainOrigin = (0, 0)
 terrainTileSize = 40
 terrain = ETerrain("Resources/Maps/test_map.png", origin=terrainOrigin, tileSize=terrainTileSize)
 
@@ -28,6 +29,8 @@ terrain.fill_grid(grid)
 EntitySystem().add_entity(EResourcePanel())
 EntitySystem().add_entity(EShop())
 
+EntitySystem().add_entity(ECursor())
+
 TARGET_FPS = 60.0
 TICK_MS = 1000.0 / TARGET_FPS
 
@@ -40,6 +43,8 @@ running = True
 
 lastFrameStartTime = pygame.time.get_ticks()
 leftSimTime = 0
+
+pygame.mouse.set_visible(False)
 
 while running:
     deltaTime = pygame.time.get_ticks() - lastFrameStartTime
