@@ -1,7 +1,7 @@
 import pygame
 from EUIElement import EUIElement
 from GraphicsEngine import GraphicsEngine
-from UserInput import UserInput
+from UserInput import UserInput, MouseButton
 
 from Utils import *
 
@@ -44,7 +44,7 @@ class EButton(EUIElement):
                 self.__selected = False
                 self.on_deselected()
 
-        if input.is_ui_mouse_down() and self.__selected:
+        if input.is_ui_mouse_down(MouseButton.LEFT) and self.__selected:
             self.on_pressed()
 
     def on_selected(self):
