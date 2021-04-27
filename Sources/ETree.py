@@ -1,9 +1,10 @@
-from EStaticObject import EStaticObject
-
 import math
+import random
+
 import pygame
 
-import random
+from EStaticObject import EStaticObject
+
 
 class ETree(EStaticObject):
     def __init__(self, x, y, sprite, spritePos):
@@ -15,7 +16,6 @@ class ETree(EStaticObject):
         super().on_start()
 
         self.y_start = self.y
-
 
     def update(self):
         super().update()

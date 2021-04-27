@@ -1,7 +1,7 @@
-from EntitySystem import Entity, EntitySystem
 from EBuilding import EBuilding
-
 from EResourceParticle import EResourceParticle
+from EntitySystem import EntitySystem
+
 
 class EResourceProvider(EBuilding):
     def __init__(self, x, y, sprite, resources):
@@ -15,9 +15,8 @@ class EResourceProvider(EBuilding):
 
         for name, value in enumerate(self.__resources):
             EntitySystem().get_entity(self.__resourcePanel).add_resource(value[0], value[1])
-            
-            EntitySystem().add_entity(EResourceParticle(self.x, self.y, value[0], value[1]))
 
+            EntitySystem().add_entity(EResourceParticle(self.x, self.y, value[0], value[1]))
 
     def update(self):
         super().update()

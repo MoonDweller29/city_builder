@@ -1,6 +1,7 @@
-from ETree import ETree
-from enum import Enum
 import random
+from enum import Enum
+
+from ETree import ETree
 
 
 class TreeType(Enum):
@@ -8,12 +9,13 @@ class TreeType(Enum):
     BIRCH = 1
     PINE = 2
 
+
 class TreeFactory:
     __spriteSheetName = "SP-Overworld"
     __spriteCoords = {
-        TreeType.OAK   : (1, 10),
-        TreeType.BIRCH : (1, 13),
-        TreeType.PINE  : (1, 16)
+        TreeType.OAK: (1, 10),
+        TreeType.BIRCH: (1, 13),
+        TreeType.PINE: (1, 16)
     }
 
     @classmethod
@@ -22,7 +24,7 @@ class TreeFactory:
 
     @classmethod
     def create_random_tree(cls):
-        treeTypes = [ TreeType.OAK, TreeType.BIRCH, TreeType.PINE ]
+        treeTypes = [TreeType.OAK, TreeType.BIRCH, TreeType.PINE]
         weights = [1, 1, 1]
         treeType = random.choices(treeTypes, weights=weights, k=1)[0]
 

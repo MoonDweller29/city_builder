@@ -1,6 +1,7 @@
 from EntitySystem import Entity
 from GraphicsEngine import GraphicsEngine
 
+
 class EActor(Entity):
     def __init__(self, x, y, size, sprite, spritePos=None):
         super().__init__()
@@ -11,7 +12,7 @@ class EActor(Entity):
         self.size = size
 
         self.sprite = sprite
-        self.spritePos = spritePos #coord in spriteSheet
+        self.spritePos = spritePos  # coord in spriteSheet
         self.tint_color = None
 
     def update(self):
@@ -26,4 +27,3 @@ class EActor(Entity):
             GraphicsEngine().draw_sprite(
                 self.sprite, self.spritePos, (self.x, self.y), self.size, tint_color=self.tint_color
             )
-
