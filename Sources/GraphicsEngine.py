@@ -54,7 +54,7 @@ class GraphicsEngine:
         else:
             tmp.set_alpha(None)
 
-        if (not tint_color is None):
+        if tint_color is not None:
             tint_image = pygame.Surface(size)
             tint_image.fill(tint_color)
             tmp.blit(tint_image, (0, 0), special_flags=tint_flag)
@@ -78,7 +78,7 @@ class GraphicsEngine:
             else:
                 tmp.set_alpha(None)
 
-            if (not tint_color is None):
+            if tint_color is not None:
                 tint_image = pygame.Surface(size)
                 tint_image.fill(tint_color)
                 tmp.blit(tint_image, (0, 0), special_flags=tint_flag)

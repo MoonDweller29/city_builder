@@ -1,5 +1,6 @@
 from EntitySystem import EntitySystem, Entity
 from GraphicsEngine import GraphicsEngine
+from Utils import lerp
 
 
 class EResourceParticle(Entity):
@@ -30,7 +31,7 @@ class EResourceParticle(Entity):
             EntitySystem().destroy_entity(self.id)
 
         self.y -= 0.5
-        self.alpha = Lerp(self.lifetime / self.lifetime_max, 0, 255)
+        self.alpha = lerp(self.lifetime / self.lifetime_max, 0, 255)
 
     def draw(self):
         super().draw()

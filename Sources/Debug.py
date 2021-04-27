@@ -58,5 +58,6 @@ class Debug(Entity):
         renderer.draw_text((1100, 30), self.fontName, (0, 255, 0), "UFPS: " + str(int(self.updateFps)))
         renderer.draw_text((1100, 50), self.fontName, (0, 255, 0),
                            "Entities: " + str(int(len(EntitySystem().entities))))
+        drawCallCount = GraphicsEngine().drawCalls
         renderer.draw_text((1100, 70), self.fontName, (0, 255, 0),
-                           f"DCalls: {GraphicsEngine().drawCalls - GraphicsEngine().culledDrawCalls}/{GraphicsEngine().drawCalls}")
+                           f"DCalls: {drawCallCount - GraphicsEngine().culledDrawCalls}/{drawCallCount}")

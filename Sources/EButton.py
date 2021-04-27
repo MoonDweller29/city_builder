@@ -20,9 +20,9 @@ class EButton(EUIElement):
 
         self.pressed_frames = 0
 
-    def set_greyed(self, v):
-        self.__greyed = v
-        if v == True:
+    def set_greyed(self, isGreyed):
+        self.__greyed = isGreyed
+        if isGreyed:
             self._size = self.__originSize
 
     def update(self):
