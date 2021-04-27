@@ -9,3 +9,6 @@ class EBuilding(EOnGrid):
 
     def draw(self):
         super().draw()
+
+    def on_start(self):
+        super().on_start()

@@ -1,5 +1,6 @@
 from EOnGrid import EOnGrid
 from EntitySystem import EntitySystem
+from GraphicsEngine import GraphicsEngine
 from UserInput import UserInput
 
 class EFakeBuilding(EOnGrid):
@@ -7,6 +8,9 @@ class EFakeBuilding(EOnGrid):
         super().__init__(x, y, sprite)
 
         self.drawOrder = 800
+        self.cellSize = EntitySystem().get_grid().cellSize
+        self.tint_color = (255, 255, 255)
+        self.radius = 0
 
     def on_start(self):
         super().on_start()
@@ -31,4 +35,8 @@ class EFakeBuilding(EOnGrid):
 
 
     def draw(self):
+        if self.radius > 0:
+            lt = (self.x - self.cellSize*self.radius, self.y - self.cellSize*self.radius)
+            rectSize = (self.cellSize*(2*self.radius + 1), self.cellSize*(2*self.radius + 1))
+            GraphicsEngine().draw_rectangle(self.tint_color, lt, rectSize, 100)
         super().draw()

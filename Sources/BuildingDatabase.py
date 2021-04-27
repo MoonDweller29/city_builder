@@ -1,4 +1,5 @@
 from EBuilding import EBuilding
+from ESource import ESource, ESourceType
 
 class BuildingDatabase:
     def GetAllBuildingNames(self):
@@ -8,7 +9,16 @@ class BuildingDatabase:
         return self.buildings[name][2]
 
     def GetBuilding(self, name):
-        return self.buildings[name][0](0, 0, self.buildings[name][1])
+        return self.buildings[name][0](0, 0, *(self.buildings[name][1]))
+
+    def get_affect_radius(self, name):
+        buildingClass = self.buildings[name][0]
+        if (buildingClass is EBuilding):
+            return 0
+        elif (buildingClass is ESource):
+            buildingType = ESource.nameToTypeDict[name]
+            typeInfo = ESource.typeInfoDict[buildingType]
+            return typeInfo.effectRadius
 
     __instance = None
 
@@ -20,7 +30,7 @@ class BuildingDatabase:
 
     def __init__singleton(self):
         self.buildings = {
-            "CrystalMine": (EBuilding, "CrystalMine", [("Wood", 10)]),
-            "Sawmill": (EBuilding, "Sawmill", [("Wood", 10), ("CrystalMine", 2)]),
-            "WindMill": (EBuilding, "WindMill", [("CrystalMine", 1)])
+            "Sawmill": (ESource, [ESourceType.SAW_MILL], [("Wood", 1)]),
+            "CrystalMine": (EBuilding, ["CrystalMine"], [("Wood", 10), ("CrystalMine", 2)]),
+            "WindMill": (EBuilding, ["WindMill"], [("CrystalMine", 1)])
         }

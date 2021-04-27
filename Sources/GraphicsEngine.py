@@ -85,9 +85,15 @@ class GraphicsEngine:
         pygame.draw.circle(self.screen, color, pos, radius)
 
 
-    def draw_rectangle(self, color, lt, rb):
+    def draw_rectangle(self, color, lt, rectSize, alpha=None):
         self.drawCalls += 1
-        pygame.draw.rect(self.screen, color, pygame.Rect(lt[0], lt[1], rb[0], rb[1]))
+        # pygame.draw.rect(self.screen, color, pygame.Rect(lt[0], lt[1], rectSize[0], rectSize[1]))
+
+        s = pygame.Surface(rectSize)
+        if not (alpha is None):
+            s.set_alpha(alpha)
+        s.fill(color)
+        self.screen.blit(s, lt)
 
     ##############################################################################
     # private interface

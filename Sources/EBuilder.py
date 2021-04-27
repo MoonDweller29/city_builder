@@ -25,6 +25,8 @@ class EBuilder(Entity):
         
         EntitySystem().get_entity(self.fakeBuilding).enable()
         EntitySystem().get_entity(self.fakeBuilding).sprite = buildingName
+        radius = BuildingDatabase().get_affect_radius(buildingName)
+        EntitySystem().get_entity(self.fakeBuilding).radius = radius
 
     def update(self):
         super().update()
