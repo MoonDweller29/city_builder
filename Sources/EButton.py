@@ -5,7 +5,7 @@ import pygame
 from EUIElement import EUIElement
 from GraphicsEngine import GraphicsEngine
 from UserInput import UserInput, MouseButton
-from Utils import mul, toInt
+from Utils import mul, to_int
 
 
 class EButton(EUIElement):
@@ -49,7 +49,7 @@ class EButton(EUIElement):
             self.on_pressed()
 
     def on_selected(self):
-        self._size = toInt(mul(self.__originSize, (1.2, 1.2)))
+        self._size = to_int(mul(self.__originSize, (1.2, 1.2)))
 
     def on_deselected(self):
         self._size = self.__originSize
