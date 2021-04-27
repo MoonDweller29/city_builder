@@ -1,13 +1,11 @@
-from Utils import *
-
 from EntitySystem import Entity, EntitySystem
-from GraphicsEngine import GraphicsEngine
-from UserInput import UserInput
+from Utils import add, sub, mul, div, toInt
+
 
 class EGrid(Entity):
     def __init__(self, origin, size, cellSize):
         super().__init__()
- 
+
         self.origin = origin
         self.size = size
         self.cellSize = cellSize
@@ -32,7 +30,10 @@ class EGrid(Entity):
         return add(mul(coord, (self.cellSize, self.cellSize)), self.origin)
 
     def cell_to_world_center(self, coord):
-        return add(mul(coord, (self.cellSize, self.cellSize)), add(self.origin, (self.cellSize * 0.5, self.cellSize * 0.5)))
+        return add(
+            mul(coord, (self.cellSize, self.cellSize)),
+            add(self.origin, (self.cellSize * 0.5, self.cellSize * 0.5))
+        )
 
     def get_cell_world(self, worldCoord):
         return self.get_cell(self.world_to_cell(worldCoord))
@@ -44,14 +45,16 @@ class EGrid(Entity):
             return self.contents[coord[0]][coord[1]]
 
     def on_remove_from_cell(self, id):
-        self.contents[EntitySystem().get_entity(id).get_pos()[0]][EntitySystem().get_entity(id).get_pos()[1]].discard(id)
+        curr_entity_pos = EntitySystem().get_entity(id).get_pos()
+        self.contents[curr_entity_pos[0]][curr_entity_pos[1]].discard(id)
 
     def on_add_to_cell(self, id):
-        self.contents[EntitySystem().get_entity(id).get_pos()[0]][EntitySystem().get_entity(id).get_pos()[1]].add(id)
-    
+        curr_entity_pos = EntitySystem().get_entity(id).get_pos()
+        self.contents[curr_entity_pos[0]][curr_entity_pos[1]].add(id)
+
     def is_cell_free(self, coord):
         return len(self.contents[coord[0]][coord[1]]) <= 0
-    
+
     def on_add_to_cell_xy(self, id, x, y):
         self.contents[x][y].add(id)
 
@@ -60,7 +63,3 @@ class EGrid(Entity):
 
     def draw(self):
         super().draw()
-
-        #for x in range(self.size[0]):
-        #    for y in range(self.size[1]):
-        #        GraphicsEngine().draw_circle((0, self.get_cell((x, y)), 0), toInt(self.cell_to_world_center((x, y))), (self.cellSize >> 1) - 20)

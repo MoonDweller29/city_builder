@@ -1,10 +1,12 @@
 # Resource Manager - all resources in game load from it
 
-import pygame
 import json
 
+import pygame
+
 from SpriteSheet import SpriteSheet
- 
+
+
 # @TODO нужно будет сделать систему подгрузки ресурсов
 # 1) Шрифты, картинки, может звуки (потом)
 # 2) Доступно из разных модулей программы (Давайте синглтон)
@@ -61,7 +63,7 @@ class ResourceManager:
     def create_font(self, name, path, size):
         if name in self.__fontDict:
             raise ValueError(f"Resource font {name} exist!")
-        
+
         # Проверка на системный шрифт
         if pygame.font.match_font(path):
             path = pygame.font.match_font(path)
@@ -74,7 +76,7 @@ class ResourceManager:
             return self.__imageDict[name]
         else:
             raise ValueError(f"Image resource {name} not exist!")
-    
+
     def get_sprite_sheet(self, name, x, y):
         if name in self.__spriteSheetDict:
             return self.__spriteSheetDict[name].get_sprite(x, y)

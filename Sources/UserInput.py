@@ -1,16 +1,19 @@
-import pygame
-from EntitySystem import EntitySystem
-from EUIElement import EUIElement
 from enum import Enum
 
+import pygame
+
+from EUIElement import EUIElement
+from EntitySystem import EntitySystem
+
+
 class MouseButton(Enum):
-    LEFT       = 0,
-    RIGHT      = 1
-    MIDDLE     = 3
+    LEFT = 0,
+    RIGHT = 1
+    MIDDLE = 3
     WHEEL_DOWN = 4
-    WHEEL_UP   = 5
-    EXTRA_1    = 6,
-    EXTRA_2    = 7
+    WHEEL_UP = 5
+    EXTRA_1 = 6,
+    EXTRA_2 = 7
 
     @classmethod
     def from_pygame(cls, pygameButtonCode):
@@ -25,11 +28,12 @@ class MouseButton(Enum):
         }
         return __pygameMouseButtonToMouseButton[pygameButtonCode]
 
+
 class UserInput:
     __instance = None
     __initialized = None
     __keyDown = set()
-    __mouseButtonsPressed = { keyCode :False for keyCode in MouseButton }
+    __mouseButtonsPressed = {keyCode: False for keyCode in MouseButton}
     __isUI = False
     __quit = False
 
@@ -54,13 +58,13 @@ class UserInput:
 
     def update(self):
         self.__keyDown.clear()
-        self.__mouseButtonsPressed = { keyCode :False for keyCode in MouseButton }
+        self.__mouseButtonsPressed = {keyCode: False for keyCode in MouseButton}
         self.__isUI = self.__check_ui(self.get_mouse_position())
-        
+
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
-                    mouseButton = MouseButton.from_pygame(event.button)
-                    self.__mouseButtonsPressed[mouseButton] = True
+                mouseButton = MouseButton.from_pygame(event.button)
+                self.__mouseButtonsPressed[mouseButton] = True
             elif event.type == pygame.QUIT:
                 self.__quit = True
             elif event.type == pygame.KEYDOWN:
@@ -83,4 +87,3 @@ class UserInput:
 
     def get_mouse_position(self):
         return pygame.mouse.get_pos()
-

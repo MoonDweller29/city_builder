@@ -1,9 +1,9 @@
 import pygame
 
-from GraphicsEngine import GraphicsEngine
 from EntitySystem import EntitySystem, Entity
-
+from GraphicsEngine import GraphicsEngine
 from UserInput import UserInput
+
 
 class Debug(Entity):
     def __init__(self, fontName, TICK_MS):
@@ -27,7 +27,7 @@ class Debug(Entity):
     def update(self):
         super().update()
 
-        self.updateFrames += 1 
+        self.updateFrames += 1
 
         if UserInput().is_key_down(pygame.K_F1):
             self.active = not self.active
@@ -44,7 +44,7 @@ class Debug(Entity):
 
     def draw(self):
         super().draw()
-        
+
         self.frames += 1
 
         if (not self.active):
@@ -56,7 +56,8 @@ class Debug(Entity):
 
         renderer.draw_text((1100, 10), self.fontName, (0, 255, 0), "FPS:  " + str(int(self.fps)))
         renderer.draw_text((1100, 30), self.fontName, (0, 255, 0), "UFPS: " + str(int(self.updateFps)))
-        renderer.draw_text((1100, 50), self.fontName, (0, 255, 0), "Entities: " + str(int(len(EntitySystem().entities))))
+        renderer.draw_text((1100, 50), self.fontName, (0, 255, 0),
+                           "Entities: " + str(int(len(EntitySystem().entities))))
+        drawCallCount = GraphicsEngine().drawCalls
         renderer.draw_text((1100, 70), self.fontName, (0, 255, 0),
-                           f"DCalls: {GraphicsEngine().drawCalls - GraphicsEngine().culledDrawCalls}/{GraphicsEngine().drawCalls}")
-
+                           f"DCalls: {drawCallCount - GraphicsEngine().culledDrawCalls}/{drawCallCount}")

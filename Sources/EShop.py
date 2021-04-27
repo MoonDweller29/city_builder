@@ -1,14 +1,11 @@
-from EShopButton import EShopButton
-from GraphicsEngine import GraphicsEngine
-
-from EBuilder import EBuilder
-
 from BuildingDatabase import BuildingDatabase
-
-from EntitySystem import EntitySystem
+from EBuilder import EBuilder
+from EShopButton import EShopButton
 from EUIElement import EUIElement
+from EntitySystem import EntitySystem
+from GraphicsEngine import GraphicsEngine
+from Utils import add
 
-from Utils import *
 
 class EShop(EUIElement):
     def __init__(self):
@@ -26,10 +23,11 @@ class EShop(EUIElement):
             if id >= len(names):
                 break
 
-            for x in range(3): 
+            for x in range(3):
                 if id >= len(names):
                     break
-                EntitySystem().add_entity(EShopButton(names[id], add((965, 180), (110 * x, 110 * y)), (100, 100), names[id], self.id))
+                EntitySystem().add_entity(
+                    EShopButton(names[id], add((965, 180), (110 * x, 110 * y)), (100, 100), names[id], self.id))
                 id += 1
 
     def can_buy(self, buildingName):
@@ -47,4 +45,4 @@ class EShop(EUIElement):
         super().draw()
 
         GraphicsEngine().draw_rectangle((99, 68, 57), self._position, self._size, alpha=245)
-        #GraphicsEngine().draw_text(add(self._position, (10, 10)), "Arial_20", (255, 255, 255), "Shop")
+        # GraphicsEngine().draw_text(add(self._position, (10, 10)), "Arial_20", (255, 255, 255), "Shop")

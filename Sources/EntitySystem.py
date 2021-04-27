@@ -49,10 +49,11 @@ class Entity:
     def on_destroy(self):
         pass
 
+
 class EntitySystem:
-############################################################################
-#                       Public interface
-############################################################################
+    ############################################################################
+    #                       Public interface
+    ############################################################################
 
     def get_grid(self):
         return self.get_entity(self.gridId)
@@ -68,14 +69,14 @@ class EntitySystem:
         return id
 
     def find_entity(self, name):
-        for id, entity in self.entities.items(): 
+        for id, entity in self.entities.items():
             if entity.name == name:
                 return id
         return -1
 
     def find_all_children(self, cls):
         result = []
-        for id, entity in self.entities.items(): 
+        for id, entity in self.entities.items():
             if isinstance(entity, cls):
                 result.append(id)
         return result
@@ -100,15 +101,15 @@ class EntitySystem:
                 entity.update()
 
     def draw(self):
-        self.__update_preprocess() # Ensure that enable and on_start are called before first draw and update methods
-        
+        self.__update_preprocess()  # Ensure that enable and on_start are called before first draw and update methods
+
         for entity in sorted(self.entities.values(), key=lambda e: e.drawOrder):
             if (entity.enabled):
                 entity.draw()
 
-############################################################################
-#                       Private interface
-############################################################################
+    ############################################################################
+    #                       Private interface
+    ############################################################################
 
     __instance = None
 
@@ -138,7 +139,7 @@ class EntitySystem:
             self.get_entity(id).on_start()
 
             # if was disabled after contruction - don't call enable
-            if self.get_entity(id).enabled: # Enable for the first time 
+            if self.get_entity(id).enabled:  # Enable for the first time
                 self.get_entity(id).enabled = False
                 self.get_entity(id).enable()
 

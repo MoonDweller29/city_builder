@@ -1,7 +1,8 @@
 import pygame
-from ResourceManager import ResourceManager
 
-from Utils import *
+from ResourceManager import ResourceManager
+from Utils import sub, div
+
 
 class GraphicsEngine:
     ##############################################################################
@@ -23,7 +24,7 @@ class GraphicsEngine:
 
         pygame.display.flip()
 
-    def set_render_target(self, surface = None):
+    def set_render_target(self, surface=None):
         if surface is None:
             surface = self.__screen
 
@@ -33,10 +34,10 @@ class GraphicsEngine:
     # draw methods
 
     def draw_image_bot(self, name, position, size, tint_color=None, tint_flag=pygame.BLEND_RGBA_MULT):
-        self.draw_image(name, sub(position, size), size, tint_color=tint_color, tint_flag= tint_flag)
+        self.draw_image(name, sub(position, size), size, tint_color=tint_color, tint_flag=tint_flag)
 
     def draw_image_centered(self, name, position, size, tint_color=None, tint_flag=pygame.BLEND_RGBA_MULT):
-        self.draw_image(name, sub(position, div(size, (2, 2))), size, tint_color=tint_color, tint_flag= tint_flag)
+        self.draw_image(name, sub(position, div(size, (2, 2))), size, tint_color=tint_color, tint_flag=tint_flag)
 
     def draw_image(self, name, position, size, alpha=255, tint_color=None, tint_flag=pygame.BLEND_RGBA_MULT):
         self.drawCalls += 1
@@ -50,20 +51,21 @@ class GraphicsEngine:
         #
         if (alpha == 255):
             tmp.set_alpha(alpha)
-        else: 
+        else:
             tmp.set_alpha(None)
 
-        if (not tint_color is None):
+        if tint_color is not None:
             tint_image = pygame.Surface(size)
             tint_image.fill(tint_color)
             tmp.blit(tint_image, (0, 0), special_flags=tint_flag)
-        
+
         # @TODO alpha не работает у AlexHonor провить эту дичь
-        #tmp.set_alpha(128)
+        # tmp.set_alpha(128)
 
         self.__renderTarget.blit(tmp, rect)
 
-    def draw_sprite(self, name, tileCoord, position, size, alpha=255, tint_color=None, tint_flag=pygame.BLEND_RGBA_MULT):
+    def draw_sprite(self, name, tileCoord, position, size, alpha=255, tint_color=None,
+                    tint_flag=pygame.BLEND_RGBA_MULT):
         self.drawCalls += 1
 
         rect = pygame.Rect(position[0], position[1], size[0], size[1])
@@ -76,7 +78,7 @@ class GraphicsEngine:
             else:
                 tmp.set_alpha(None)
 
-            if (not tint_color is None):
+            if tint_color is not None:
                 tint_image = pygame.Surface(size)
                 tint_image.fill(tint_color)
                 tmp.blit(tint_image, (0, 0), special_flags=tint_flag)
@@ -94,7 +96,6 @@ class GraphicsEngine:
         self.drawCalls += 1
         pygame.draw.circle(self.__renderTarget, color, pos, radius)
 
-
     def draw_rectangle(self, color, lt, rectSize, alpha=None):
         self.drawCalls += 1
         # pygame.draw.rect(self.__renderTarget, color, pygame.Rect(lt[0], lt[1], rectSize[0], rectSize[1]))
@@ -108,7 +109,6 @@ class GraphicsEngine:
     def draw_surface(self, surface, lt):
         self.drawCalls += 1
         self.__renderTarget.blit(surface, lt)
-
 
     ##############################################################################
     # private interface
