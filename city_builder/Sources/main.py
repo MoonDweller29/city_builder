@@ -20,7 +20,7 @@ def main():
 
     terrainOrigin = (0, 0)
     terrainTileSize = 40
-    terrain = ETerrain(RootPath().create_path("../Resources/Maps/test_map.png"), origin=terrainOrigin, tileSize=terrainTileSize)
+    terrain = ETerrain(RootPath().create_path("Resources/Maps/test_map.png"), origin=terrainOrigin, tileSize=terrainTileSize)
 
     EntitySystem().add_entity(terrain)
     EntitySystem().gridId = EntitySystem().add_entity(EGrid(terrainOrigin, terrain.get_size(), terrainTileSize))

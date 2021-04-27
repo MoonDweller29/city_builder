@@ -30,7 +30,7 @@ class ResourceManager:
 
     def __init__(self):
         if not self.__initialized:
-            with open(RootPath().create_path("../Resources.json")) as json_file:
+            with open(RootPath().create_path("Resources.json")) as json_file:
                 data = json.load(json_file)
                 self.__imageDict["None"] = pygame.Surface((0, 0))
                 for (name, path) in data["Images"].items():
@@ -42,10 +42,10 @@ class ResourceManager:
             self.__initialized = True
 
     def __load_img(self, path):
-        return pygame.image.load(RootPath().create_path("../" + path)).convert_alpha()
+        return pygame.image.load(RootPath().create_path(path)).convert_alpha()
 
     def __load_font(self, path, size):
-        return pygame.font.Font(RootPath().create_path("../" + path), size)
+        return pygame.font.Font(RootPath().create_path(path), size)
 
     def create_img(self, name, path):
         if name in self.__imageDict:
