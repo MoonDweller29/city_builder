@@ -1,5 +1,7 @@
+import pygame
 from EntitySystem import Entity
 from Utils import *
+from ResourceManager import ResourceManager
 from GraphicsEngine import GraphicsEngine
 from EntitySystem import EntitySystem
 from TreeFactory import TreeFactory
@@ -135,6 +137,7 @@ class ETerrain(Entity):
         self.__tileSize = (tileSize, tileSize)
         self.__spriteSheetName = "SP-Overworld"
         self.__load_map(mapPath)
+        self.__draw_to_surface()
 
     def __load_map(self, path):
         imgMap = img_as_ubyte(imread(path))[:,:,:3].astype(np.uint32)
@@ -210,6 +213,25 @@ class ETerrain(Entity):
 
         return (0,0)
 
+    def __draw_to_surface(self):
+        shape = self.__logicMap.shape
+        surfSize = (self.__tileSize[0]*shape[1], self.__tileSize[1]*shape[1])
+        self.__terrainTex = pygame.Surface(surfSize)
+
+        renderer = GraphicsEngine()
+        renderer.set_render_target(self.__terrainTex)
+
+        for y in range(self.__logicMap.shape[0]):
+            for x in range(self.__logicMap.shape[1]):
+                renderer.draw_sprite(self.__spriteSheetName,
+                                     self.__spriteIds[y][x],
+                                     (self.__tileSize[0] * x, self.__tileSize[1] * y),
+                                     self.__tileSize)
+
+        renderer.set_render_target()
+        # pygame.image.save(self.__terrainTex, "current_map.png")
+
+
     def get_size(self):
         return self.__logicMap.shape
 
@@ -234,11 +256,13 @@ class ETerrain(Entity):
         super().draw()
 
         renderer = GraphicsEngine()
+        renderer.draw_surface(self.__terrainTex, self.__origin)
 
-        for y in range(self.__logicMap.shape[0]):
-            for x in range(self.__logicMap.shape[1]):
-                renderer.draw_sprite(self.__spriteSheetName,
-                                     self.__spriteIds[y][x],
-                                     add(self.__origin, (self.__tileSize[0] * x, self.__tileSize[1] * y)),
-                                     self.__tileSize)
+        # non optimal approach
+        # for y in range(self.__logicMap.shape[0]):
+        #     for x in range(self.__logicMap.shape[1]):
+        #         renderer.draw_sprite(self.__spriteSheetName,
+        #                              self.__spriteIds[y][x],
+        #                              add(self.__origin, (self.__tileSize[0] * x, self.__tileSize[1] * y)),
+        #                              self.__tileSize)
 
