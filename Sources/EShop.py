@@ -37,9 +37,7 @@ class EShop(EUIElement):
         return EntitySystem().get_entity(self.resourcePanel).can_buy(costs)
 
     def try_buying(self, buildingName):
-        costs = BuildingDatabase().GetBuildingCosts(buildingName)
         if self.can_buy(buildingName):
-            EntitySystem().get_entity(self.resourcePanel).spend(costs)
             EntitySystem().get_entity(self.builder).start_building(buildingName)
 
     def update(self):
