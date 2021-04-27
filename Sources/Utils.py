@@ -19,3 +19,6 @@ def floor(a, b):
 
 def toInt(a):
     return (int(a[0]), int(a[1]))
+
+def Lerp(t, a, b):
+    return a + (b - a) * t

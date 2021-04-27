@@ -18,12 +18,13 @@ class Entity:
         self.id = 0
         self.name = "Unnamed"
         self.tag = "Tag"
-        self.enabled = False
+        self.enabled = True
 
     def enable(self):
         if (not self.enabled):
             self.enabled = True
             self.on_enable()
+            self.__init = True
 
     def disable(self):
         if (self.enabled):
@@ -59,14 +60,10 @@ class EntitySystem:
     def add_entity(self, entity):
         id = self.__get_unused_id()
 
-        #self.entitiesToStart.append(id)
+        self.entitiesToStart.append(id)
 
         self.entities[id] = entity
         self.entities[id].id = id
-
-        self.entities[id].enable()
-
-        self.entities[id].on_start()
 
         return id
 
@@ -103,6 +100,8 @@ class EntitySystem:
                 entity.update()
 
     def draw(self):
+        self.__update_preprocess() # Ensure that enable and on_start are called before first draw and update methods
+        
         for entity in sorted(self.entities.values(), key=lambda e: e.drawOrder):
             if (entity.enabled):
                 entity.draw()
@@ -135,7 +134,12 @@ class EntitySystem:
 
         self.entitiesToDelete.clear()
 
-        #for id in self.entitiesToStart:
-        #    self.get_entity(self.entitiesToStart[id]).on_start()
+        for id in self.entitiesToStart:
+            self.get_entity(id).on_start()
 
-        #self.entitiesToStart.clear()
+            # if was disabled after contruction - don't call enable
+            if self.get_entity(id).enabled: # Enable for the first time 
+                self.get_entity(id).enabled = False
+                self.get_entity(id).enable()
+
+        self.entitiesToStart.clear()

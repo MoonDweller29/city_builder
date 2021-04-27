@@ -4,6 +4,8 @@ from EGrid import EGrid
 from ETree import ETree
 from enum import Enum
 
+from EResourceParticle import EResourceParticle
+
 class ESourceType(Enum):
     WIND_MILL = 0
     SAW_MILL  = 1
@@ -54,6 +56,8 @@ class ESource(EBuilding):
                 onTickCount = self.__onTickResourceCounts[i]
                 self.__resourcePanel.add_resource(modRes.resourceName, onTickCount)
                 self.__tickCounters[i] = 0
+
+                EntitySystem().add_entity(EResourceParticle(self.x, self.y, modRes.resourceName, onTickCount))
 
         self.__tickCounters = [i+1 for i in self.__tickCounters]
 
