@@ -49,4 +49,4 @@ class EShop(EUIElement):
         super().draw()
 
         GraphicsEngine().draw_rectangle((99, 68, 57), self._position, self._size, alpha=245)
-        GraphicsEngine().draw_text((1060, 20), "Arial_20", (255, 255, 255), "Shop")
+        #GraphicsEngine().draw_text(add(self._position, (10, 10)), "Arial_20", (255, 255, 255), "Shop")

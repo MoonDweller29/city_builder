@@ -29,10 +29,10 @@ class ESource(EBuilding):
         "Sawmill"  : ESourceType.SAW_MILL
     }
     typeInfoDict = {
-        ESourceType.WIND_MILL : ESourceInfo("WindMill", 5, [
-            ResourceModifyingInfo("Food", 1, 60)
+        ESourceType.WIND_MILL : ESourceInfo("WindMill", 0, [
+            ResourceModifyingInfo("Food", 1, 240)
         ], {}),
-        ESourceType.SAW_MILL  : ESourceInfo("Sawmill", 2, [
+        ESourceType.SAW_MILL  : ESourceInfo("Sawmill", 1, [
             ResourceModifyingInfo("Wood", 1, 360)
         ],{
             "Tree" : 1 #@TODO: refactor this

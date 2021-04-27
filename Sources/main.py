@@ -68,7 +68,7 @@ while running:
         leftSimTime -= TICK_MS
 
     #Render
-    GraphicsEngine().clear_screen((0, 30, 0))
+    GraphicsEngine().clear_screen((36, 159, 222))
 
     EntitySystem().draw()
 

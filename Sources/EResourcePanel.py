@@ -20,13 +20,13 @@ class EResourcePanel(Entity):
         self.__resources = {}
         self.__resourcesInfo = {}
 
-        self.__resources["People"] = 2
+        self.__resources["People"] = 5
         self.__resourcesInfo["People"] = ("PeopleResource", 0)
 
         self.__resources["Food"] = 2
         self.__resourcesInfo["Food"] = ("Food", 0)
 
-        self.__resources["Wood"] = 100
+        self.__resources["Wood"] = 20
         self.__resourcesInfo["Wood"] = ("Wood", 0)
 
         self.__resources["Gold"] = 2
@@ -68,7 +68,7 @@ class EResourcePanel(Entity):
     def draw(self):
         super().draw()
 
-        GraphicsEngine().draw_rectangle((0, 0, 0), (0, 0), (1280, 40))
+        GraphicsEngine().draw_rectangle((0, 0, 0), (0, 0), (1280, 40), alpha=200)
 
         id = 0
         for k, v in self.__resourcesInfo.items():
