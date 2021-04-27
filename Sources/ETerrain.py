@@ -230,7 +230,7 @@ class ETerrain(Entity):
         # pygame.image.save(self.__terrainTex, "current_map.png")
 
     def get_size(self):
-        return self.__logicMap.shape
+        return (self.__logicMap.shape[1], self.__logicMap.shape[0])
 
     def fill_grid(self, grid):
         shape = self.__logicMap.shape
