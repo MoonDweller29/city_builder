@@ -1,5 +1,6 @@
 import os
 
+
 class RootPath:
     __instance = None
     __initialized = None
@@ -17,6 +18,6 @@ class RootPath:
 
     def get_path(self):
         return self.__rootPath
-    
+
     def create_path(self, path):
         return os.path.join(self.__rootPath, path)
