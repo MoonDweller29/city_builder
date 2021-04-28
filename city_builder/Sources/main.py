@@ -1,26 +1,25 @@
 import pygame
 
 from .Debug import Debug
+from .ECursor import ECursor
 from .EGrid import EGrid
 from .EResourcePanel import EResourcePanel
 from .EShop import EShop
 from .ETerrain import ETerrain
 from .EntitySystem import EntitySystem
 from .GraphicsEngine import GraphicsEngine
-from .ResourceManager import ResourceManager
-from .UserInput import UserInput
-from .ECursor import ECursor
 from .RootPath import RootPath
+from .UserInput import UserInput
 
 
 def app():
     GraphicsEngine().init_window([1280, 720], 'City Builder')
 
-    fontArial = ResourceManager().get_font("Arial_20")
-
     terrainOrigin = (0, 0)
     terrainTileSize = 40
-    terrain = ETerrain(RootPath().create_path("Resources/Maps/test_map.png"), origin=terrainOrigin, tileSize=terrainTileSize)
+    terrain = ETerrain(RootPath().create_path("Resources/Maps/test_map.png"),
+                       origin=terrainOrigin,
+                       tileSize=terrainTileSize)
 
     EntitySystem().add_entity(terrain)
     EntitySystem().gridId = EntitySystem().add_entity(EGrid(terrainOrigin, terrain.get_size(), terrainTileSize))
