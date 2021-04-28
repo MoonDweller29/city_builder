@@ -10,7 +10,7 @@ import locale
 
 
 language = gettext.translation('EShop',
-                               localedir='city_builder/locales',
+                               localedir='city_builder/Resources/locales',
                                languages=[locale.getdefaultlocale()[0], 'en-us'])
 
 language.install()
