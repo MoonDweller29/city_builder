@@ -1,6 +1,6 @@
-from EBuilding import EBuilding
-from EResourceProvider import EResourceProvider
-from ESource import ESource, ESourceType
+from .EBuilding import EBuilding
+from .EResourceProvider import EResourceProvider
+from .ESource import ESource, ESourceType
 
 
 class BuildingDatabase:

@@ -4,7 +4,8 @@ import json
 
 import pygame
 
-from SpriteSheet import SpriteSheet
+from .SpriteSheet import SpriteSheet
+from .RootPath import RootPath
 
 
 # @TODO нужно будет сделать систему подгрузки ресурсов
@@ -29,7 +30,7 @@ class ResourceManager:
 
     def __init__(self):
         if not self.__initialized:
-            with open('Resources.json') as json_file:
+            with open(RootPath().create_path("../Resources.json")) as json_file:
                 data = json.load(json_file)
                 self.__imageDict["None"] = pygame.Surface((0, 0))
                 for (name, path) in data["Images"].items():
@@ -41,10 +42,10 @@ class ResourceManager:
             self.__initialized = True
 
     def __load_img(self, path):
-        return pygame.image.load(path).convert_alpha()
+        return pygame.image.load(RootPath().create_path("../" + path)).convert_alpha()
 
     def __load_font(self, path, size):
-        return pygame.font.Font(path, size)
+        return pygame.font.Font(RootPath().create_path("../" + path), size)
 
     def create_img(self, name, path):
         if name in self.__imageDict:
@@ -66,9 +67,9 @@ class ResourceManager:
 
         # Проверка на системный шрифт
         if pygame.font.match_font(path):
-            path = pygame.font.match_font(path)
-
-        self.__fontDict[name] = self.__load_font(path, size)
+            self.__fontDict[name] = pygame.font.SysFont(path, size)
+        else:
+            self.__fontDict[name] = self.__load_font(path, size)
         return self.__fontDict[name]
 
     def get_image(self, name):

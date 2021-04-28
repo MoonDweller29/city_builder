@@ -1,6 +1,6 @@
-from EBuilding import EBuilding
-from EResourceParticle import EResourceParticle
-from EntitySystem import EntitySystem
+from .EBuilding import EBuilding
+from .EResourceParticle import EResourceParticle
+from .EntitySystem import EntitySystem
 
 
 class EResourceProvider(EBuilding):

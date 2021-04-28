@@ -1,4 +1,4 @@
-from EntitySystem import Entity
+from .EntitySystem import Entity
 
 
 class EUIElement(Entity):

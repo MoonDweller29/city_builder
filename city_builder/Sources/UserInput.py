@@ -2,8 +2,8 @@ from enum import Enum
 
 import pygame
 
-from EUIElement import EUIElement
-from EntitySystem import EntitySystem
+from .EUIElement import EUIElement
+from .EntitySystem import EntitySystem
 
 
 class MouseButton(Enum):

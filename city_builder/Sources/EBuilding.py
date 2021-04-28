@@ -1,7 +1,7 @@
 import pygame
 
-from EOnGrid import EOnGrid
-from Utils import lerp, ease_out_elastic
+from .EOnGrid import EOnGrid
+from .Utils import lerp, ease_out_elastic
 
 
 class EBuilding(EOnGrid):

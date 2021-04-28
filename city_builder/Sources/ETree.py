@@ -3,7 +3,7 @@ import random
 
 import pygame
 
-from EStaticObject import EStaticObject
+from .EStaticObject import EStaticObject
 
 
 class ETree(EStaticObject):

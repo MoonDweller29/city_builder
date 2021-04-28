@@ -1,9 +1,9 @@
 from enum import Enum
 
-from EBuilding import EBuilding
-from EResourceParticle import EResourceParticle
-from ETree import ETree
-from EntitySystem import EntitySystem
+from .EBuilding import EBuilding
+from .EResourceParticle import EResourceParticle
+from .ETree import ETree
+from .EntitySystem import EntitySystem
 
 
 class ESourceType(Enum):

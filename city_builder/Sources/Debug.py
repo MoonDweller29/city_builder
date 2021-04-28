@@ -1,8 +1,8 @@
 import pygame
 
-from EntitySystem import EntitySystem, Entity
-from GraphicsEngine import GraphicsEngine
-from UserInput import UserInput
+from .EntitySystem import EntitySystem, Entity
+from .GraphicsEngine import GraphicsEngine
+from .UserInput import UserInput
 
 
 class Debug(Entity):

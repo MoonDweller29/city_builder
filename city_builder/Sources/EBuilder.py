@@ -1,7 +1,7 @@
-from BuildingDatabase import BuildingDatabase
-from EFakeBuilding import EFakeBuilding
-from EntitySystem import EntitySystem, Entity
-from UserInput import UserInput, MouseButton
+from .BuildingDatabase import BuildingDatabase
+from .EFakeBuilding import EFakeBuilding
+from .EntitySystem import EntitySystem, Entity
+from .UserInput import UserInput, MouseButton
 
 
 class EBuilder(Entity):

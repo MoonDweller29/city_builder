@@ -5,10 +5,10 @@ import pygame
 from skimage import img_as_ubyte
 from skimage.io import imread
 
-from EntitySystem import Entity
-from EntitySystem import EntitySystem
-from GraphicsEngine import GraphicsEngine
-from TreeFactory import TreeFactory
+from .EntitySystem import Entity
+from .EntitySystem import EntitySystem
+from .GraphicsEngine import GraphicsEngine
+from .TreeFactory import TreeFactory
 
 
 def to_color_hash(r, g, b):
