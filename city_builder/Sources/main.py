@@ -13,7 +13,7 @@ from .ECursor import ECursor
 from .RootPath import RootPath
 
 
-def main():
+def app():
     GraphicsEngine().init_window([1280, 720], 'City Builder')
 
     fontArial = ResourceManager().get_font("Arial_20")
