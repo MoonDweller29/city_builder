@@ -37,8 +37,11 @@ jobs:
     - name: Create wheel
       run: |
         python setup.py bdist_wheel
-#        cp city_builder
-        
+        cp dist/city_builder-1.0-py3-none-any.whl path/to/artifact/
+    - uses: actions/upload-artifact@v2
+      with:
+        name: my-artifact
+        path: path/to/artifact/city_builder-1.0-py3-none-any.whl   
 #     - name: Test with pytest
 #       run: |
 #         pytest
