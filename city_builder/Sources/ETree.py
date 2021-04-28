@@ -4,6 +4,7 @@ import random
 import pygame
 
 from .EStaticObject import EStaticObject
+from .Utils import add, sub, mul
 
 
 class ETree(EStaticObject):
@@ -11,18 +12,24 @@ class ETree(EStaticObject):
         super().__init__(x, y, sprite, spritePos)
 
         self.seed = random.random() * 12331
+        self.__startSize = self.size
+        self.__origin = (0.5, 0.875)
 
     def on_start(self):
         super().on_start()
 
-        self.y_start = self.y
+        self.__startPos = (self.x, self.y)
 
     def update(self):
         super().update()
 
     def draw(self):
-        self.size = (self.size[0], int(math.sin(self.seed + pygame.time.get_ticks() / 1200.0) * 3 + 32))
+        self.size = (
+            self.size[0],
+            int(math.sin(self.seed + pygame.time.get_ticks() / 1200.0) * 2 - 3 + self.__startSize[1])
+        )
 
-        self.y = self.y_start - self.size[1] + 32
+        originPos = add(self.__startPos, mul(self.__startSize, self.__origin))
+        self.x, self.y = sub(originPos, mul(self.size, self.__origin))
 
         super().draw()
