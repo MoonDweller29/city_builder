@@ -12,7 +12,6 @@ def add(a: Tuple, b: Tuple) -> Tuple:
     :param b: tuple of size N which contains objects with overloaded operator.__add__
     :return: tuple of size N with element-wise sum of tuples a and b
     """
-
     return tuple(map(operator.add, a, b))
 
 
@@ -23,7 +22,6 @@ def sub(a: Tuple, b: Tuple) -> Tuple:
     :param b: tuple of size N which contains objects with overloaded operator.__sub__
     :return: tuple of size N with element-wise subtraction of tuple b from tuple a
     """
-
     return tuple(map(operator.sub, a, b))
 
 
@@ -34,7 +32,6 @@ def mul(a: Tuple, b: Tuple) -> Tuple:
     :param b: tuple of size N which contains objects with overloaded operator.__mul__
     :return: tuple of size N with element-wise multiplication of tuples a and b
     """
-
     return tuple(map(operator.mul, a, b))
 
 
@@ -45,7 +42,6 @@ def div(a: Tuple, b: Tuple) -> Tuple:
     :param b: tuple of size N which contains objects with overloaded operator.__div__
     :return: tuple of size N with element-wise division of tuple a by tuple b
     """
-
     return tuple(map(operator.truediv, a, b))
 
 
@@ -55,7 +51,6 @@ def floor(x: Tuple) -> Tuple:
     :param x: tuple of floats or objects with overloaded __floor__() method
     :return: tuple of floored elements of x
     """
-
     return tuple(map(math.floor, x))
 
 
@@ -65,7 +60,6 @@ def to_int(a: Tuple[float, float]) -> Tuple[int, int]:
     :param a: tuple of 2 float elements
     :return: tuple of 2 int elements
     """
-
     return (int(a[0]), int(a[1]))
 
 
@@ -77,7 +71,6 @@ def lerp(t: float, a: float, b: float) -> float:
     :param b: second value for linear interpolation
     :return: interpolated value between a and b
     """
-
     if (t > 1):
         return b
 
@@ -93,7 +86,6 @@ def ease_out_elastic(t: float) -> float:
     :param t: time in range [0, 1]
     :return: calculated easing value
     """
-
     c4 = (2 * math.pi) / 3
 
     if t < 0:
