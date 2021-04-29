@@ -15,7 +15,7 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: city_builder/Sources/EShop.py:52 city_builder/Sources/EShop.py:53
+#: city_builder/Sources/EShop.py:58 city_builder/Sources/EShop.py:59
 msgid "Shop"
 msgstr "Магазин"
 

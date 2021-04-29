@@ -15,19 +15,19 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: city_builder/Sources/EShopButton.py:23
+#: city_builder/Sources/EShopButton.py:26
 msgid "Mine"
 msgstr "Шахта"
 
-#: city_builder/Sources/EShopButton.py:24
+#: city_builder/Sources/EShopButton.py:27
 msgid "Sawmill"
 msgstr "Лесопилка"
 
-#: city_builder/Sources/EShopButton.py:25
+#: city_builder/Sources/EShopButton.py:28
 msgid "Windmill"
 msgstr "Мельница"
 
-#: city_builder/Sources/EShopButton.py:26
+#: city_builder/Sources/EShopButton.py:29
 msgid "House"
 msgstr "Дом"
 

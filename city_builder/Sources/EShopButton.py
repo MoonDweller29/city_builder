@@ -50,10 +50,10 @@ class EShopButton(EButton):
         # GraphicsEngine().draw_rectangle((230, 230, 230), add(self._position, (-48, 32)), (80, 20), alpha=200)
 
         GraphicsEngine().draw_text(add(self._position, (-48 - 3, 20 + 3)), "ShopButtonFont",
-                            (0, 0, 0), self.outputNames[self.buildingName])
+                                   (0, 0, 0), self.outputNames[self.buildingName])
 
         GraphicsEngine().draw_text(add(self._position, (-48, 20)), "ShopButtonFont",
-                            (255, 255, 255), self.outputNames[self.buildingName])
+                                   (255, 255, 255), self.outputNames[self.buildingName])
 
         resourceStatus = EntitySystem().get_entity(self.__resourcePanel).check_needed_resources(self.costs)
 
@@ -67,10 +67,12 @@ class EShopButton(EButton):
             if not resourceStatus[i]:
                 textColor = (255, 45, 17)
 
-            GraphicsEngine().draw_text(add(add(self._position, (-48 + 25 - 3, 20+ 25 + 3)), (64 * i, 0)), "ShopButtonFont",
+            GraphicsEngine().draw_text(add(add(self._position, (-48 + 25 - 3, 20 + 25 + 3)), (64 * i, 0)),
+                                       "ShopButtonFont",
                                        (0, 0, 0), str(self.costs[i][1]))
 
-            GraphicsEngine().draw_text(add(add(self._position, (-48 + 25, 20+ 25)), (64 * i, 0)), "ShopButtonFont",
+            GraphicsEngine().draw_text(add(add(self._position, (-48 + 25, 20 + 25)), (64 * i, 0)),
+                                       "ShopButtonFont",
                                        textColor, str(self.costs[i][1]))
 
     def on_pressed(self):

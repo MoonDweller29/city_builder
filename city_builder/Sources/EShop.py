@@ -9,7 +9,10 @@ import gettext
 import locale
 
 
-language = gettext.translation('EShop', localedir='city_builder/locales', languages=[locale.getdefaultlocale()[0], 'en-us'])
+language = gettext.translation('EShop',
+                               localedir='city_builder/locales',
+                               languages=[locale.getdefaultlocale()[0], 'en-us'])
+
 language.install()
 _ = language.gettext
 
