@@ -13,6 +13,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Create enviroment
+      run: |
+        mkdir -p path/to/artifact
     - name: Set up Python 3.9
       uses: actions/setup-python@v2
       with:
@@ -20,7 +23,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8 pydocstyle pytest
+        pip install flake8 pydocstyle pytest setuptools wheel
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Check flake8
       run: |
@@ -31,3 +34,11 @@ jobs:
     - name: Pytest
       run: |
         pytest city_builder/Sources/Tests.py
+    - name: Create wheel
+      run: |
+        python setup.py bdist_wheel
+        cp dist/city_builder-1.0-py3-none-any.whl path/to/artifact/
+    - uses: actions/upload-artifact@v2
+      with:
+        name: wheel-artifact
+        path: path/to/artifact/city_builder-1.0-py3-none-any.whl   
