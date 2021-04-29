@@ -1,3 +1,5 @@
+"""Module contains functions of vector operations on tuples and other useful ones."""
+
 import math
 import operator
 from typing import Tuple
