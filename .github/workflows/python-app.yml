@@ -2,7 +2,7 @@ name: Python application
 
 on:
   push:
-    branches: [ master, smirnov/Artifact ]
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
