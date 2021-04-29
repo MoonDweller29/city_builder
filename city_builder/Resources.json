@@ -16,6 +16,7 @@
     "Fonts": {
         "Arial_20": ["Resources/Font/vinque rg.ttf", 17],
         "CustomFont_20": ["Resources/Font/vinque rg.ttf", 20],
-        "ShopButtonFont": ["Resources/Font/vinque rg.ttf", 17] 
+        "ShopButtonFont": ["Resources/Font/vinque rg.ttf", 17],
+        "ShopTitleFont": ["Resources/Font/vinque rg.ttf", 22] 
     }
 }
