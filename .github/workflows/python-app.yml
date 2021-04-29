@@ -23,7 +23,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8 pydocstyle pytest setuptools wheel
+        pip install flake8 pydocstyle pytest setuptools wheel sphinx
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Check flake8
       run: |
@@ -38,7 +38,20 @@ jobs:
       run: |
         python setup.py bdist_wheel
         cp dist/city_builder-1.0-py3-none-any.whl path/to/artifact/
-    - uses: actions/upload-artifact@v2
+    - name: Sphinx
+      run: |
+        cd docs
+        sphinx-apidoc -o . ..
+        make html
+        cp -R _build/html ../path/to/artifact/
+    - name: Create wheel artifact
+      uses: actions/upload-artifact@v2
       with:
         name: wheel-artifact
-        path: path/to/artifact/city_builder-1.0-py3-none-any.whl   
+        path: |
+          path/to/artifact/city_builder-1.0-py3-none-any.whl
+    - name: Create sphinx artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: sphinx-artifact
+        path: path/to/artifact/html
