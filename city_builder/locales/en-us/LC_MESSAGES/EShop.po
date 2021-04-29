@@ -17,5 +17,5 @@ msgstr ""
 
 #: city_builder/Sources/EShop.py:52 city_builder/Sources/EShop.py:53
 msgid "Shop"
-msgstr "Магазин"
+msgstr ""
 

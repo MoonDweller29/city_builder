@@ -1,11 +1,12 @@
-# SOME DESCRIPTIVE TITLE.
+
++0# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR ORGANIZATION
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-04-29 05:19+0300\n"
+"POT-Creation-Date: 2021-04-29 06:52+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,19 +16,19 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: city_builder/Sources/EShopButton.py:18
-msgid "CrystalMine"
+#: city_builder/Sources/EShopButton.py:23
+msgid "Mine"
 msgstr ""
 
-#: city_builder/Sources/EShopButton.py:19
+#: city_builder/Sources/EShopButton.py:24
 msgid "Sawmill"
 msgstr ""
 
-#: city_builder/Sources/EShopButton.py:20
+#: city_builder/Sources/EShopButton.py:25
 msgid "Windmill"
 msgstr ""
 
-#: city_builder/Sources/EShopButton.py:21
+#: city_builder/Sources/EShopButton.py:26
 msgid "House"
 msgstr ""
 

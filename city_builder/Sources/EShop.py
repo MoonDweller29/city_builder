@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from .BuildingDatabase import BuildingDatabase
 from .EBuilder import EBuilder
 from .EShopButton import EShopButton
@@ -6,10 +8,13 @@ from .EntitySystem import EntitySystem
 from .GraphicsEngine import GraphicsEngine
 from .Utils import add
 import gettext
+import locale
 
-ru = gettext.translation('EShop', localedir='city_builder/locales', languages=['ru'])
-ru.install()
-_ = ru.gettext
+
+language = gettext.translation('EShop', localedir='city_builder/locales', languages=[locale.getdefaultlocale()[0], 'en-us'])
+language.install()
+_ = language.gettext
+
 
 class EShop(EUIElement):
     def __init__(self):

@@ -1,13 +1,18 @@
+# -*- coding: cp1251 -*-
+
 from .BuildingDatabase import BuildingDatabase
 from .EButton import EButton
 from .EntitySystem import EntitySystem
 from .GraphicsEngine import GraphicsEngine
 from .Utils import add
 import gettext
+import locale
 
-ru = gettext.translation('EShopButton', localedir='city_builder/locales', languages=['ru'])
-ru.install()
-_ = ru.gettext
+
+language = gettext.translation('EShopButton', localedir='city_builder/locales', languages=[locale.getdefaultlocale()[0], 'en-us'])
+language.install()
+_ = language.gettext
+
 
 class EShopButton(EButton):
     def __init__(self, name, position, size, buildingName, shopPanel):
@@ -18,10 +23,10 @@ class EShopButton(EButton):
 
         # @TODO Remove this
         self.outputNames = {
-            "CrystalMine": _("CrystalMine"),
-            "Sawmill": _("Sawmill"),
-            "WindMill": _("Windmill"),
-            "House": _("House"),
+            "CrystalMine": _(u"Mine"),
+            "Sawmill": _(u"Sawmill"),
+            "WindMill": _(u"Windmill"),
+            "House": _(u"House"),
         }
 
         self.__resourcePanel = EntitySystem().find_entity("ResourcePanel")
