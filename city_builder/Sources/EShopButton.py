@@ -1,5 +1,3 @@
-# -*- coding: cp1251 -*-
-
 from .BuildingDatabase import BuildingDatabase
 from .EButton import EButton
 from .EntitySystem import EntitySystem
@@ -9,7 +7,9 @@ import gettext
 import locale
 
 
-language = gettext.translation('EShopButton', localedir='city_builder/locales', languages=[locale.getdefaultlocale()[0], 'en-us'])
+language = gettext.translation('EShopButton',
+                               localedir='city_builder/locales',
+                               languages=[locale.getdefaultlocale()[0], 'en-us'])
 language.install()
 _ = language.gettext
 

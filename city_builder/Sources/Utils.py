@@ -79,12 +79,6 @@ def lerp(t: float, a: float, b: float) -> float:
     if (t < 0):
         return a
 
-    if (t > 1):
-        return b
-
-    if (t < 0):
-        return a
-
     return a + (b - a) * t
 
 

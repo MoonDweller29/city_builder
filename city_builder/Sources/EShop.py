@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from .BuildingDatabase import BuildingDatabase
 from .EBuilder import EBuilder
 from .EShopButton import EShopButton
