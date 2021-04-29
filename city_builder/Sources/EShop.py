@@ -5,7 +5,11 @@ from .EUIElement import EUIElement
 from .EntitySystem import EntitySystem
 from .GraphicsEngine import GraphicsEngine
 from .Utils import add
+import gettext
 
+ru = gettext.translation('EShop', localedir='city_builder/locales', languages=['ru'])
+ru.install()
+_ = ru.gettext
 
 class EShop(EUIElement):
     def __init__(self):
@@ -45,4 +49,5 @@ class EShop(EUIElement):
         super().draw()
 
         GraphicsEngine().draw_rectangle((99, 68, 57), self._position, self._size, alpha=245)
-        # GraphicsEngine().draw_text(add(self._position, (10, 10)), "Arial_20", (255, 255, 255), "Shop")
+        GraphicsEngine().draw_text(add(self._position, (10 - 3, 5 + 3)), "ShopTitleFont", (0, 0, 0), _("Shop"))
+        GraphicsEngine().draw_text(add(self._position, (10, 5)), "ShopTitleFont", (255, 255, 255), _("Shop"))

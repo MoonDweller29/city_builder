@@ -3,7 +3,11 @@ from .EButton import EButton
 from .EntitySystem import EntitySystem
 from .GraphicsEngine import GraphicsEngine
 from .Utils import add
+import gettext
 
+ru = gettext.translation('EShopButton', localedir='city_builder/locales', languages=['ru'])
+ru.install()
+_ = ru.gettext
 
 class EShopButton(EButton):
     def __init__(self, name, position, size, buildingName, shopPanel):
@@ -11,6 +15,14 @@ class EShopButton(EButton):
 
         self.buildingName = buildingName
         self.shopPanel = shopPanel
+
+        # @TODO Remove this
+        self.outputNames = {
+            "CrystalMine": _("CrystalMine"),
+            "Sawmill": _("Sawmill"),
+            "WindMill": _("Windmill"),
+            "House": _("House"),
+        }
 
         self.__resourcePanel = EntitySystem().find_entity("ResourcePanel")
 
@@ -32,22 +44,28 @@ class EShopButton(EButton):
         # GraphicsEngine().draw_rectangle((0, 0, 0), add(self._position, (-48, 32 - 3)), (80, 20), alpha=100)
         # GraphicsEngine().draw_rectangle((230, 230, 230), add(self._position, (-48, 32)), (80, 20), alpha=200)
 
+        GraphicsEngine().draw_text(add(self._position, (-48 - 3, 20 + 3)), "ShopButtonFont",
+                            (0, 0, 0), self.outputNames[self.buildingName])
+
+        GraphicsEngine().draw_text(add(self._position, (-48, 20)), "ShopButtonFont",
+                            (255, 255, 255), self.outputNames[self.buildingName])
+
         resourceStatus = EntitySystem().get_entity(self.__resourcePanel).check_needed_resources(self.costs)
 
         for i in range(len(self.costs)):
             GraphicsEngine().draw_image(
                 EntitySystem().get_entity(self.__resourcePanel).get_resource_icon(self.costs[i][0]),
-                add(add(self._position, (-48, 25)), (64 * i, 0)), (24, 24))
+                add(add(self._position, (-48, 20 + 25)), (64 * i, 0)), (24, 24))
 
             textColor = (255, 255, 255)
 
             if not resourceStatus[i]:
                 textColor = (255, 45, 17)
 
-            GraphicsEngine().draw_text(add(add(self._position, (-48 + 25 - 3, 25 + 3)), (64 * i, 0)), "ShopButtonFont",
+            GraphicsEngine().draw_text(add(add(self._position, (-48 + 25 - 3, 20+ 25 + 3)), (64 * i, 0)), "ShopButtonFont",
                                        (0, 0, 0), str(self.costs[i][1]))
 
-            GraphicsEngine().draw_text(add(add(self._position, (-48 + 25, 25)), (64 * i, 0)), "ShopButtonFont",
+            GraphicsEngine().draw_text(add(add(self._position, (-48 + 25, 20+ 25)), (64 * i, 0)), "ShopButtonFont",
                                        textColor, str(self.costs[i][1]))
 
     def on_pressed(self):
