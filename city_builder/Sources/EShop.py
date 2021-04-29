@@ -5,12 +5,13 @@ from .EUIElement import EUIElement
 from .EntitySystem import EntitySystem
 from .GraphicsEngine import GraphicsEngine
 from .Utils import add
+from .RootPath import RootPath
 import gettext
 import locale
 
 
 language = gettext.translation('EShop',
-                               localedir='city_builder/Resources/locales',
+                               localedir=RootPath().create_path("Resources/locales"),
                                languages=[locale.getdefaultlocale()[0], 'en-us'])
 
 language.install()
