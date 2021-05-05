@@ -222,9 +222,9 @@ class ETerrain(Entity):
         for y in range(self.__logicMap.shape[0]):
             for x in range(self.__logicMap.shape[1]):
                 renderer.draw_sprite(self.__spriteSheetName,
-                                     self.__spriteIds[y][x],
                                      (self.__tileSize[0] * x, self.__tileSize[1] * y),
-                                     self.__tileSize)
+                                     self.__tileSize,
+                                     tileCoord=self.__spriteIds[y][x])
 
         renderer.set_render_target()
         # pygame.image.save(self.__terrainTex, "current_map.png")
@@ -259,6 +259,6 @@ class ETerrain(Entity):
         # for y in range(self.__logicMap.shape[0]):
         #     for x in range(self.__logicMap.shape[1]):
         #         renderer.draw_sprite(self.__spriteSheetName,
-        #                              self.__spriteIds[y][x],
+        #                              tileCoord=self.__spriteIds[y][x],
         #                              add(self.__origin, (self.__tileSize[0] * x, self.__tileSize[1] * y)),
         #                              self.__tileSize)

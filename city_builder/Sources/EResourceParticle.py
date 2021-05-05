@@ -38,7 +38,7 @@ class EResourceParticle(Entity):
 
         # GE().draw_rectangle(add((self.x, self.y), (0, 3)), (50,20), (0, 0, 0), alpha=100)
 
-        GE().draw_image(
+        GE().draw_sprite(
             ES().get_entity(self.__resourcePanel).get_resource_icon(self.resourceName), (self.x, self.y),
             (24, 24))
 

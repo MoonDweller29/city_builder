@@ -59,7 +59,7 @@ class EShopButton(EButton):
         resourceStatus = ES().get_entity(self.__resourcePanel).check_needed_resources(self.costs)
 
         for i in range(len(self.costs)):
-            GE().draw_image(
+            GE().draw_sprite(
                 ES().get_entity(self.__resourcePanel).get_resource_icon(self.costs[i][0]),
                 add(add(self._position, (-48, 20 + 25)), (64 * i, 0)), (24, 24))
 

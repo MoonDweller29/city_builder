@@ -59,7 +59,7 @@ class EResourcePanel(Entity):
         # self.wood += 1
 
     def draw_resource(self, id, sprite, text):
-        GE().draw_image(sprite, add((20 + 400, 20), (id * 120, 0)), (32, 32), valign=VAlign.C, halign=HAlign.C)
+        GE().draw_sprite(sprite, add((20 + 400, 20), (id * 120, 0)), (32, 32), valign=VAlign.C, halign=HAlign.C)
         GE().draw_text("Arial_20", add((40 + 400, 10), (id * 120, 0)), (255, 255, 255), text)
 
     def draw(self):

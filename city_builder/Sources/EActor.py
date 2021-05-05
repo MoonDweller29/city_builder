@@ -22,8 +22,8 @@ class EActor(Entity):
         super().draw()
 
         if self.spritePos is None:
-            GE().draw_image(self.sprite, (self.x, self.y), self.size, tint_color=self.tint_color)
+            GE().draw_sprite(self.sprite, (self.x, self.y), self.size, tint_color=self.tint_color)
         else:
             GE().draw_sprite(
-                self.sprite, self.spritePos, (self.x, self.y), self.size, tint_color=self.tint_color
+                self.sprite, (self.x, self.y), self.size, tileCoord=self.spritePos, tint_color=self.tint_color
             )

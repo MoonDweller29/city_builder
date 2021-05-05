@@ -41,15 +41,15 @@ class GraphicsEngine:
         self.__renderTargetRect = self.__screen.get_rect()
         
         self.vfunc = {
-            VAlign.TOP   : self.vtop_position,
-            VAlign.CENTER: self.vcenter_position,
-            VAlign.BOTTOM: self.vbot_position
+            VAlign.TOP   : self.__vtop_position,
+            VAlign.CENTER: self.__vcenter_position,
+            VAlign.BOTTOM: self.__vbot_position
         }
 
         self.hfunc = {
-            HAlign.LEFT  : self.hleft_position,
-            HAlign.CENTER: self.hcenter_position,
-            HAlign.RIGHT : self.hright_position
+            HAlign.LEFT  : self.__hleft_position,
+            HAlign.CENTER: self.__hcenter_position,
+            HAlign.RIGHT : self.__hright_position
         }
 
 
@@ -71,34 +71,19 @@ class GraphicsEngine:
 
     # draw methods
 
-    def hcenter_position(self, position, size):
-        return position - size / 2
+    def draw_sprite(self, name, position, size, alpha=255, tileCoord=None, tint_color=None, tint_flag=pygame.BLEND_RGBA_MULT, valign=VAlign.TOP, halign=HAlign.LEFT):
+        if (not tileCoord is None):
+            self.__draw_tile(name, tileCoord, position, size, alpha=alpha, tint_color=tint_color, tint_flag=tint_flag, valign=valign, halign=halign)
+            return
 
-    def hleft_position(self, position, size):
-        return position
-
-    def hright_position(self, position, size):
-        return position - size
-
-    def vcenter_position(self, position, size):
-        return position - size / 2
-
-    def vbot_position(self, position, size):
-        return position - size
-
-    def vtop_position(self, position, size):
-        return position
-
-    def draw_image(self, name, position, size, alpha=255, tint_color=None, tint_flag=pygame.BLEND_RGBA_MULT, valign=VAlign.TOP, halign=HAlign.LEFT):
         self.drawCalls += 1
 
         tmp = pygame.transform.scale(ResourceManager().get_image(name), size)
 
-        x = self.hfunc[halign](position[0], size[0])
-        y = self.vfunc[valign](position[1], size[1])
+        position = self.__apply_alignment(position, size, halign, valign)
 
         rect = tmp.get_rect()
-        rect = rect.move((x, y))
+        rect = rect.move(position)
 
         # , special_flags=pygame.BLEND_RGBA_ADD
         #
@@ -112,37 +97,7 @@ class GraphicsEngine:
             tint_image.fill(tint_color)
             tmp.blit(tint_image, (0, 0), special_flags=tint_flag)
 
-        # @TODO alpha не работает у AlexHonor провить эту дичь
-        # tmp.set_alpha(128)
-
         self.__renderTarget.blit(tmp, rect)
-
-    def draw_sprite(self, name, tileCoord, position, size, alpha=255, tint_color=None,
-                    tint_flag=pygame.BLEND_RGBA_MULT, valign=VAlign.TOP, halign=HAlign.LEFT):
-        self.drawCalls += 1
-
-        x = self.hfunc[halign](position[0], size[0])
-        y = self.vfunc[valign](position[1], size[1])
-
-        rect = pygame.Rect(x, y, size[0], size[1])
-        
-        if (rect.colliderect(self.__renderTargetRect)):
-            tmp = pygame.transform.scale(
-                ResourceManager().get_sprite_sheet(name, tileCoord[0], tileCoord[1]), size
-            )
-            if (alpha == 255):
-                tmp.set_alpha(alpha)
-            else:
-                tmp.set_alpha(None)
-
-            if tint_color is not None:
-                tint_image = pygame.Surface(size)
-                tint_image.fill(tint_color)
-                tmp.blit(tint_image, (0, 0), special_flags=tint_flag)
-
-            self.__renderTarget.blit(tmp, rect)
-        else:
-            self.culledDrawCalls += 1
 
     # @TODO проверить memory leak texture surface возвращаемого из метода ренедер
     def draw_text(self, fontName, position, color, text, valign=VAlign.TOP, halign=HAlign.LEFT):
@@ -152,31 +107,28 @@ class GraphicsEngine:
 
         size = font.size(text)
 
-        x = self.hfunc[halign](position[0], size[0])
-        y = self.vfunc[valign](position[1], size[1])
+        position = self.__apply_alignment(position, size, halign, valign)
 
-        self.__renderTarget.blit(font.render(text, False, color), (x, y))
+        self.__renderTarget.blit(font.render(text, False, color), position)
 
     def draw_circle(self, position, radius, color, valign=VAlign.TOP, halign=HAlign.LEFT):
         self.drawCalls += 1
 
-        x = self.hfunc[halign](position[0], radius * 2)
-        y = self.vfunc[valign](position[1], radius * 2)
+        position = self.__apply_alignment(position, size, halign, valign)
 
-        pygame.draw.circle(self.__renderTarget, color, (x, y), radius)
+        pygame.draw.circle(self.__renderTarget, color, position, radius)
 
     def draw_rectangle(self, position, size, color, alpha=None, valign=VAlign.TOP, halign=HAlign.LEFT):
         self.drawCalls += 1
         # pygame.draw.rect(self.__renderTarget, color, pygame.Rect(position[0], position[1], size[0], size[1]))
 
-        x = self.hfunc[halign](position[0], size[0])
-        y = self.vfunc[valign](position[1], size[1])
+        position = self.__apply_alignment(position, size, halign, valign)
 
         s = pygame.Surface(size)
         if not (alpha is None):
             s.set_alpha(alpha)
         s.fill(color)
-        self.__renderTarget.blit(s, (x, y))
+        self.__renderTarget.blit(s, position)
 
     def draw_surface(self, surface, position):
         self.drawCalls += 1
@@ -205,3 +157,50 @@ class GraphicsEngine:
         if not pygame.get_init():
             pygame.init()
             pygame.font.init()
+
+    def __apply_alignment(self, position, size, halign, valign):
+        return (self.hfunc[halign](position[0], size[0]), self.vfunc[valign](position[1], size[1]))
+
+    def __hcenter_position(self, position, size):
+        return position - size / 2
+
+    def __hleft_position(self, position, size):
+        return position
+
+    def __hright_position(self, position, size):
+        return position - size
+
+    def __vcenter_position(self, position, size):
+        return position - size / 2
+
+    def __vbot_position(self, position, size):
+        return position - size
+
+    def __vtop_position(self, position, size):
+        return position
+
+    def __draw_tile(self, name, tileCoord, position, size, alpha=255, tint_color=None,
+                    tint_flag=pygame.BLEND_RGBA_MULT, valign=VAlign.TOP, halign=HAlign.LEFT):
+        self.drawCalls += 1
+
+        position = self.__apply_alignment(position, size, halign, valign)
+
+        rect = pygame.Rect(position[0], position[1], size[0], size[1])
+        
+        if (rect.colliderect(self.__renderTargetRect)):
+            tmp = pygame.transform.scale(
+                ResourceManager().get_sprite_sheet(name, tileCoord[0], tileCoord[1]), size
+            )
+            if (alpha == 255):
+                tmp.set_alpha(alpha)
+            else:
+                tmp.set_alpha(None)
+
+            if tint_color is not None:
+                tint_image = pygame.Surface(size)
+                tint_image.fill(tint_color)
+                tmp.blit(tint_image, (0, 0), special_flags=tint_flag)
+
+            self.__renderTarget.blit(tmp, rect)
+        else:
+            self.culledDrawCalls += 1
