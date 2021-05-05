@@ -39,6 +39,19 @@ class GraphicsEngine:
         self.__screen = pygame.display.set_mode(resolution)
         self.__renderTarget = self.__screen
         self.__renderTargetRect = self.__screen.get_rect()
+        
+        self.vfunc = {
+            VAlign.TOP   : self.vtop_position,
+            VAlign.CENTER: self.vcenter_position,
+            VAlign.BOTTOM: self.vbot_position
+        }
+
+        self.hfunc = {
+            HAlign.LEFT  : self.hleft_position,
+            HAlign.CENTER: self.hcenter_position,
+            HAlign.RIGHT : self.hright_position
+        }
+
 
     def clear_screen(self, color):
         self.__renderTarget.fill(color)
@@ -58,19 +71,16 @@ class GraphicsEngine:
 
     # draw methods
 
-    def draw_image_bot(self, name, position, size, tint_color=None, tint_flag=pygame.BLEND_RGBA_MULT):
-        self.draw_image(name, sub(position, size), size, tint_color=tint_color, tint_flag=tint_flag)
-
-    def draw_image_centered(self, name, position, size, tint_color=None, tint_flag=pygame.BLEND_RGBA_MULT):
-        self.draw_image(name, sub(position, div(size, (2, 2))), size, tint_color=tint_color, tint_flag=tint_flag)
-
-    def draw_image(self, name, position, size, alpha=255, tint_color=None, tint_flag=pygame.BLEND_RGBA_MULT):
+    def draw_image(self, name, position, size, alpha=255, tint_color=None, tint_flag=pygame.BLEND_RGBA_MULT, valign=VAlign.TOP, halign=HAlign.LEFT):
         self.drawCalls += 1
 
         tmp = pygame.transform.scale(ResourceManager().get_image(name), size)
 
+        x = self.hfunc[halign](position[0], size[0])
+        y = self.vfunc[valign](position[1], size[1])
+
         rect = tmp.get_rect()
-        rect = rect.move(position)
+        rect = rect.move((x, y))
 
         # , special_flags=pygame.BLEND_RGBA_ADD
         #
@@ -90,19 +100,19 @@ class GraphicsEngine:
         self.__renderTarget.blit(tmp, rect)
 
     def hcenter_position(self, position, size):
-        return position + size / 2
+        return position - size / 2
 
     def hleft_position(self, position, size):
         return position
 
     def hright_position(self, position, size):
-        return position + size
+        return position - size
 
     def vcenter_position(self, position, size):
-        return position + size / 2
+        return position - size / 2
 
     def vbot_position(self, position, size):
-        return position + size
+        return position - size
 
     def vtop_position(self, position, size):
         return position
@@ -111,20 +121,8 @@ class GraphicsEngine:
                     tint_flag=pygame.BLEND_RGBA_MULT, valign=VAlign.TOP, halign=HAlign.LEFT):
         self.drawCalls += 1
 
-        vfunc = {
-            VAlign.TOP   : self.vtop_position,
-            VAlign.CENTER: self.vcenter_position,
-            VAlign.BOTTOM: self.vbot_position
-        }
-
-        hfunc = {
-            HAlign.LEFT  : self.hleft_position,
-            HAlign.CENTER: self.hcenter_position,
-            HAlign.RIGHT : self.hright_position
-        }
-
-        x = hfunc[halign](position[0], size[0])
-        y = vfunc[valign](position[1], size[1])
+        x = self.hfunc[halign](position[0], size[0])
+        y = self.vfunc[valign](position[1], size[1])
 
         rect = pygame.Rect(x, y, size[0], size[1])
         

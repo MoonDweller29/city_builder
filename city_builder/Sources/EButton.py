@@ -3,7 +3,7 @@ import copy
 import pygame
 
 from .EUIElement import EUIElement
-from .GraphicsEngine import GE
+from .GraphicsEngine import GE, VAlign, HAlign
 from .UserInput import UserInput, MouseButton
 from .Utils import mul, to_int
 
@@ -63,12 +63,12 @@ class EButton(EUIElement):
 
         # @TODO map tint colors and stuff?
         if self.__greyed:
-            render.draw_image_centered(self.__textureName, self._position, self._size, tint_color=(50, 50, 50))
+            render.draw_image(self.__textureName, self._position, self._size, tint_color=(50, 50, 50), valign=VAlign.C, halign=HAlign.C)
         elif self.pressed_frames < 0:
             if self.__selected:
-                render.draw_image_centered(self.__textureName, self._position, self._size, tint_color=(40, 40, 40),
-                                           tint_flag=pygame.BLEND_RGB_ADD)
+                render.draw_image(self.__textureName, self._position, self._size, tint_color=(40, 40, 40),
+                                           tint_flag=pygame.BLEND_RGB_ADD, valign=VAlign.C, halign=HAlign.C)
             else:
-                render.draw_image_centered(self.__textureName, self._position, self._size)
+                render.draw_image(self.__textureName, self._position, self._size, valign=VAlign.C, halign=HAlign.C)
         else:
-            render.draw_image_centered(self.__textureName, self._position, self._size, tint_color=(220, 220, 220))
+            render.draw_image(self.__textureName, self._position, self._size, tint_color=(220, 220, 220), valign=VAlign.C, halign=HAlign.C)
