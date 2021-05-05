@@ -1,4 +1,4 @@
-from .EntitySystem import EntitySystem, Entity
+from .EntitySystem import ES, Entity
 from .GraphicsEngine import GraphicsEngine
 from .Utils import lerp
 
@@ -20,7 +20,7 @@ class EResourceParticle(Entity):
     def on_start(self):
         super().on_start()
 
-        self.__resourcePanel = EntitySystem().find_entity("ResourcePanel")
+        self.__resourcePanel = ES().find_entity("ResourcePanel")
 
     def update(self):
         super().update()
@@ -28,7 +28,7 @@ class EResourceParticle(Entity):
         self.lifetime -= 1
 
         if self.lifetime < 0:
-            EntitySystem().destroy_entity(self.id)
+            ES().destroy_entity(self.id)
 
         self.y -= 0.5
         self.alpha = lerp(self.lifetime / self.lifetime_max, 0, 255)
@@ -39,7 +39,7 @@ class EResourceParticle(Entity):
         # GraphicsEngine().draw_rectangle((0, 0, 0), add((self.x, self.y), (0, 3)), (50,20), alpha=100)
 
         GraphicsEngine().draw_image(
-            EntitySystem().get_entity(self.__resourcePanel).get_resource_icon(self.resourceName), (self.x, self.y),
+            ES().get_entity(self.__resourcePanel).get_resource_icon(self.resourceName), (self.x, self.y),
             (24, 24))
 
         textColor = (255, 255, 255)

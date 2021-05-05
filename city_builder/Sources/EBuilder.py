@@ -1,6 +1,6 @@
 from .BuildingDatabase import BuildingDatabase
 from .EFakeBuilding import EFakeBuilding
-from .EntitySystem import EntitySystem, Entity
+from .EntitySystem import ES, Entity
 from .UserInput import UserInput, MouseButton
 
 
@@ -13,18 +13,18 @@ class EBuilder(Entity):
 
         self.buildingName = ""
 
-        self.__resourcePanelId = EntitySystem().find_entity("ResourcePanel")
-        self.fakeBuilding = EntitySystem().add_entity(EFakeBuilding(0, 0, "CrystalMine"))
+        self.__resourcePanelId = ES().find_entity("ResourcePanel")
+        self.fakeBuilding = ES().add_entity(EFakeBuilding(0, 0, "CrystalMine"))
 
-        EntitySystem().get_entity(self.fakeBuilding).disable()
+        ES().get_entity(self.fakeBuilding).disable()
 
     def start_building(self, buildingName):
         self.buildingName = buildingName
 
-        EntitySystem().get_entity(self.fakeBuilding).enable()
-        EntitySystem().get_entity(self.fakeBuilding).sprite = buildingName
+        ES().get_entity(self.fakeBuilding).enable()
+        ES().get_entity(self.fakeBuilding).sprite = buildingName
         radius = BuildingDatabase().get_affect_radius(buildingName)
-        EntitySystem().get_entity(self.fakeBuilding).radius = radius
+        ES().get_entity(self.fakeBuilding).radius = radius
 
     def update(self):
         super().update()
@@ -38,15 +38,15 @@ class EBuilder(Entity):
             return
 
         if UserInput().is_mouse_down(MouseButton.LEFT):
-            grid = EntitySystem().get_grid()
+            grid = ES().get_grid()
             coord = grid.world_to_cell(UserInput().get_mouse_position())
 
             if (grid.is_inside(coord) and grid.is_cell_free(coord)):
                 costs = BuildingDatabase().GetBuildingCosts(self.buildingName)
-                EntitySystem().get_entity(self.__resourcePanelId).spend(costs)
+                ES().get_entity(self.__resourcePanelId).spend(costs)
 
-                buildingId = EntitySystem().add_entity(BuildingDatabase().GetBuilding(self.buildingName))
-                EntitySystem().get_entity(buildingId).set_pos(coord)
+                buildingId = ES().add_entity(BuildingDatabase().GetBuilding(self.buildingName))
+                ES().get_entity(buildingId).set_pos(coord)
 
                 self.__stop_building()
 
@@ -55,4 +55,4 @@ class EBuilder(Entity):
 
     def __stop_building(self):
         self.buildingName = ""
-        EntitySystem().get_entity(self.fakeBuilding).disable()
+        ES().get_entity(self.fakeBuilding).disable()

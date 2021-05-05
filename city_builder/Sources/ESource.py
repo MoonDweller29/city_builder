@@ -3,7 +3,7 @@ from enum import Enum
 from .EBuilding import EBuilding
 from .EResourceParticle import EResourceParticle
 from .ETree import ETree
-from .EntitySystem import EntitySystem
+from .EntitySystem import ES
 
 
 class ESourceType(Enum):
@@ -60,7 +60,7 @@ class ESource(EBuilding):
                 self.__resourcePanel.add_resource(modRes.resourceName, perTickAmount)
                 self.__tickCounters[i] = 0
 
-                EntitySystem().add_entity(EResourceParticle(self.x, self.y, modRes.resourceName, perTickAmount))
+                ES().add_entity(EResourceParticle(self.x, self.y, modRes.resourceName, perTickAmount))
 
         self.__tickCounters = [i + 1 for i in self.__tickCounters]
 
@@ -71,14 +71,14 @@ class ESource(EBuilding):
         super().on_start()
         # @TODO Вот так не надо вообще делать. Понятно, что панель пропасть не должна,
         # но id по идее существуют чтобы косвенно адресовать
-        self.__resourcePanel = EntitySystem().get_entity(EntitySystem().find_entity("ResourcePanel"))
+        self.__resourcePanel = ES().get_entity(ES().find_entity("ResourcePanel"))
 
     def set_pos(self, coord):
         super().set_pos(coord)
         self.__tickCounters = [i + 1 for i in self.__tickCounters]
         self.__onTickResourceCounts = [modRes.perTickAmount for modRes in self.__modifyingResources]
 
-        grid = EntitySystem().get_grid()
+        grid = ES().get_grid()
         cellPos = grid.world_to_cell((self.x, self.y))  # @TODO: maybe it's ok to use self.__cell_x from EOnGrid
 
         for y in range(cellPos[1] - self.__effectRadius, cellPos[1] + self.__effectRadius + 1):
@@ -90,7 +90,7 @@ class ESource(EBuilding):
                     continue
                 for neighbourId in neighbourIds:
                     if neighbourId > 0:
-                        neighbour = EntitySystem().get_entity(neighbourId)
+                        neighbour = ES().get_entity(neighbourId)
                         if isinstance(neighbour, ETree):
                             if "Tree" in self.__typeInfo.neighbourEffects:
                                 treeEffect = self.__typeInfo.neighbourEffects["Tree"]

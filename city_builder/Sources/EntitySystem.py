@@ -11,6 +11,8 @@
 # def draw(self):
 #     super().draw()
 
+def ES():
+    return EntitySystem()
 
 class Entity:
     def __init__(self):

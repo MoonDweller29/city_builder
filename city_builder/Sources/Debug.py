@@ -1,6 +1,6 @@
 import pygame
 
-from .EntitySystem import EntitySystem, Entity
+from .EntitySystem import ES, Entity
 from .GraphicsEngine import GraphicsEngine
 from .UserInput import UserInput
 
@@ -57,7 +57,7 @@ class Debug(Entity):
         renderer.draw_text((1100, 10), self.fontName, (0, 255, 0), "FPS:  " + str(int(self.fps)))
         renderer.draw_text((1100, 30), self.fontName, (0, 255, 0), "UFPS: " + str(int(self.updateFps)))
         renderer.draw_text((1100, 50), self.fontName, (0, 255, 0),
-                           "Entities: " + str(int(len(EntitySystem().entities))))
+                           "Entities: " + str(int(len(ES().entities))))
         drawCallCount = GraphicsEngine().drawCalls
         renderer.draw_text((1100, 70), self.fontName, (0, 255, 0),
                            f"DCalls: {drawCallCount - GraphicsEngine().culledDrawCalls}/{drawCallCount}")

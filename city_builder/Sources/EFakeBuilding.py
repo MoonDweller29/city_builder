@@ -1,5 +1,5 @@
 from .EOnGrid import EOnGrid
-from .EntitySystem import EntitySystem
+from .EntitySystem import ES
 from .GraphicsEngine import GraphicsEngine
 from .UserInput import UserInput
 
@@ -9,7 +9,7 @@ class EFakeBuilding(EOnGrid):
         super().__init__(x, y, sprite)
 
         self.drawOrder = 800
-        self.cellSize = EntitySystem().get_grid().cellSize
+        self.cellSize = ES().get_grid().cellSize
         self.tint_color = (255, 255, 255)
         self.radius = 0
 
@@ -20,7 +20,7 @@ class EFakeBuilding(EOnGrid):
     def update(self):
         super().update()
 
-        grid = EntitySystem().get_grid()
+        grid = ES().get_grid()
         userInput = UserInput()
         coord = grid.world_to_cell(userInput.get_mouse_position())
 
@@ -38,7 +38,7 @@ class EFakeBuilding(EOnGrid):
             self.y = userInput.get_mouse_position()[1] - 32
 
     def draw(self):
-        grid = EntitySystem().get_grid()
+        grid = ES().get_grid()
         coord = grid.world_to_cell(UserInput().get_mouse_position())
 
         if self.radius > 0 and grid.is_inside(coord) and not UserInput().is_ui():

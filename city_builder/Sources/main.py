@@ -6,7 +6,7 @@ from .EGrid import EGrid
 from .EResourcePanel import EResourcePanel
 from .EShop import EShop
 from .ETerrain import ETerrain
-from .EntitySystem import EntitySystem
+from .EntitySystem import ES
 from .GraphicsEngine import GraphicsEngine
 from .RootPath import RootPath
 from .UserInput import UserInput
@@ -21,22 +21,22 @@ def app():
                        origin=terrainOrigin,
                        tileSize=terrainTileSize)
 
-    EntitySystem().add_entity(terrain)
-    EntitySystem().gridId = EntitySystem().add_entity(EGrid(terrainOrigin, terrain.get_size(), terrainTileSize))
+    ES().add_entity(terrain)
+    ES().gridId = ES().add_entity(EGrid(terrainOrigin, terrain.get_size(), terrainTileSize))
 
-    grid = EntitySystem().get_entity(EntitySystem().gridId)
+    grid = ES().get_entity(ES().gridId)
 
     terrain.fill_grid(grid)
 
-    EntitySystem().add_entity(EResourcePanel())
-    EntitySystem().add_entity(EShop())
+    ES().add_entity(EResourcePanel())
+    ES().add_entity(EShop())
 
-    EntitySystem().add_entity(ECursor())
+    ES().add_entity(ECursor())
 
     TARGET_FPS = 60.0
     TICK_MS = 1000.0 / TARGET_FPS
 
-    EntitySystem().add_entity(Debug("Arial_20", TICK_MS))
+    ES().add_entity(Debug("Arial_20", TICK_MS))
 
     print(grid.world_to_cell(grid.cell_to_world((3, 3))))
 
@@ -62,14 +62,14 @@ def app():
             if UserInput().is_exit():
                 running = False
 
-            EntitySystem().update()
+            ES().update()
 
             leftSimTime -= TICK_MS
 
         # Render
         GraphicsEngine().clear_screen((36, 159, 222))
 
-        EntitySystem().draw()
+        ES().draw()
 
         # Flip the display
         GraphicsEngine().display_flip()

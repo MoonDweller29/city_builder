@@ -1,6 +1,6 @@
 from .BuildingDatabase import BuildingDatabase
 from .EButton import EButton
-from .EntitySystem import EntitySystem
+from .EntitySystem import ES
 from .GraphicsEngine import GraphicsEngine
 from .Utils import add
 from .RootPath import RootPath
@@ -30,7 +30,7 @@ class EShopButton(EButton):
             "House": _(u"House"),
         }
 
-        self.__resourcePanel = EntitySystem().find_entity("ResourcePanel")
+        self.__resourcePanel = ES().find_entity("ResourcePanel")
 
     def on_start(self):
         super().on_start()
@@ -39,7 +39,7 @@ class EShopButton(EButton):
 
     def update(self):
         super().update()
-        if EntitySystem().get_entity(self.shopPanel).can_buy(self.buildingName):
+        if ES().get_entity(self.shopPanel).can_buy(self.buildingName):
             self.set_greyed(False)
         else:
             self.set_greyed(True)
@@ -56,11 +56,11 @@ class EShopButton(EButton):
         GraphicsEngine().draw_text(add(self._position, (-48, 20)), "ShopButtonFont",
                                    (255, 255, 255), self.outputNames[self.buildingName])
 
-        resourceStatus = EntitySystem().get_entity(self.__resourcePanel).check_needed_resources(self.costs)
+        resourceStatus = ES().get_entity(self.__resourcePanel).check_needed_resources(self.costs)
 
         for i in range(len(self.costs)):
             GraphicsEngine().draw_image(
-                EntitySystem().get_entity(self.__resourcePanel).get_resource_icon(self.costs[i][0]),
+                ES().get_entity(self.__resourcePanel).get_resource_icon(self.costs[i][0]),
                 add(add(self._position, (-48, 20 + 25)), (64 * i, 0)), (24, 24))
 
             textColor = (255, 255, 255)
@@ -79,4 +79,4 @@ class EShopButton(EButton):
     def on_pressed(self):
         super().on_pressed()
 
-        EntitySystem().get_entity(self.shopPanel).try_buying(self.buildingName)
+        ES().get_entity(self.shopPanel).try_buying(self.buildingName)

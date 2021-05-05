@@ -1,4 +1,4 @@
-from .EntitySystem import Entity, EntitySystem
+from .EntitySystem import Entity, ES
 from .Utils import add, sub, mul, div, to_int
 
 
@@ -45,11 +45,11 @@ class EGrid(Entity):
             return self.contents[coord[0]][coord[1]]
 
     def on_remove_from_cell(self, id):
-        curr_entity_pos = EntitySystem().get_entity(id).get_pos()
+        curr_entity_pos = ES().get_entity(id).get_pos()
         self.contents[curr_entity_pos[0]][curr_entity_pos[1]].discard(id)
 
     def on_add_to_cell(self, id):
-        curr_entity_pos = EntitySystem().get_entity(id).get_pos()
+        curr_entity_pos = ES().get_entity(id).get_pos()
         self.contents[curr_entity_pos[0]][curr_entity_pos[1]].add(id)
 
     def is_cell_free(self, coord):

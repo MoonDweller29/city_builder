@@ -6,7 +6,7 @@ from skimage import img_as_ubyte
 from skimage.io import imread
 
 from .EntitySystem import Entity
-from .EntitySystem import EntitySystem
+from .EntitySystem import ES
 from .GraphicsEngine import GraphicsEngine
 from .TreeFactory import TreeFactory
 
@@ -241,7 +241,7 @@ class ETerrain(Entity):
                     grid.on_add_to_cell_xy(self.id, x, y)
                 elif tileName == "TREE":
                     tree = TreeFactory.create_random_tree()
-                    EntitySystem().add_entity(tree)
+                    ES().add_entity(tree)
                     tree.set_pos((x, y))
 
     def update(self):
