@@ -2,6 +2,7 @@ import pygame
 
 from .ResourceManager import ResourceManager
 from enum import Enum
+from .Utils import add
 
 
 class VAlign(Enum):
@@ -9,7 +10,6 @@ class VAlign(Enum):
     C = 1
 
     BOTTOM = 2
-    BOT = 2
     B = 2
 
     TOP = 3
@@ -18,7 +18,6 @@ class VAlign(Enum):
 
 class HAlign(Enum):
     CENTER = 1
-    CTR = 1
     C = 1
 
     LEFT = 2
@@ -26,10 +25,6 @@ class HAlign(Enum):
 
     RIGHT = 3
     R = 3
-
-
-def GE():
-    return GraphicsEngine()
 
 
 class GraphicsEngine:
@@ -44,15 +39,15 @@ class GraphicsEngine:
         self.__renderTargetRect = self.__screen.get_rect()
 
         self.vfunc = {
-            VAlign.TOP   : self.__vtop_position,
-            VAlign.CENTER: self.__vcenter_position,
-            VAlign.BOTTOM: self.__vbot_position
+            VAlign.TOP   : self.__low_align,
+            VAlign.CENTER: self.__center_align,
+            VAlign.BOTTOM: self.__high_align
         }
 
         self.hfunc = {
-            HAlign.LEFT  : self.__hleft_position,
-            HAlign.CENTER: self.__hcenter_position,
-            HAlign.RIGHT : self.__hright_position
+            HAlign.LEFT  : self.__low_align,
+            HAlign.CENTER: self.__center_align,
+            HAlign.RIGHT : self.__high_align
         }
 
     def clear_screen(self, color):
@@ -75,14 +70,14 @@ class GraphicsEngine:
 
     def draw_sprite(self, name, position, size, alpha=255, tileCoord=None, tint_color=None,
                     tint_flag=pygame.BLEND_RGBA_MULT, valign=VAlign.TOP, halign=HAlign.LEFT):
-        if (tileCoord):
-            self.__draw_tile(name, tileCoord, position, size, alpha=alpha, tint_color=tint_color,
-                             tint_flag=tint_flag, valign=valign, halign=halign)
-            return
-
         self.drawCalls += 1
 
-        tmp = pygame.transform.scale(ResourceManager().get_image(name), size)
+        if (tileCoord is None):
+            image = ResourceManager().get_image(name)
+        else:
+            image = ResourceManager().get_sprite_sheet(name, tileCoord[0], tileCoord[1])
+
+        tmp = pygame.transform.scale(image, size)
 
         position = self.__apply_alignment(position, size, halign, valign)
 
@@ -118,9 +113,9 @@ class GraphicsEngine:
     def draw_circle(self, position, radius, color, valign=VAlign.TOP, halign=HAlign.LEFT):
         self.drawCalls += 1
 
-        position = self.__apply_alignment(position, (radius, radius), halign, valign)
+        position = self.__apply_alignment(position, (radius * 2, radius * 2), halign, valign)
 
-        pygame.draw.circle(self.__renderTarget, color, position, radius)
+        pygame.draw.circle(self.__renderTarget, color, add(position, (radius, radius)), radius)
 
     def draw_rectangle(self, position, size, color, alpha=None, valign=VAlign.TOP, halign=HAlign.LEFT):
         self.drawCalls += 1
@@ -165,46 +160,14 @@ class GraphicsEngine:
     def __apply_alignment(self, position, size, halign, valign):
         return (self.hfunc[halign](position[0], size[0]), self.vfunc[valign](position[1], size[1]))
 
-    def __hcenter_position(self, position, size):
+    def __center_align(self, position, size):
         return position - size / 2
 
-    def __hleft_position(self, position, size):
+    def __low_align(self, position, size):
         return position
 
-    def __hright_position(self, position, size):
+    def __high_align(self, position, size):
         return position - size
 
-    def __vcenter_position(self, position, size):
-        return position - size / 2
 
-    def __vbot_position(self, position, size):
-        return position - size
-
-    def __vtop_position(self, position, size):
-        return position
-
-    def __draw_tile(self, name, tileCoord, position, size, alpha=255, tint_color=None,
-                    tint_flag=pygame.BLEND_RGBA_MULT, valign=VAlign.TOP, halign=HAlign.LEFT):
-        self.drawCalls += 1
-
-        position = self.__apply_alignment(position, size, halign, valign)
-
-        rect = pygame.Rect(position[0], position[1], size[0], size[1])
-
-        if (rect.colliderect(self.__renderTargetRect)):
-            tmp = pygame.transform.scale(
-                ResourceManager().get_sprite_sheet(name, tileCoord[0], tileCoord[1]), size
-            )
-            if (alpha == 255):
-                tmp.set_alpha(alpha)
-            else:
-                tmp.set_alpha(None)
-
-            if tint_color is not None:
-                tint_image = pygame.Surface(size)
-                tint_image.fill(tint_color)
-                tmp.blit(tint_image, (0, 0), special_flags=tint_flag)
-
-            self.__renderTarget.blit(tmp, rect)
-        else:
-            self.culledDrawCalls += 1
+GE = GraphicsEngine

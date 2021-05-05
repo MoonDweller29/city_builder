@@ -11,9 +11,6 @@
 # def draw(self):
 #     super().draw()
 
-def ES():
-    return EntitySystem()
-
 
 class Entity:
     def __init__(self):
@@ -147,3 +144,6 @@ class EntitySystem:
                 self.get_entity(id).enable()
 
         self.entitiesToStart.clear()
+
+
+ES = EntitySystem
