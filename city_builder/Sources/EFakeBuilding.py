@@ -1,6 +1,6 @@
 from .EOnGrid import EOnGrid
 from .EntitySystem import ES
-from .GraphicsEngine import GraphicsEngine
+from .GraphicsEngine import GE
 from .UserInput import UserInput
 
 
@@ -44,5 +44,5 @@ class EFakeBuilding(EOnGrid):
         if self.radius > 0 and grid.is_inside(coord) and not UserInput().is_ui():
             lt = (self.x - self.cellSize * self.radius, self.y - self.cellSize * self.radius)
             rectSize = (self.cellSize * (2 * self.radius + 1), self.cellSize * (2 * self.radius + 1))
-            GraphicsEngine().draw_rectangle(self.tint_color, lt, rectSize, 100)
+            GE().draw_rectangle(self.tint_color, lt, rectSize, 100)
         super().draw()

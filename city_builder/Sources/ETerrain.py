@@ -7,7 +7,7 @@ from skimage.io import imread
 
 from .EntitySystem import Entity
 from .EntitySystem import ES
-from .GraphicsEngine import GraphicsEngine
+from .GraphicsEngine import GE
 from .TreeFactory import TreeFactory
 
 
@@ -216,7 +216,7 @@ class ETerrain(Entity):
         surfSize = (self.__tileSize[0] * shape[1], self.__tileSize[1] * shape[1])
         self.__terrainTex = pygame.Surface(surfSize)
 
-        renderer = GraphicsEngine()
+        renderer = GE()
         renderer.set_render_target(self.__terrainTex)
 
         for y in range(self.__logicMap.shape[0]):
@@ -252,7 +252,7 @@ class ETerrain(Entity):
     def draw(self):
         super().draw()
 
-        renderer = GraphicsEngine()
+        renderer = GE()
         renderer.draw_surface(self.__terrainTex, self.__origin)
 
         # non optimal approach

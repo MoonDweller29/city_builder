@@ -1,5 +1,5 @@
 from .EntitySystem import Entity
-from .GraphicsEngine import GraphicsEngine
+from .GraphicsEngine import GE
 from .Utils import add
 
 
@@ -59,13 +59,13 @@ class EResourcePanel(Entity):
         # self.wood += 1
 
     def draw_resource(self, id, sprite, text):
-        GraphicsEngine().draw_image_centered(sprite, add((20 + 400, 20), (id * 120, 0)), (32, 32))
-        GraphicsEngine().draw_text(add((40 + 400, 10), (id * 120, 0)), "Arial_20", (255, 255, 255), text)
+        GE().draw_image_centered(sprite, add((20 + 400, 20), (id * 120, 0)), (32, 32))
+        GE().draw_text("Arial_20", add((40 + 400, 10), (id * 120, 0)), (255, 255, 255), text)
 
     def draw(self):
         super().draw()
 
-        GraphicsEngine().draw_rectangle((0, 0, 0), (0, 0), (1280, 40), alpha=200)
+        GE().draw_rectangle((0, 0, 0), (0, 0), (1280, 40), alpha=200)
 
         id = 0
         for k, v in self.__resourcesInfo.items():

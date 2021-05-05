@@ -7,13 +7,13 @@ from .EResourcePanel import EResourcePanel
 from .EShop import EShop
 from .ETerrain import ETerrain
 from .EntitySystem import ES
-from .GraphicsEngine import GraphicsEngine
+from .GraphicsEngine import GE
 from .RootPath import RootPath
 from .UserInput import UserInput
 
 
 def app():
-    GraphicsEngine().init_window([1280, 720], 'City Builder')
+    GE().init_window([1280, 720], 'City Builder')
 
     terrainOrigin = (0, 0)
     terrainTileSize = 40
@@ -67,12 +67,12 @@ def app():
             leftSimTime -= TICK_MS
 
         # Render
-        GraphicsEngine().clear_screen((36, 159, 222))
+        GE().clear_screen((36, 159, 222))
 
         ES().draw()
 
         # Flip the display
-        GraphicsEngine().display_flip()
+        GE().display_flip()
 
     # Done! Time to quit.
     pygame.quit()

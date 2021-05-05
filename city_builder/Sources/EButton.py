@@ -3,7 +3,7 @@ import copy
 import pygame
 
 from .EUIElement import EUIElement
-from .GraphicsEngine import GraphicsEngine
+from .GraphicsEngine import GE
 from .UserInput import UserInput, MouseButton
 from .Utils import mul, to_int
 
@@ -59,7 +59,7 @@ class EButton(EUIElement):
 
     def draw(self):
         super().draw()
-        render = GraphicsEngine()
+        render = GE()
 
         # @TODO map tint colors and stuff?
         if self.__greyed:

@@ -1,8 +1,33 @@
 import pygame
 
 from .ResourceManager import ResourceManager
-from .Utils import sub, div
+from .Utils import sub, div, add, mul
+from enum import Enum
 
+class VAlign(Enum):
+    CENTER = 1
+    C = 1
+
+    BOTTOM = 2
+    BOT = 2
+    B = 2
+
+    TOP = 3
+    T = 3
+
+class HAlign(Enum):
+    CENTER = 1
+    CTR = 1
+    C = 1
+
+    LEFT = 2
+    L = 2
+
+    RIGHT = 3
+    R = 3
+
+def GE():
+    return GraphicsEngine()
 
 class GraphicsEngine:
     ##############################################################################
@@ -64,11 +89,45 @@ class GraphicsEngine:
 
         self.__renderTarget.blit(tmp, rect)
 
+    def hcenter_position(self, position, size):
+        return position + size / 2
+
+    def hleft_position(self, position, size):
+        return position
+
+    def hright_position(self, position, size):
+        return position + size
+
+    def vcenter_position(self, position, size):
+        return position + size / 2
+
+    def vbot_position(self, position, size):
+        return position + size
+
+    def vtop_position(self, position, size):
+        return position
+
     def draw_sprite(self, name, tileCoord, position, size, alpha=255, tint_color=None,
-                    tint_flag=pygame.BLEND_RGBA_MULT):
+                    tint_flag=pygame.BLEND_RGBA_MULT, valign=VAlign.TOP, halign=HAlign.LEFT):
         self.drawCalls += 1
 
-        rect = pygame.Rect(position[0], position[1], size[0], size[1])
+        vfunc = {
+            VAlign.TOP   : self.vtop_position,
+            VAlign.CENTER: self.vcenter_position,
+            VAlign.BOTTOM: self.vbot_position
+        }
+
+        hfunc = {
+            HAlign.LEFT  : self.hleft_position,
+            HAlign.CENTER: self.hcenter_position,
+            HAlign.RIGHT : self.hright_position
+        }
+
+        x = hfunc[halign](position[0], size[0])
+        y = vfunc[valign](position[1], size[1])
+
+        rect = pygame.Rect(x, y, size[0], size[1])
+        
         if (rect.colliderect(self.__renderTargetRect)):
             tmp = pygame.transform.scale(
                 ResourceManager().get_sprite_sheet(name, tileCoord[0], tileCoord[1]), size
@@ -88,7 +147,7 @@ class GraphicsEngine:
             self.culledDrawCalls += 1
 
     # @TODO проверить memory leak texture surface возвращаемого из метода ренедер
-    def draw_text(self, position, fontName, color, text):
+    def draw_text(self, fontName, position, color, text):
         self.drawCalls += 1
         self.__renderTarget.blit(ResourceManager().get_font(fontName).render(text, False, color), position)
 

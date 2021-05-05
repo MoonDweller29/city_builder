@@ -3,7 +3,7 @@ from .EBuilder import EBuilder
 from .EShopButton import EShopButton
 from .EUIElement import EUIElement
 from .EntitySystem import ES
-from .GraphicsEngine import GraphicsEngine
+from .GraphicsEngine import GE
 from .Utils import add
 from .RootPath import RootPath
 import gettext
@@ -55,6 +55,6 @@ class EShop(EUIElement):
     def draw(self):
         super().draw()
 
-        GraphicsEngine().draw_rectangle((99, 68, 57), self._position, self._size, alpha=245)
-        GraphicsEngine().draw_text(add(self._position, (10 - 3, 5 + 3)), "ShopTitleFont", (0, 0, 0), _("Shop"))
-        GraphicsEngine().draw_text(add(self._position, (10, 5)), "ShopTitleFont", (255, 255, 255), _("Shop"))
+        GE().draw_rectangle((99, 68, 57), self._position, self._size, alpha=245)
+        GE().draw_text("ShopTitleFont", add(self._position, (10 - 3, 5 + 3)), (0, 0, 0), _("Shop"))
+        GE().draw_text("ShopTitleFont", add(self._position, (10, 5)), (255, 255, 255), _("Shop"))

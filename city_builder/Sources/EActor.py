@@ -1,5 +1,5 @@
 from .EntitySystem import Entity
-from .GraphicsEngine import GraphicsEngine
+from .GraphicsEngine import GE
 
 
 class EActor(Entity):
@@ -22,8 +22,8 @@ class EActor(Entity):
         super().draw()
 
         if self.spritePos is None:
-            GraphicsEngine().draw_image(self.sprite, (self.x, self.y), self.size, tint_color=self.tint_color)
+            GE().draw_image(self.sprite, (self.x, self.y), self.size, tint_color=self.tint_color)
         else:
-            GraphicsEngine().draw_sprite(
+            GE().draw_sprite(
                 self.sprite, self.spritePos, (self.x, self.y), self.size, tint_color=self.tint_color
             )
