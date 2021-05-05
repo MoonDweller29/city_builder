@@ -75,7 +75,7 @@ class EShopButton(EButton):
             GraphicsEngine().draw_text(add(add(self._position, (-48 + 25, 20 + 25)), (64 * i, 0)),
                                        "ShopButtonFont",
                                        textColor, str(self.costs[i][1]))
-
+ 
     def on_pressed(self):
         super().on_pressed()
 
