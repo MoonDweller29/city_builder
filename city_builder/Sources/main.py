@@ -10,12 +10,12 @@ from .EntitySystem import ES
 from .GraphicsEngine import GE
 from .RootPath import RootPath
 from .UserInput import UserInput
-
+from .Utils import Vec
 
 def app():
     GE().init_window([1280, 720], 'City Builder')
 
-    terrainOrigin = (0, 0)
+    terrainOrigin = Vec((0, 0))
     terrainTileSize = 40
     terrain = ETerrain(RootPath().create_path("Resources/Maps/test_map.png"),
                        origin=terrainOrigin,

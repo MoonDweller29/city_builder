@@ -1,5 +1,5 @@
 from .EntitySystem import Entity, ES
-from .Utils import add, sub, mul, div, to_int
+from .Utils import to_int, Vec
 
 
 class EGrid(Entity):
@@ -24,16 +24,13 @@ class EGrid(Entity):
         return coord[0] >= 0 and coord[1] >= 0 and coord[0] < self.size[0] and coord[1] < self.size[1]
 
     def world_to_cell(self, worldCoord):
-        return to_int(div(sub(worldCoord, self.origin), (self.cellSize, self.cellSize)))
+        return to_int((worldCoord - self.origin) / Vec((self.cellSize, self.cellSize)))
 
     def cell_to_world(self, coord):
-        return add(mul(coord, (self.cellSize, self.cellSize)), self.origin)
+        return coord * Vec((self.cellSize, self.cellSize)) + self.origin
 
     def cell_to_world_center(self, coord):
-        return add(
-            mul(coord, (self.cellSize, self.cellSize)),
-            add(self.origin, (self.cellSize * 0.5, self.cellSize * 0.5))
-        )
+        return coord * Vec((self.cellSize, self.cellSize)) + self.origin + Vec((self.cellSize * 0.5, self.cellSize * 0.5))
 
     def get_cell_world(self, worldCoord):
         return self.get_cell(self.world_to_cell(worldCoord))

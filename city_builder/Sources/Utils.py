@@ -5,46 +5,18 @@ import operator
 from typing import Tuple
 
 
-# Vector operations on tuples
+class Vec(tuple):
+    def __add__(self, other):
+        return Vec(map(operator.add, self, other))
 
-def add(a: Tuple, b: Tuple) -> Tuple:
-    """Calculate element-wise sum of tuples of equal size.
+    def __sub__(self, other):
+        return Vec(map(operator.sub, self, other))
 
-    :param a: tuple of size N which contains objects with overloaded operator.__add__
-    :param b: tuple of size N which contains objects with overloaded operator.__add__
-    :return: tuple of size N with element-wise sum of tuples a and b
-    """
-    return tuple(map(operator.add, a, b))
+    def __mul__(self, other):
+        return Vec(map(operator.mul, self, other))
 
-
-def sub(a: Tuple, b: Tuple) -> Tuple:
-    """Calculate element-wise subtraction of tuple b from tuple a.
-
-    :param a: tuple of size N which contains objects with overloaded operator.__sub__
-    :param b: tuple of size N which contains objects with overloaded operator.__sub__
-    :return: tuple of size N with element-wise subtraction of tuple b from tuple a
-    """
-    return tuple(map(operator.sub, a, b))
-
-
-def mul(a: Tuple, b: Tuple) -> Tuple:
-    """Calculate element-wise multiplication of tuples of equal size.
-
-    :param a: tuple of size N which contains objects with overloaded operator.__mul__
-    :param b: tuple of size N which contains objects with overloaded operator.__mul__
-    :return: tuple of size N with element-wise multiplication of tuples a and b
-    """
-    return tuple(map(operator.mul, a, b))
-
-
-def div(a: Tuple, b: Tuple) -> Tuple:
-    """Calculate element-wise division of tuple a by tuple b.
-
-    :param a: tuple of size N which contains objects with overloaded operator.__div__
-    :param b: tuple of size N which contains objects with overloaded operator.__div__
-    :return: tuple of size N with element-wise division of tuple a by tuple b
-    """
-    return tuple(map(operator.truediv, a, b))
+    def __div__(self, other):
+        return Vec(map(operator.div, self, other))
 
 
 def floor(x: Tuple) -> Tuple:

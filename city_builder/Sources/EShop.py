@@ -2,9 +2,9 @@ from .BuildingDatabase import BuildingDatabase
 from .EBuilder import EBuilder
 from .EShopButton import EShopButton
 from .EUIElement import EUIElement
+from .Utils import Vec
 from .EntitySystem import ES
 from .GraphicsEngine import GE
-from .Utils import add
 from .RootPath import RootPath
 import gettext
 import locale
@@ -38,7 +38,7 @@ class EShop(EUIElement):
                 if id >= len(names):
                     break
                 ES().add_entity(
-                    EShopButton(names[id], add((965, 180), (110 * x, 110 * y)), (100, 100), names[id], self.id))
+                    EShopButton(names[id], ((965, 180) + (110 * x, 110 * y)), (100, 100), names[id], self.id))
                 id += 1
 
     def can_buy(self, buildingName):
@@ -56,5 +56,5 @@ class EShop(EUIElement):
         super().draw()
 
         GE().draw_rectangle(self._position, self._size, (99, 68, 57), alpha=245)
-        GE().draw_text("ShopTitleFont", add(self._position, (10 - 3, 5 + 3)), (0, 0, 0), _("Shop"))
-        GE().draw_text("ShopTitleFont", add(self._position, (10, 5)), (255, 255, 255), _("Shop"))
+        GE().draw_text("ShopTitleFont", self._position + Vec((10 - 3, 5 + 3)), (0, 0, 0), _("Shop"))
+        GE().draw_text("ShopTitleFont", self._position + Vec((10, 5)), (255, 255, 255), _("Shop"))

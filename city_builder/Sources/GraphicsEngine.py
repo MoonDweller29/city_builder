@@ -2,7 +2,6 @@ import pygame
 
 from .ResourceManager import ResourceManager
 from enum import Enum
-from .Utils import add
 
 
 class VAlign(Enum):
@@ -115,7 +114,7 @@ class GraphicsEngine:
 
         position = self.__apply_alignment(position, (radius * 2, radius * 2), halign, valign)
 
-        pygame.draw.circle(self.__renderTarget, color, add(position, (radius, radius)), radius)
+        pygame.draw.circle(self.__renderTarget, color, position + (radius, radius), radius)
 
     def draw_rectangle(self, position, size, color, alpha=None, valign=VAlign.TOP, halign=HAlign.LEFT):
         self.drawCalls += 1
