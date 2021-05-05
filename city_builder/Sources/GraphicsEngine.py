@@ -1,8 +1,8 @@
 import pygame
 
 from .ResourceManager import ResourceManager
-from .Utils import sub, div, add, mul
 from enum import Enum
+
 
 class VAlign(Enum):
     CENTER = 1
@@ -15,6 +15,7 @@ class VAlign(Enum):
     TOP = 3
     T = 3
 
+
 class HAlign(Enum):
     CENTER = 1
     CTR = 1
@@ -26,8 +27,10 @@ class HAlign(Enum):
     RIGHT = 3
     R = 3
 
+
 def GE():
     return GraphicsEngine()
+
 
 class GraphicsEngine:
     ##############################################################################
@@ -39,7 +42,7 @@ class GraphicsEngine:
         self.__screen = pygame.display.set_mode(resolution)
         self.__renderTarget = self.__screen
         self.__renderTargetRect = self.__screen.get_rect()
-        
+
         self.vfunc = {
             VAlign.TOP   : self.__vtop_position,
             VAlign.CENTER: self.__vcenter_position,
@@ -51,7 +54,6 @@ class GraphicsEngine:
             HAlign.CENTER: self.__hcenter_position,
             HAlign.RIGHT : self.__hright_position
         }
-
 
     def clear_screen(self, color):
         self.__renderTarget.fill(color)
@@ -71,9 +73,11 @@ class GraphicsEngine:
 
     # draw methods
 
-    def draw_sprite(self, name, position, size, alpha=255, tileCoord=None, tint_color=None, tint_flag=pygame.BLEND_RGBA_MULT, valign=VAlign.TOP, halign=HAlign.LEFT):
-        if (not tileCoord is None):
-            self.__draw_tile(name, tileCoord, position, size, alpha=alpha, tint_color=tint_color, tint_flag=tint_flag, valign=valign, halign=halign)
+    def draw_sprite(self, name, position, size, alpha=255, tileCoord=None, tint_color=None,
+                    tint_flag=pygame.BLEND_RGBA_MULT, valign=VAlign.TOP, halign=HAlign.LEFT):
+        if (tileCoord):
+            self.__draw_tile(name, tileCoord, position, size, alpha=alpha, tint_color=tint_color,
+                             tint_flag=tint_flag, valign=valign, halign=halign)
             return
 
         self.drawCalls += 1
@@ -114,7 +118,7 @@ class GraphicsEngine:
     def draw_circle(self, position, radius, color, valign=VAlign.TOP, halign=HAlign.LEFT):
         self.drawCalls += 1
 
-        position = self.__apply_alignment(position, size, halign, valign)
+        position = self.__apply_alignment(position, (radius, radius), halign, valign)
 
         pygame.draw.circle(self.__renderTarget, color, position, radius)
 
@@ -186,7 +190,7 @@ class GraphicsEngine:
         position = self.__apply_alignment(position, size, halign, valign)
 
         rect = pygame.Rect(position[0], position[1], size[0], size[1])
-        
+
         if (rect.colliderect(self.__renderTargetRect)):
             tmp = pygame.transform.scale(
                 ResourceManager().get_sprite_sheet(name, tileCoord[0], tileCoord[1]), size
