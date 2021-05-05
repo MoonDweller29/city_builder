@@ -1,8 +1,7 @@
 import math
 import random
 
-import pygame
-
+from .EntitySystem import ES
 from .EStaticObject import EStaticObject
 from .Utils import add, sub, mul
 
@@ -26,7 +25,7 @@ class ETree(EStaticObject):
     def draw(self):
         self.size = (
             self.size[0],
-            int(math.sin(self.seed + pygame.time.get_ticks() / 1200.0) * 2 - 3 + self.__startSize[1])
+            int(math.sin(self.seed + ES().get_ms() / 1200.0) * 2 - 3 + self.__startSize[1])
         )
 
         originPos = add(self.__startPos, mul(self.__startSize, self.__origin))

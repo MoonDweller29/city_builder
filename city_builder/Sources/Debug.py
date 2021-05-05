@@ -32,13 +32,13 @@ class Debug(Entity):
         if UserInput().is_key_down(pygame.K_F1):
             self.active = not self.active
 
-        if pygame.time.get_ticks() - self.lastFpsCountTime > self.FPS_COUNT_CD:
-            deltaTime = pygame.time.get_ticks() - self.lastFpsCountTime
+        if ES().get_ms() - self.lastFpsCountTime > self.FPS_COUNT_CD:
+            deltaTime = ES().get_ms() - self.lastFpsCountTime
 
             self.fps = self.frames / deltaTime * 1000.0
             self.updateFps = self.updateFrames / deltaTime * 1000.0
 
-            self.lastFpsCountTime = pygame.time.get_ticks()
+            self.lastFpsCountTime = ES().get_ms()
             self.frames = 0
             self.updateFrames = 0
 
