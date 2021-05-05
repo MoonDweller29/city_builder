@@ -47,8 +47,8 @@ class EShopButton(EButton):
     def draw(self):
         super().draw()
 
-        # GE().draw_rectangle((0, 0, 0), add(self._position, (-48, 32 - 3)), (80, 20), alpha=100)
-        # GE().draw_rectangle((230, 230, 230), add(self._position, (-48, 32)), (80, 20), alpha=200)
+        # GE().draw_rectangle(add(self._position, (-48, 32 - 3)), (80, 20), (0, 0, 0), alpha=100)
+        # GE().draw_rectangle(add(self._position, (-48, 32)), (80, 20), (230, 230, 230), alpha=200)
 
         GE().draw_text("ShopButtonFont", add(self._position, (-48 - 3, 20 + 3)), 
                                    (0, 0, 0), self.outputNames[self.buildingName])

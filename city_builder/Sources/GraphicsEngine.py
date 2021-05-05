@@ -71,6 +71,24 @@ class GraphicsEngine:
 
     # draw methods
 
+    def hcenter_position(self, position, size):
+        return position - size / 2
+
+    def hleft_position(self, position, size):
+        return position
+
+    def hright_position(self, position, size):
+        return position - size
+
+    def vcenter_position(self, position, size):
+        return position - size / 2
+
+    def vbot_position(self, position, size):
+        return position - size
+
+    def vtop_position(self, position, size):
+        return position
+
     def draw_image(self, name, position, size, alpha=255, tint_color=None, tint_flag=pygame.BLEND_RGBA_MULT, valign=VAlign.TOP, halign=HAlign.LEFT):
         self.drawCalls += 1
 
@@ -98,24 +116,6 @@ class GraphicsEngine:
         # tmp.set_alpha(128)
 
         self.__renderTarget.blit(tmp, rect)
-
-    def hcenter_position(self, position, size):
-        return position - size / 2
-
-    def hleft_position(self, position, size):
-        return position
-
-    def hright_position(self, position, size):
-        return position - size
-
-    def vcenter_position(self, position, size):
-        return position - size / 2
-
-    def vbot_position(self, position, size):
-        return position - size
-
-    def vtop_position(self, position, size):
-        return position
 
     def draw_sprite(self, name, tileCoord, position, size, alpha=255, tint_color=None,
                     tint_flag=pygame.BLEND_RGBA_MULT, valign=VAlign.TOP, halign=HAlign.LEFT):
@@ -145,27 +145,42 @@ class GraphicsEngine:
             self.culledDrawCalls += 1
 
     # @TODO проверить memory leak texture surface возвращаемого из метода ренедер
-    def draw_text(self, fontName, position, color, text):
+    def draw_text(self, fontName, position, color, text, valign=VAlign.TOP, halign=HAlign.LEFT):
         self.drawCalls += 1
-        self.__renderTarget.blit(ResourceManager().get_font(fontName).render(text, False, color), position)
 
-    def draw_circle(self, color, pos, radius):
+        font = ResourceManager().get_font(fontName)
+
+        size = font.size(text)
+
+        x = self.hfunc[halign](position[0], size[0])
+        y = self.vfunc[valign](position[1], size[1])
+
+        self.__renderTarget.blit(font.render(text, False, color), (x, y))
+
+    def draw_circle(self, position, radius, color, valign=VAlign.TOP, halign=HAlign.LEFT):
         self.drawCalls += 1
-        pygame.draw.circle(self.__renderTarget, color, pos, radius)
 
-    def draw_rectangle(self, color, lt, rectSize, alpha=None):
+        x = self.hfunc[halign](position[0], radius * 2)
+        y = self.vfunc[valign](position[1], radius * 2)
+
+        pygame.draw.circle(self.__renderTarget, color, (x, y), radius)
+
+    def draw_rectangle(self, position, size, color, alpha=None, valign=VAlign.TOP, halign=HAlign.LEFT):
         self.drawCalls += 1
-        # pygame.draw.rect(self.__renderTarget, color, pygame.Rect(lt[0], lt[1], rectSize[0], rectSize[1]))
+        # pygame.draw.rect(self.__renderTarget, color, pygame.Rect(position[0], position[1], size[0], size[1]))
 
-        s = pygame.Surface(rectSize)
+        x = self.hfunc[halign](position[0], size[0])
+        y = self.vfunc[valign](position[1], size[1])
+
+        s = pygame.Surface(size)
         if not (alpha is None):
             s.set_alpha(alpha)
         s.fill(color)
-        self.__renderTarget.blit(s, lt)
+        self.__renderTarget.blit(s, (x, y))
 
-    def draw_surface(self, surface, lt):
+    def draw_surface(self, surface, position):
         self.drawCalls += 1
-        self.__renderTarget.blit(surface, lt)
+        self.__renderTarget.blit(surface, position)
 
     ##############################################################################
     # private interface

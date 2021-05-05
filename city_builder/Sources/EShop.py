@@ -55,6 +55,6 @@ class EShop(EUIElement):
     def draw(self):
         super().draw()
 
-        GE().draw_rectangle((99, 68, 57), self._position, self._size, alpha=245)
+        GE().draw_rectangle(self._position, self._size, (99, 68, 57), alpha=245)
         GE().draw_text("ShopTitleFont", add(self._position, (10 - 3, 5 + 3)), (0, 0, 0), _("Shop"))
         GE().draw_text("ShopTitleFont", add(self._position, (10, 5)), (255, 255, 255), _("Shop"))

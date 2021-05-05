@@ -65,7 +65,7 @@ class EResourcePanel(Entity):
     def draw(self):
         super().draw()
 
-        GE().draw_rectangle((0, 0, 0), (0, 0), (1280, 40), alpha=200)
+        GE().draw_rectangle((0, 0), (1280, 40), (0, 0, 0), alpha=200)
 
         id = 0
         for k, v in self.__resourcesInfo.items():

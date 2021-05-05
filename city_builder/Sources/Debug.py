@@ -52,7 +52,7 @@ class Debug(Entity):
 
         renderer = GE()
 
-        GE().draw_rectangle((0, 0, 0), (1090, 5), (1260, 100))
+        GE().draw_rectangle((1090, 5), (1260, 100), (0, 0, 0))
 
         renderer.draw_text(self.fontName, (1100, 10), (0, 255, 0), "FPS:  " + str(int(self.fps)))
         renderer.draw_text(self.fontName, (1100, 30), (0, 255, 0), "UFPS: " + str(int(self.updateFps)))
