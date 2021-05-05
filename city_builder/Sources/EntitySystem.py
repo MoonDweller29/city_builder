@@ -14,6 +14,7 @@
 def ES():
     return EntitySystem()
 
+
 class Entity:
     def __init__(self):
         self.drawOrder = 0

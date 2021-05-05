@@ -63,12 +63,14 @@ class EButton(EUIElement):
 
         # @TODO map tint colors and stuff?
         if self.__greyed:
-            render.draw_sprite(self.__textureName, self._position, self._size, tint_color=(50, 50, 50), valign=VAlign.C, halign=HAlign.C)
+            render.draw_sprite(self.__textureName, self._position, self._size, tint_color=(50, 50, 50), valign=VAlign.C,
+                               halign=HAlign.C)
         elif self.pressed_frames < 0:
             if self.__selected:
                 render.draw_sprite(self.__textureName, self._position, self._size, tint_color=(40, 40, 40),
-                                           tint_flag=pygame.BLEND_RGB_ADD, valign=VAlign.C, halign=HAlign.C)
+                                   tint_flag=pygame.BLEND_RGB_ADD, valign=VAlign.C, halign=HAlign.C)
             else:
                 render.draw_sprite(self.__textureName, self._position, self._size, valign=VAlign.C, halign=HAlign.C)
         else:
-            render.draw_sprite(self.__textureName, self._position, self._size, tint_color=(220, 220, 220), valign=VAlign.C, halign=HAlign.C)
+            render.draw_sprite(self.__textureName, self._position, self._size, tint_color=(220, 220, 220),
+                               valign=VAlign.C, halign=HAlign.C)
