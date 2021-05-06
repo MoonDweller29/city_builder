@@ -1,7 +1,7 @@
 import pygame
 
-from .EntitySystem import EntitySystem, Entity
-from .GraphicsEngine import GraphicsEngine
+from .EntitySystem import ES, Entity
+from .GraphicsEngine import GE
 from .UserInput import UserInput
 
 
@@ -32,13 +32,13 @@ class Debug(Entity):
         if UserInput().is_key_down(pygame.K_F1):
             self.active = not self.active
 
-        if pygame.time.get_ticks() - self.lastFpsCountTime > self.FPS_COUNT_CD:
-            deltaTime = pygame.time.get_ticks() - self.lastFpsCountTime
+        if ES().get_ms() - self.lastFpsCountTime > self.FPS_COUNT_CD:
+            deltaTime = ES().get_ms() - self.lastFpsCountTime
 
             self.fps = self.frames / deltaTime * 1000.0
             self.updateFps = self.updateFrames / deltaTime * 1000.0
 
-            self.lastFpsCountTime = pygame.time.get_ticks()
+            self.lastFpsCountTime = ES().get_ms()
             self.frames = 0
             self.updateFrames = 0
 
@@ -50,14 +50,14 @@ class Debug(Entity):
         if (not self.active):
             return
 
-        renderer = GraphicsEngine()
+        renderer = GE()
 
-        GraphicsEngine().draw_rectangle((0, 0, 0), (1090, 5), (1260, 100))
+        GE().draw_rectangle((1090, 5), (1260, 100), (0, 0, 0))
 
-        renderer.draw_text((1100, 10), self.fontName, (0, 255, 0), "FPS:  " + str(int(self.fps)))
-        renderer.draw_text((1100, 30), self.fontName, (0, 255, 0), "UFPS: " + str(int(self.updateFps)))
-        renderer.draw_text((1100, 50), self.fontName, (0, 255, 0),
-                           "Entities: " + str(int(len(EntitySystem().entities))))
-        drawCallCount = GraphicsEngine().drawCalls
-        renderer.draw_text((1100, 70), self.fontName, (0, 255, 0),
-                           f"DCalls: {drawCallCount - GraphicsEngine().culledDrawCalls}/{drawCallCount}")
+        renderer.draw_text(self.fontName, (1100, 10), (0, 255, 0), "FPS:  " + str(int(self.fps)))
+        renderer.draw_text(self.fontName, (1100, 30), (0, 255, 0), "UFPS: " + str(int(self.updateFps)))
+        renderer.draw_text(self.fontName, (1100, 50), (0, 255, 0),
+                           "Entities: " + str(int(len(ES().entities))))
+        drawCallCount = GE().drawCalls
+        renderer.draw_text(self.fontName, (1100, 70), (0, 255, 0),
+                           f"DCalls: {drawCallCount - GE().culledDrawCalls}/{drawCallCount}")

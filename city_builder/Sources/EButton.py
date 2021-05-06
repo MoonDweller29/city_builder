@@ -3,9 +3,9 @@ import copy
 import pygame
 
 from .EUIElement import EUIElement
-from .GraphicsEngine import GraphicsEngine
+from .GraphicsEngine import GE, VAlign, HAlign
 from .UserInput import UserInput, MouseButton
-from .Utils import mul, to_int
+from .Utils import Vec, to_int
 
 
 class EButton(EUIElement):
@@ -14,7 +14,7 @@ class EButton(EUIElement):
         self.__textureName = name
         self.__selected = False
         self.__greyed = False
-        self.__originSize = copy.deepcopy(size)
+        self.__originSize = Vec(copy.deepcopy(size))
         # @TODO: change drawOrder
         self.drawOrder = 500
 
@@ -49,7 +49,7 @@ class EButton(EUIElement):
             self.on_pressed()
 
     def on_selected(self):
-        self._size = to_int(mul(self.__originSize, (1.2, 1.2)))
+        self._size = to_int(self.__originSize * Vec((1.2, 1.2)))
 
     def on_deselected(self):
         self._size = self.__originSize
@@ -59,16 +59,18 @@ class EButton(EUIElement):
 
     def draw(self):
         super().draw()
-        render = GraphicsEngine()
+        render = GE()
 
         # @TODO map tint colors and stuff?
         if self.__greyed:
-            render.draw_image_centered(self.__textureName, self._position, self._size, tint_color=(50, 50, 50))
+            render.draw_sprite(self.__textureName, self._position, self._size, tint_color=(50, 50, 50), valign=VAlign.C,
+                               halign=HAlign.C)
         elif self.pressed_frames < 0:
             if self.__selected:
-                render.draw_image_centered(self.__textureName, self._position, self._size, tint_color=(40, 40, 40),
-                                           tint_flag=pygame.BLEND_RGB_ADD)
+                render.draw_sprite(self.__textureName, self._position, self._size, tint_color=(40, 40, 40),
+                                   tint_flag=pygame.BLEND_RGB_ADD, valign=VAlign.C, halign=HAlign.C)
             else:
-                render.draw_image_centered(self.__textureName, self._position, self._size)
+                render.draw_sprite(self.__textureName, self._position, self._size, valign=VAlign.C, halign=HAlign.C)
         else:
-            render.draw_image_centered(self.__textureName, self._position, self._size, tint_color=(220, 220, 220))
+            render.draw_sprite(self.__textureName, self._position, self._size, tint_color=(220, 220, 220),
+                               valign=VAlign.C, halign=HAlign.C)

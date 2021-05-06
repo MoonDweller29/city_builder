@@ -1,3 +1,5 @@
+import pygame
+
 # Entity class - all objects in game inherit from it
 #
 # Sample for new Entity child
@@ -54,6 +56,9 @@ class EntitySystem:
     ############################################################################
     #                       Public interface
     ############################################################################
+
+    def get_ms(self):
+        return pygame.time.get_ticks()
 
     def get_grid(self):
         return self.get_entity(self.gridId)
@@ -144,3 +149,6 @@ class EntitySystem:
                 self.get_entity(id).enable()
 
         self.entitiesToStart.clear()
+
+
+ES = EntitySystem

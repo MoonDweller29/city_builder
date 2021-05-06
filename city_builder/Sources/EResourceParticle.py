@@ -1,5 +1,5 @@
-from .EntitySystem import EntitySystem, Entity
-from .GraphicsEngine import GraphicsEngine
+from .EntitySystem import ES, Entity
+from .GraphicsEngine import GE
 from .Utils import lerp
 
 
@@ -20,7 +20,7 @@ class EResourceParticle(Entity):
     def on_start(self):
         super().on_start()
 
-        self.__resourcePanel = EntitySystem().find_entity("ResourcePanel")
+        self.__resourcePanel = ES().find_entity("ResourcePanel")
 
     def update(self):
         super().update()
@@ -28,7 +28,7 @@ class EResourceParticle(Entity):
         self.lifetime -= 1
 
         if self.lifetime < 0:
-            EntitySystem().destroy_entity(self.id)
+            ES().destroy_entity(self.id)
 
         self.y -= 0.5
         self.alpha = lerp(self.lifetime / self.lifetime_max, 0, 255)
@@ -36,10 +36,10 @@ class EResourceParticle(Entity):
     def draw(self):
         super().draw()
 
-        # GraphicsEngine().draw_rectangle((0, 0, 0), add((self.x, self.y), (0, 3)), (50,20), alpha=100)
+        # GE().draw_rectangle(add((self.x, self.y), (0, 3)), (50,20), (0, 0, 0), alpha=100)
 
-        GraphicsEngine().draw_image(
-            EntitySystem().get_entity(self.__resourcePanel).get_resource_icon(self.resourceName), (self.x, self.y),
+        GE().draw_sprite(
+            ES().get_entity(self.__resourcePanel).get_resource_icon(self.resourceName), (self.x, self.y),
             (24, 24))
 
         textColor = (255, 255, 255)
@@ -49,5 +49,5 @@ class EResourceParticle(Entity):
             textColor = (255, 45, 17)
             text = "+" + str(self.value)
 
-        GraphicsEngine().draw_text((self.x + 23, self.y + 2), "ShopButtonFont", (0, 0, 0), text)
-        GraphicsEngine().draw_text((self.x + 25, self.y), "ShopButtonFont", textColor, text)
+        GE().draw_text("ShopButtonFont", (self.x + 23, self.y + 2), (0, 0, 0), text)
+        GE().draw_text("ShopButtonFont", (self.x + 25, self.y), textColor, text)

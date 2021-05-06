@@ -2,9 +2,9 @@ from .BuildingDatabase import BuildingDatabase
 from .EBuilder import EBuilder
 from .EShopButton import EShopButton
 from .EUIElement import EUIElement
-from .EntitySystem import EntitySystem
-from .GraphicsEngine import GraphicsEngine
-from .Utils import add
+from .Utils import Vec
+from .EntitySystem import ES
+from .GraphicsEngine import GE
 from .RootPath import RootPath
 import gettext
 import locale
@@ -23,10 +23,10 @@ class EShop(EUIElement):
         super().__init__((900, 100), (360, 280))
 
     def on_start(self):
-        self.builder = EntitySystem().add_entity(EBuilder())
+        self.builder = ES().add_entity(EBuilder())
 
         names = BuildingDatabase().GetAllBuildingNames()
-        self.resourcePanel = EntitySystem().find_entity("ResourcePanel")
+        self.resourcePanel = ES().find_entity("ResourcePanel")
 
         id = 0
 
@@ -37,17 +37,17 @@ class EShop(EUIElement):
             for x in range(3):
                 if id >= len(names):
                     break
-                EntitySystem().add_entity(
-                    EShopButton(names[id], add((965, 180), (110 * x, 110 * y)), (100, 100), names[id], self.id))
+                ES().add_entity(
+                    EShopButton(names[id], Vec((965, 180)) + Vec((110 * x, 110 * y)), (100, 100), names[id], self.id))
                 id += 1
 
     def can_buy(self, buildingName):
         costs = BuildingDatabase().GetBuildingCosts(buildingName)
-        return EntitySystem().get_entity(self.resourcePanel).can_buy(costs)
+        return ES().get_entity(self.resourcePanel).can_buy(costs)
 
     def try_buying(self, buildingName):
         if self.can_buy(buildingName):
-            EntitySystem().get_entity(self.builder).start_building(buildingName)
+            ES().get_entity(self.builder).start_building(buildingName)
 
     def update(self):
         super().update()
@@ -55,6 +55,6 @@ class EShop(EUIElement):
     def draw(self):
         super().draw()
 
-        GraphicsEngine().draw_rectangle((99, 68, 57), self._position, self._size, alpha=245)
-        GraphicsEngine().draw_text(add(self._position, (10 - 3, 5 + 3)), "ShopTitleFont", (0, 0, 0), _("Shop"))
-        GraphicsEngine().draw_text(add(self._position, (10, 5)), "ShopTitleFont", (255, 255, 255), _("Shop"))
+        GE().draw_rectangle(self._position, self._size, (99, 68, 57), alpha=245)
+        GE().draw_text("ShopTitleFont", self._position + Vec((10 - 3, 5 + 3)), (0, 0, 0), _("Shop"))
+        GE().draw_text("ShopTitleFont", self._position + Vec((10, 5)), (255, 255, 255), _("Shop"))

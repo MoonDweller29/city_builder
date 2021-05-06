@@ -6,39 +6,38 @@ from .EGrid import EGrid
 from .EResourcePanel import EResourcePanel
 from .EShop import EShop
 from .ETerrain import ETerrain
-from .EntitySystem import EntitySystem
-from .GraphicsEngine import GraphicsEngine
+from .EntitySystem import ES
+from .GraphicsEngine import GE
 from .RootPath import RootPath
 from .UserInput import UserInput
+from .Utils import Vec
 
 
 def app():
-    GraphicsEngine().init_window([1280, 720], 'City Builder')
+    GE().init_window([1280, 720], 'City Builder')
 
-    terrainOrigin = (0, 0)
+    terrainOrigin = Vec((0, 0))
     terrainTileSize = 40
     terrain = ETerrain(RootPath().create_path("Resources/Maps/test_map.png"),
                        origin=terrainOrigin,
                        tileSize=terrainTileSize)
 
-    EntitySystem().add_entity(terrain)
-    EntitySystem().gridId = EntitySystem().add_entity(EGrid(terrainOrigin, terrain.get_size(), terrainTileSize))
+    ES().add_entity(terrain)
+    ES().gridId = ES().add_entity(EGrid(terrainOrigin, terrain.get_size(), terrainTileSize))
 
-    grid = EntitySystem().get_entity(EntitySystem().gridId)
+    grid = ES().get_entity(ES().gridId)
 
     terrain.fill_grid(grid)
 
-    EntitySystem().add_entity(EResourcePanel())
-    EntitySystem().add_entity(EShop())
+    ES().add_entity(EResourcePanel())
+    ES().add_entity(EShop())
 
-    EntitySystem().add_entity(ECursor())
+    ES().add_entity(ECursor())
 
     TARGET_FPS = 60.0
     TICK_MS = 1000.0 / TARGET_FPS
 
-    EntitySystem().add_entity(Debug("Arial_20", TICK_MS))
-
-    print(grid.world_to_cell(grid.cell_to_world((3, 3))))
+    ES().add_entity(Debug("Arial_20", TICK_MS))
 
     # Run until the user asks to quit
     running = True
@@ -62,17 +61,17 @@ def app():
             if UserInput().is_exit():
                 running = False
 
-            EntitySystem().update()
+            ES().update()
 
             leftSimTime -= TICK_MS
 
         # Render
-        GraphicsEngine().clear_screen((36, 159, 222))
+        GE().clear_screen((36, 159, 222))
 
-        EntitySystem().draw()
+        ES().draw()
 
         # Flip the display
-        GraphicsEngine().display_flip()
+        GE().display_flip()
 
     # Done! Time to quit.
     pygame.quit()

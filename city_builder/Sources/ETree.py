@@ -1,10 +1,9 @@
 import math
 import random
 
-import pygame
-
+from .EntitySystem import ES
 from .EStaticObject import EStaticObject
-from .Utils import add, sub, mul
+from .Utils import Vec
 
 
 class ETree(EStaticObject):
@@ -13,23 +12,23 @@ class ETree(EStaticObject):
 
         self.seed = random.random() * 12331
         self.__startSize = self.size
-        self.__origin = (0.5, 0.875)
+        self.__origin = Vec((0.5, 0.875))
 
     def on_start(self):
         super().on_start()
 
-        self.__startPos = (self.x, self.y)
+        self.__startPos = Vec((self.x, self.y))
 
     def update(self):
         super().update()
 
     def draw(self):
-        self.size = (
+        self.size = Vec((
             self.size[0],
-            int(math.sin(self.seed + pygame.time.get_ticks() / 1200.0) * 2 - 3 + self.__startSize[1])
-        )
+            int(math.sin(self.seed + ES().get_ms() / 1200.0) * 2 - 3 + self.__startSize[1])
+        ))
 
-        originPos = add(self.__startPos, mul(self.__startSize, self.__origin))
-        self.x, self.y = sub(originPos, mul(self.size, self.__origin))
+        originPos = self.__startPos + self.__startSize * self.__origin
+        self.x, self.y = originPos - self.size * self.__origin
 
         super().draw()

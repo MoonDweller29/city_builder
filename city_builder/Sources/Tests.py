@@ -1,28 +1,28 @@
-from .Utils import add, sub, mul, div, lerp
+from .Utils import Vec, lerp
 
 
 def test_add():
-    assert add((383, 122), (10, 2))  == (393, 124)
-    assert add((100, 100), (-10, 0)) == (90, 100)
-    assert add((-20, 0), (-10, 0))   == (-30, 0)
+    assert Vec((383, 122)) + Vec((10, 2))  == (393, 124)
+    assert Vec((100, 100)) + Vec((-10, 0)) == (90, 100)
+    assert Vec((-20, 0))   + Vec((-10, 0)) == (-30, 0)
 
 
 def test_sub():
-    assert sub((383, 122), (10, 2))  == (373, 120)
-    assert sub((100, 100), (-10, 0)) == (110, 100)
-    assert sub((-20, 0)  , (-10, 0)) == (-10, 0)
+    assert Vec((383, 122)) - Vec((10, 2))  == (373, 120)
+    assert Vec((100, 100)) - Vec((-10, 0)) == (110, 100)
+    assert Vec((-20, 0))   - Vec((-10, 0)) == (-10, 0)
 
 
 def test_mul():
-    assert mul((383, 122), (10, 2))  == (3830, 244)
-    assert mul((100, 100), (-10, 0)) == (-1000, 0)
-    assert mul((-20, 0), (-10, 0))   == (200, 0)
+    assert Vec((383, 122)) * Vec((10, 2))  == (3830, 244)
+    assert Vec((100, 100)) * Vec((-10, 0)) == (-1000, 0)
+    assert Vec((-20, 0))   * Vec((-10, 0)) == (200, 0)
 
 
 def test_div():
-    assert div((383, 122), ( 10, 2)) == (38.3, 61)
-    assert div((100, 100), (-10, 1)) == (-10, 100)
-    assert div((-20, 0)  , (-10, 1)) == (2, 0)
+    assert Vec((383, 122)) / Vec(( 10, 2)) == (38.3, 61)
+    assert Vec((100, 100)) / Vec((-10, 1)) == (-10, 100)
+    assert Vec((-20, 0))   / Vec((-10, 1)) == (2, 0)
 
 
 def test_lerp():

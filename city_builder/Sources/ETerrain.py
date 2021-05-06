@@ -6,8 +6,8 @@ from skimage import img_as_ubyte
 from skimage.io import imread
 
 from .EntitySystem import Entity
-from .EntitySystem import EntitySystem
-from .GraphicsEngine import GraphicsEngine
+from .EntitySystem import ES
+from .GraphicsEngine import GE
 from .TreeFactory import TreeFactory
 
 
@@ -216,15 +216,15 @@ class ETerrain(Entity):
         surfSize = (self.__tileSize[0] * shape[1], self.__tileSize[1] * shape[1])
         self.__terrainTex = pygame.Surface(surfSize)
 
-        renderer = GraphicsEngine()
+        renderer = GE()
         renderer.set_render_target(self.__terrainTex)
 
         for y in range(self.__logicMap.shape[0]):
             for x in range(self.__logicMap.shape[1]):
                 renderer.draw_sprite(self.__spriteSheetName,
-                                     self.__spriteIds[y][x],
                                      (self.__tileSize[0] * x, self.__tileSize[1] * y),
-                                     self.__tileSize)
+                                     self.__tileSize,
+                                     tileCoord=self.__spriteIds[y][x])
 
         renderer.set_render_target()
         # pygame.image.save(self.__terrainTex, "current_map.png")
@@ -241,7 +241,7 @@ class ETerrain(Entity):
                     grid.on_add_to_cell_xy(self.id, x, y)
                 elif tileName == "TREE":
                     tree = TreeFactory.create_random_tree()
-                    EntitySystem().add_entity(tree)
+                    ES().add_entity(tree)
                     tree.set_pos((x, y))
 
     def update(self):
@@ -252,13 +252,13 @@ class ETerrain(Entity):
     def draw(self):
         super().draw()
 
-        renderer = GraphicsEngine()
+        renderer = GE()
         renderer.draw_surface(self.__terrainTex, self.__origin)
 
         # non optimal approach
         # for y in range(self.__logicMap.shape[0]):
         #     for x in range(self.__logicMap.shape[1]):
         #         renderer.draw_sprite(self.__spriteSheetName,
-        #                              self.__spriteIds[y][x],
+        #                              tileCoord=self.__spriteIds[y][x],
         #                              add(self.__origin, (self.__tileSize[0] * x, self.__tileSize[1] * y)),
         #                              self.__tileSize)

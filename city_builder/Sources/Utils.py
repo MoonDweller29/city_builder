@@ -2,67 +2,41 @@
 
 import math
 import operator
-from typing import Tuple
 
 
-# Vector operations on tuples
+class Vec(tuple):
+    def __add__(self, other):
+        return Vec(map(operator.add, self, other))
 
-def add(a: Tuple, b: Tuple) -> Tuple:
-    """Calculate element-wise sum of tuples of equal size.
+    def __sub__(self, other):
+        return Vec(map(operator.sub, self, other))
 
-    :param a: tuple of size N which contains objects with overloaded operator.__add__
-    :param b: tuple of size N which contains objects with overloaded operator.__add__
-    :return: tuple of size N with element-wise sum of tuples a and b
-    """
-    return tuple(map(operator.add, a, b))
+    def __mul__(self, other):
+        return Vec(map(operator.mul, self, other))
 
+    def __truediv__(self, other):
+        return Vec(map(operator.truediv, self, other))
 
-def sub(a: Tuple, b: Tuple) -> Tuple:
-    """Calculate element-wise subtraction of tuple b from tuple a.
-
-    :param a: tuple of size N which contains objects with overloaded operator.__sub__
-    :param b: tuple of size N which contains objects with overloaded operator.__sub__
-    :return: tuple of size N with element-wise subtraction of tuple b from tuple a
-    """
-    return tuple(map(operator.sub, a, b))
+    def __div__(self, other):
+        return Vec(map(operator.div, self, other))
 
 
-def mul(a: Tuple, b: Tuple) -> Tuple:
-    """Calculate element-wise multiplication of tuples of equal size.
-
-    :param a: tuple of size N which contains objects with overloaded operator.__mul__
-    :param b: tuple of size N which contains objects with overloaded operator.__mul__
-    :return: tuple of size N with element-wise multiplication of tuples a and b
-    """
-    return tuple(map(operator.mul, a, b))
-
-
-def div(a: Tuple, b: Tuple) -> Tuple:
-    """Calculate element-wise division of tuple a by tuple b.
-
-    :param a: tuple of size N which contains objects with overloaded operator.__div__
-    :param b: tuple of size N which contains objects with overloaded operator.__div__
-    :return: tuple of size N with element-wise division of tuple a by tuple b
-    """
-    return tuple(map(operator.truediv, a, b))
-
-
-def floor(x: Tuple) -> Tuple:
+def floor(x: Vec) -> Vec:
     """Calculate element-wise math.floor from tuple x.
 
     :param x: tuple of floats or objects with overloaded __floor__() method
     :return: tuple of floored elements of x
     """
-    return tuple(map(math.floor, x))
+    return Vec(tuple(map(math.floor, x)))
 
 
-def to_int(a: Tuple[float, float]) -> Tuple[int, int]:
+def to_int(a: Vec) -> Vec:
     """Cast tuple of 2 floats to tuple of 2 ints.
 
     :param a: tuple of 2 float elements
     :return: tuple of 2 int elements
     """
-    return (int(a[0]), int(a[1]))
+    return Vec((int(a[0]), int(a[1])))
 
 
 def lerp(t: float, a: float, b: float) -> float:

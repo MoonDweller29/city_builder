@@ -3,7 +3,8 @@ from enum import Enum
 import pygame
 
 from .EUIElement import EUIElement
-from .EntitySystem import EntitySystem
+from .EntitySystem import ES
+from .Utils import Vec
 
 
 class MouseButton(Enum):
@@ -49,7 +50,7 @@ class UserInput:
             self.__initialized = True
 
     def __check_ui(self, coord):
-        entitySystem = EntitySystem()
+        entitySystem = ES()
         idEntity = entitySystem.find_all_children(EUIElement)
         for id in idEntity:
             if entitySystem.get_entity(id).is_inside(coord):
@@ -86,4 +87,4 @@ class UserInput:
         return self.__mouseButtonsPressed[buttonCode] and self.__isUI
 
     def get_mouse_position(self):
-        return pygame.mouse.get_pos()
+        return Vec(pygame.mouse.get_pos())
