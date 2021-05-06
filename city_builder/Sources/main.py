@@ -12,6 +12,7 @@ from .RootPath import RootPath
 from .UserInput import UserInput
 from .Utils import Vec
 
+
 def app():
     GE().init_window([1280, 720], 'City Builder')
 

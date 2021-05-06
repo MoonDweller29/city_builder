@@ -2,7 +2,6 @@
 
 import math
 import operator
-from typing import Tuple
 
 
 class Vec(tuple):

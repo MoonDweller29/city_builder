@@ -30,7 +30,8 @@ class EGrid(Entity):
         return coord * Vec((self.cellSize, self.cellSize)) + self.origin
 
     def cell_to_world_center(self, coord):
-        return coord * Vec((self.cellSize, self.cellSize)) + self.origin + Vec((self.cellSize * 0.5, self.cellSize * 0.5))
+        return coord * Vec((self.cellSize, self.cellSize)) + self.origin + Vec((self.cellSize * 0.5,
+                                                                                self.cellSize * 0.5))
 
     def get_cell_world(self, worldCoord):
         return self.get_cell(self.world_to_cell(worldCoord))
