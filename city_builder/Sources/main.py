@@ -38,8 +38,6 @@ def app():
 
     ES().add_entity(Debug("Arial_20", TICK_MS))
 
-    print(grid.world_to_cell(grid.cell_to_world((3, 3))))
-
     # Run until the user asks to quit
     running = True
 

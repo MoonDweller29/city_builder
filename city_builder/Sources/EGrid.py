@@ -6,7 +6,7 @@ class EGrid(Entity):
     def __init__(self, origin, size, cellSize):
         super().__init__()
 
-        self.origin = origin
+        self.origin = Vec(origin)
         self.size = size
         self.cellSize = cellSize
 

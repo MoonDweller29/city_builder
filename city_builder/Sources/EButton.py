@@ -14,7 +14,7 @@ class EButton(EUIElement):
         self.__textureName = name
         self.__selected = False
         self.__greyed = False
-        self.__originSize = copy.deepcopy(size)
+        self.__originSize = Vec(copy.deepcopy(size))
         # @TODO: change drawOrder
         self.drawOrder = 500
 

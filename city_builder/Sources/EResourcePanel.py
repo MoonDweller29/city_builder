@@ -1,5 +1,6 @@
 from .EntitySystem import Entity
 from .GraphicsEngine import GE, VAlign, HAlign
+from .Utils import Vec
 
 
 class EResourcePanel(Entity):
@@ -58,13 +59,13 @@ class EResourcePanel(Entity):
         # self.wood += 1
 
     def draw_resource(self, id, sprite, text):
-        GE().draw_sprite(sprite, ((20 + 400, 20) + (id * 120, 0)), (32, 32), valign=VAlign.C, halign=HAlign.C)
-        GE().draw_text("Arial_20", ((40 + 400, 10) + (id * 120, 0)), (255, 255, 255), text)
+        GE().draw_sprite(sprite, Vec((20 + 400, 20)) + Vec((id * 120, 0)), (32, 32), valign=VAlign.C, halign=HAlign.C)
+        GE().draw_text("Arial_20", Vec((40 + 400, 10)) + Vec((id * 120, 0)), (255, 255, 255), text)
 
     def draw(self):
         super().draw()
 
-        GE().draw_rectangle((0, 0), (1280, 40), (0, 0, 0), alpha=200)
+        GE().draw_rectangle(Vec((0, 0)), Vec((1280, 40)), (0, 0, 0), alpha=200)
 
         id = 0
         for k, v in self.__resourcesInfo.items():

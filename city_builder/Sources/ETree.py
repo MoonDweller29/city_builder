@@ -17,16 +17,16 @@ class ETree(EStaticObject):
     def on_start(self):
         super().on_start()
 
-        self.__startPos = (self.x, self.y)
+        self.__startPos = Vec((self.x, self.y))
 
     def update(self):
         super().update()
 
     def draw(self):
-        self.size = (
+        self.size = Vec((
             self.size[0],
             int(math.sin(self.seed + ES().get_ms() / 1200.0) * 2 - 3 + self.__startSize[1])
-        )
+        ))
 
         originPos = self.__startPos + self.__startSize * self.__origin
         self.x, self.y = originPos - self.size * self.__origin

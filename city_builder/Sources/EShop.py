@@ -38,7 +38,7 @@ class EShop(EUIElement):
                 if id >= len(names):
                     break
                 ES().add_entity(
-                    EShopButton(names[id], ((965, 180) + (110 * x, 110 * y)), (100, 100), names[id], self.id))
+                    EShopButton(names[id], Vec((965, 180)) + Vec((110 * x, 110 * y)), (100, 100), names[id], self.id))
                 id += 1
 
     def can_buy(self, buildingName):

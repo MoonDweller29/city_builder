@@ -4,6 +4,7 @@ import pygame
 
 from .EUIElement import EUIElement
 from .EntitySystem import ES
+from .Utils import Vec
 
 
 class MouseButton(Enum):
@@ -86,4 +87,4 @@ class UserInput:
         return self.__mouseButtonsPressed[buttonCode] and self.__isUI
 
     def get_mouse_position(self):
-        return pygame.mouse.get_pos()
+        return Vec(pygame.mouse.get_pos())

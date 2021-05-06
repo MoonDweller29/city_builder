@@ -1,5 +1,6 @@
 from .EntitySystem import Entity
 from .GraphicsEngine import GE
+from .Utils import Vec
 
 
 class EActor(Entity):
@@ -9,7 +10,7 @@ class EActor(Entity):
         self.x = x
         self.y = y
 
-        self.size = size
+        self.size = Vec(size)
 
         self.sprite = sprite
         self.spritePos = spritePos  # coord in spriteSheet

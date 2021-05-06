@@ -4,6 +4,7 @@ from .EBuilding import EBuilding
 from .EResourceParticle import EResourceParticle
 from .ETree import ETree
 from .EntitySystem import ES
+from .Utils import Vec
 
 
 class ESourceType(Enum):
@@ -79,7 +80,7 @@ class ESource(EBuilding):
         self.__onTickResourceCounts = [modRes.perTickAmount for modRes in self.__modifyingResources]
 
         grid = ES().get_grid()
-        cellPos = grid.world_to_cell((self.x, self.y))  # @TODO: maybe it's ok to use self.__cell_x from EOnGrid
+        cellPos = grid.world_to_cell(Vec((self.x, self.y)))  # @TODO: maybe it's ok to use self.__cell_x from EOnGrid
 
         for y in range(cellPos[1] - self.__effectRadius, cellPos[1] + self.__effectRadius + 1):
             for x in range(cellPos[0] - self.__effectRadius, cellPos[0] + self.__effectRadius + 1):

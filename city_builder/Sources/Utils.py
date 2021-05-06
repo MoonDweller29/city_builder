@@ -15,26 +15,29 @@ class Vec(tuple):
     def __mul__(self, other):
         return Vec(map(operator.mul, self, other))
 
+    def __truediv__(self, other):
+        return Vec(map(operator.truediv, self, other))
+
     def __div__(self, other):
         return Vec(map(operator.div, self, other))
 
 
-def floor(x: Tuple) -> Tuple:
+def floor(x: Vec) -> Vec:
     """Calculate element-wise math.floor from tuple x.
 
     :param x: tuple of floats or objects with overloaded __floor__() method
     :return: tuple of floored elements of x
     """
-    return tuple(map(math.floor, x))
+    return Vec(tuple(map(math.floor, x)))
 
 
-def to_int(a: Tuple[float, float]) -> Tuple[int, int]:
+def to_int(a: Vec) -> Vec:
     """Cast tuple of 2 floats to tuple of 2 ints.
 
     :param a: tuple of 2 float elements
     :return: tuple of 2 int elements
     """
-    return (int(a[0]), int(a[1]))
+    return Vec((int(a[0]), int(a[1])))
 
 
 def lerp(t: float, a: float, b: float) -> float:
